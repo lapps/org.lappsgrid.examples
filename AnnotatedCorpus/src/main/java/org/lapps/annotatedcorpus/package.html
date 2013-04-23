@@ -8,7 +8,7 @@
 
 
 <body>
-	<p>Provides scripted access to annotated documents. TIn general,
+	<p>Provides scripted access to annotated documents. In general,
 		this API includes interfaces for corpus users to query (selecting
 		subset) and stream (presenting different aspect) of an annotated
 		corpus to get desired output.</p>
@@ -17,21 +17,21 @@
 		annotated documents, which can be either initialized from a connection
 		or constructed from a selection query of another corpus. After
 		constructed, the corpus can be streamed by iterator reader or used to
-		ad-hoc fetched specific document.</p>
+		fetch ad-hoc specific document.</p>
 
 	<p>Specifically, an AnnotatedCorpus can be queried by a CorpusQuery
 		object and return a new AnnotatedCorpus as selected subset of current
 		corpus. The CorpusQuery queries over corpus to select matching
 		documents. Possible queries include: 1) IR query for lucene/indri e.g.
 		"(president AND Obama)"; 2) regular expression matching query e.g.
-		"(president .* Obama)" over text field and/or annotation field 3)
-		composite query built from several queries e.g. "(query1 OR !query2)"</p>
+		"(president .* Obama)" over text field and/or annotation field; 3)
+		composite query built from several queries e.g. "(query1 OR !query2)".</p>
 
 	<p>Given a corpus, user can stream its documents with different
 		format and aspect by specifying a ViewOptions. The Class ViewOptions
 		specify how to present each document. Possible options include: 1)
 		shows document id; 2) shows document span; 3) shows document content;
-		4) shows annotation; 5) shows annotation span;</p>
+		4) shows annotation; 5) shows annotation span.</p>
 
 	<p>The CorpusManager provides a basic facility to connect remote
 		corpus with ConnectionOptions. The Class ConnectionOptions stores
