@@ -2,7 +2,7 @@ package org.lapps.annotatedcorpus;
 
 /**
  * The Class ViewOptions specify how to present each document. 
- * Possible options are: 
+ * Possible options include: 
  * 1) shows document id;
  * 2) shows document span;
  * 3) shows document content;

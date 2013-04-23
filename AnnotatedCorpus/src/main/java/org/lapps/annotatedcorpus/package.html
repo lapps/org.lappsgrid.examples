@@ -1,9 +1,64 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head></head>
+
+<link href="https://gist.github.com/assets/application-c5a73a2b7791f7a39aaa7b787945d25d.css" media="screen, print" rel="stylesheet" />
+
+</head>
+
+
+
 <body>
-  Provides scripted access to annotated documents. 
-  
-  
+	<p>Provides scripted access to annotated documents. TIn general,
+		this API includes interfaces for corpus users to query (selecting
+		subset) and stream (presenting different aspect) of an annotated
+		corpus to get desired output.</p>
+
+	<p>The AnnotatedCorpus interface represents a ranked list of
+		annotated documents, which can be either initialized from a connection
+		or constructed from a selection query of another corpus. After
+		constructed, the corpus can be streamed by iterator reader or used to
+		ad-hoc fetched specific document.</p>
+
+	<p>Specifically, an AnnotatedCorpus can be queried by a CorpusQuery
+		object and return a new AnnotatedCorpus as selected subset of current
+		corpus. The CorpusQuery queries over corpus to select matching
+		documents. Possible queries include: 1) IR query for lucene/indri e.g.
+		"(president AND Obama)"; 2) regular expression matching query e.g.
+		"(president .* Obama)" over text field and/or annotation field 3)
+		composite query built from several queries e.g. "(query1 OR !query2)"</p>
+
+	<p>Given a corpus, user can stream its documents with different
+		format and aspect by specifying a ViewOptions. The Class ViewOptions
+		specify how to present each document. Possible options include: 1)
+		shows document id; 2) shows document span; 3) shows document content;
+		4) shows annotation; 5) shows annotation span;</p>
+
+	<p>The CorpusManager provides a basic facility to connect remote
+		corpus with ConnectionOptions. The Class ConnectionOptions stores
+		server information such as URL, username, and password. It can also
+		designate a CorpusCachingStrategy to provide caching layer between
+		remote corpus and its local connection.</p>
+
+	<p>Example Code:</p>
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">ConnectionOptions connOptions <span style="color: #303030">=</span> <span style="color: #008000; font-weight: bold">new</span> ConnectionOptions<span style="color: #303030">();</span>
+connOptions<span style="color: #303030">.</span><span style="color: #0000C0">setCorpusUrl</span><span style="color: #303030">(</span>ldcServerUrl<span style="color: #303030">);</span>
+connOptions<span style="color: #303030">.</span><span style="color: #0000C0">setCachingStrategy</span><span style="color: #303030">(</span>mysqlCachingStrategy<span style="color: #303030">);</span>
+ 
+<span style="color: #808080">//Connects to a remote corpus server</span>
+AnnotatedCorpus aRemoteCorpus <span style="color: #303030">=</span> CorpusManager<span style="color: #303030">.</span><span style="color: #0000C0">connect</span><span style="color: #303030">(</span>connOptions<span style="color: #303030">);</span>
+ 
+<span style="color: #808080">//Query remote corpus and return a new corpus object</span>
+AnnotatedCorpus hitlistCorpus <span style="color: #303030">=</span> aRemoteCorpus<span style="color: #303030">.</span><span style="color: #0000C0">subCorpus</span><span style="color: #303030">(</span>keytermQuery<span style="color: #303030">);</span>
+ 
+myViewOptions<span style="color: #303030">.</span><span style="color: #0000C0">setDocumentContentShown</span><span style="color: #303030">();</span>
+myViewOptions<span style="color: #303030">.</span><span style="color: #0000C0">setAnnotationShown</span><span style="color: #303030">();</span>
+DocumentStreamReader reader <span style="color: #303030">=</span> hitlistCorpus<span style="color: #303030">.</span><span style="color: #0000C0">getDocumentStreamReader</span><span style="color: #303030">(</span>myViewOptions<span style="color: #303030">);</span>
+<span style="color: #008000; font-weight: bold">while</span><span style="color: #303030">(</span>reader<span style="color: #303030">.</span><span style="color: #0000C0">hasNext</span><span style="color: #303030">()){</span>
+  AnnotatedDocument doc <span style="color: #303030">=</span> reader<span style="color: #303030">.</span><span style="color: #0000C0">next</span><span style="color: #303030">();</span>
+  <span style="color: #808080">//do something</span>
+<span style="color: #303030">}</span>
+</pre></div>
+	
+
 </body>
 </html>
