@@ -1,7 +1,7 @@
 package org.lapps.annotatedcorpus;
 
 /**
- * The Class ConnectionOptions specify how to establish a connection to remote corpus. 
+ * Specify how to establish a connection to remote corpus. 
  * 
  * @author Di Wang
  */

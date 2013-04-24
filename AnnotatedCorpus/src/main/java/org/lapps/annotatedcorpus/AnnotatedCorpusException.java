@@ -2,7 +2,7 @@ package org.lapps.annotatedcorpus;
 
 
 /**
- * The Class AnnotatedCorpusException.
+ * Exception for Annotated Corpus in general.
  * 
  * @author Di Wang
  */

@@ -3,7 +3,7 @@ package org.lapps.annotatedcorpus;
 import java.io.Serializable;
 
 /**
- * The Class AnnotatedDocument stores an annotated document. (temporary)
+ * Stores an annotated document. (temporary)
  *
  * @author Keith Suderman
  * @author Di Wang

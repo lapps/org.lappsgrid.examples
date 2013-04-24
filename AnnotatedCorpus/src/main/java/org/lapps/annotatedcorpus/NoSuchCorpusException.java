@@ -1,7 +1,7 @@
 package org.lapps.annotatedcorpus;
 
 /**
- * The Class NoSuchCorpusException.
+ * Exception when found no such corpus.
  *
  * @author Di Wang
  */

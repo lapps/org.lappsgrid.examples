@@ -1,7 +1,7 @@
 package org.lapps.annotatedcorpus;
 
 /**
- * The Interface DocumentStreamReader streams over a list of documents.
+ * Streams over a list of {@link AnnotatedDocument}.
  *
  * @author Di Wang
  */

@@ -1,7 +1,7 @@
 package org.lapps.annotatedcorpus;
 
 /**
- * The Interface AnnotatedCorpus represents a ranked list of documents with annotations.
+ * Represents a ranked list of documents with annotations.
  * 
  * The implementation of this interface may store document id (and/or spans) itself and/or caching with {@link CorpusCachingStrategy}.
  * 

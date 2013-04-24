@@ -1,7 +1,7 @@
 package org.lapps.annotatedcorpus;
 
 /**
- * The Interface CorpusManager manages corpus. 
+ * Basic facility to manage {@link AnnotatedCorpus}. 
  *
  * @author Di Wang
  */

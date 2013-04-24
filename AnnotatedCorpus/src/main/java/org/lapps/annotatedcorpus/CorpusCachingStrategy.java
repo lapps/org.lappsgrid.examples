@@ -1,7 +1,7 @@
 package org.lapps.annotatedcorpus;
 
 /**
- * The Interface CorpusCachingStrategy defines how to cache corpus based on {@link CorpusQuery} and {@link ViewOptions}.
+ * Defines how to cache corpus based on {@link CorpusQuery} and {@link ViewOptions}.
  *  
  * @author Di Wang
  */
