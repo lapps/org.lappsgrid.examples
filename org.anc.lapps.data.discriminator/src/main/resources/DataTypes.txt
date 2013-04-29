@@ -1,0 +1,24 @@
+error
+meta
+document
+encoded
+virtual document
+physical document
+text physical
+xml encoded
+json encoded
+ptb encoded
+meta-xml meta xml
+graf
+graf-res-hdr graf meta-xml
+graf-doc-hdr graf meta-xml
+graf-txt graf text
+graf-xml graf xml
+xmi xml
+uima 
+cas uima xmi
+uima-type-system uima xml
+anc2go virtual
+anc2go-xml anc2go xml
+list meta
+index meta
