@@ -18,8 +18,8 @@
   	</dependency>
   	<dependency>
   		<groupId>org.anc.soap</groupId>
-  		<artifactId>SimpleSoapClient</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+  		<artifactId>simple-soap-client</artifactId>
+  		<version>1.0.0-SNAPSHOT</version>
   		<scope>compile</scope>
   	</dependency>
   	<dependency>
