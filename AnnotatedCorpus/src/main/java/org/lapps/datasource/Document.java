@@ -1,4 +1,4 @@
-package org.lapps.annotatedcorpus;
+package org.lapps.datasource;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Keith Suderman
  * @author Di Wang
  */
-public abstract class AnnotatedDocument implements Serializable {
+public abstract class Document implements Serializable {
 
   Object discriminator;
 

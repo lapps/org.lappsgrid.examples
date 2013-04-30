@@ -1,7 +1,7 @@
-package org.lapps.annotatedcorpus;
+package org.lapps.datasource;
 
 /**
- * Specifies how to present each {@link AnnotatedDocument}. 
+ * Specifies how to present each {@link Document}. 
  * Possible options include: 
  * 1) shows document id;
  * 2) shows document span;

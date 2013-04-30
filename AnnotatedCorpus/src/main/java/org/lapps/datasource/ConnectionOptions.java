@@ -1,4 +1,4 @@
-package org.lapps.annotatedcorpus;
+package org.lapps.datasource;
 
 /**
  * Specify how to establish a connection to remote corpus. 
@@ -17,7 +17,7 @@ public abstract class ConnectionOptions {
   String password;
 
   /** The caching strategy. */
-  CorpusCachingStrategy cachingStrategy;
+  DataSourceCachingStrategy cachingStrategy;
 
   /**
    * Gets the corpus url.
@@ -78,7 +78,7 @@ public abstract class ConnectionOptions {
    *
    * @return the caching strategy
    */
-  public CorpusCachingStrategy getCachingStrategy() {
+  public DataSourceCachingStrategy getCachingStrategy() {
     return cachingStrategy;
   }
 
@@ -87,7 +87,7 @@ public abstract class ConnectionOptions {
    *
    * @param cachingStrategy the new caching strategy
    */
-  public void setCachingStrategy(CorpusCachingStrategy cachingStrategy) {
+  public void setCachingStrategy(DataSourceCachingStrategy cachingStrategy) {
     this.cachingStrategy = cachingStrategy;
   }
 

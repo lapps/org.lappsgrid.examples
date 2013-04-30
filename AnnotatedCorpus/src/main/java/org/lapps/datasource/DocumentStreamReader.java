@@ -1,7 +1,7 @@
-package org.lapps.annotatedcorpus;
+package org.lapps.datasource;
 
 /**
- * Streams over a list of {@link AnnotatedDocument}.
+ * Streams over a list of {@link Document}.
  *
  * @author Di Wang
  */
@@ -19,5 +19,5 @@ public interface DocumentStreamReader {
    *
    * @return the annotated document
    */
-  public AnnotatedDocument next();
+  public Document next();
 }

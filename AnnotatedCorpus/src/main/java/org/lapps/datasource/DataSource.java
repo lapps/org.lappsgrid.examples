@@ -1,14 +1,14 @@
-package org.lapps.annotatedcorpus;
+package org.lapps.datasource;
 
 /**
  * Represents a ranked list of documents with annotations.
  * 
- * The implementation of this interface may store document id (and/or spans) itself and/or caching with {@link CorpusCachingStrategy}.
+ * The implementation of this interface may store document id (and/or spans) itself and/or caching with {@link DataSourceCachingStrategy}.
  * 
  * @author Di Wang
  * 
  */
-public interface AnnotatedCorpus {
+public interface DataSource {
 
   /**
    * Gets a subset of corpus selected by input query.
@@ -16,7 +16,7 @@ public interface AnnotatedCorpus {
    * @param query the input query
    * @return a subset of annotated corpus
    */
-  public AnnotatedCorpus subCorpus(CorpusQuery query);
+  public DataSource subCorpus(Query query);
 
   /**
    * Gets the document stream reader of current corpus.
@@ -35,6 +35,6 @@ id", "doc content", "annotation", "annotation spans", etc.
    * @param documentID the document id
    * @return the document
    */
-  public AnnotatedDocument getDocument(ViewOptions options, String documentID);
+  public Document getDocument(ViewOptions options, String documentID);
 
 }

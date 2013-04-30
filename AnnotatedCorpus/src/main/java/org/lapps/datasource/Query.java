@@ -1,7 +1,7 @@
-package org.lapps.annotatedcorpus;
+package org.lapps.datasource;
 
 /**
- * Queries over {@link AnnotatedCorpus} to select matching documents.
+ * Queries over {@link DataSource} to select matching documents.
  * Possible queries include:
  * 1) IR query for lucene/indri e.g. "(president AND Obama)";
  * 2) regular expression matching query e.g. "(president .* Obama)" over text field and/or annotation field
@@ -9,6 +9,6 @@ package org.lapps.annotatedcorpus;
  *
  * @author Di Wang
  */
-public abstract class CorpusQuery {
+public abstract class Query {
   
 }
