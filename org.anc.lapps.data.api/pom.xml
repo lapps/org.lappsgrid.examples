@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>parent-pom</artifactId>
+    <groupId>org.anc.maven</groupId>
+    <version>2.2.0-SNAPSHOT</version>
+  </parent>
+  <groupId>org.anc.lapps.data</groupId>
+  <artifactId>data-source-api</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>LAPPS DatSource API</name>
+  <description>A DataSource is any web service that provides data to other services.</description>
+  <inceptionYear>2013</inceptionYear>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.anc.grid</groupId>
+  		<artifactId>service-grid-libs</artifactId>
+  		<version>1.0.0-SNAPSHOT</version>
+  		<type>jar</type>
+  		<scope>provided</scope>
+  	</dependency>
+  </dependencies>
+	<distributionManagement>
+		<site>
+			<id>anc-scp</id>
+			<url>scp://suderman@anc.org:22022/home/www/anc/projects/lapps-data-source</url>
+		</site>
+	</distributionManagement>
+</project>
