@@ -13,18 +13,19 @@ import org.apache.axis.encoding.ser.BeanSerializerFactory;
 
 public class MascDataSourceClient extends AbstractSoapClient implements DataSource
 {
-   // The service on grid.anc.org
+   private static class Service {
+	      public static final String NAMESPACE = "http://localhost:8080/anc2go/services/MascXmlProcessorService";
+	      public static final String ENDPOINT = "http://localhost:8080/anc2go/services/MascXmlProcessorService";
+   };
+
+	// The service on grid.anc.org
 //   private static class Service {
 //      public static final String NAMESPACE = "http://grid.anc.org:8080/MascDataSource/services/MascDataSource";
 //      public static final String ENDPOINT = "http://grid.anc.org:8080/MascDataSource/services/MascDataSource"; 
 //   };
    
    // The service on the service grid.
-   private static class Service {
-      public static final String NAMESPACE = "servicegrid:servicetype:NaturalLanguageProcessing:DATA_SOURCE";
-      public static final String ENDPOINT = "http://grid.anc.org:8080/service_manager/wsdl/lapps:MASC3_DATA_SOURCE"; 
-   };
-   
+    
    public MascDataSourceClient(String user, String password) throws ServiceException
    {
       super(Service.NAMESPACE);

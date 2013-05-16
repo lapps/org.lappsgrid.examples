@@ -6,3 +6,6 @@ AnnotatedCorpus/doc/
 *.jar
 *.war
 *.ear
+
+# Maven generated output #
+target
