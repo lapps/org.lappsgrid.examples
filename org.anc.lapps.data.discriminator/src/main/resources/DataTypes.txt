@@ -2,6 +2,7 @@ error
 meta
 document
 encoded
+input-parameter
 virtual document
 physical document
 text physical
@@ -22,3 +23,6 @@ anc2go virtual
 anc2go-xml anc2go xml
 list meta
 index meta
+input-get input-paramter
+input-list input-parameter
+input-query input-parameter
