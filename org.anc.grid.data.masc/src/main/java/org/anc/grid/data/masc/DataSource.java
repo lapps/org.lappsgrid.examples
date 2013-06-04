@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.anc.io.UTF8Reader;
-import org.anc.lapps.data.api.Data;
-import org.anc.lapps.data.api.DataSource;
+import org.anc.lapps.data.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,19 +22,19 @@ import org.slf4j.LoggerFactory;
  * @author Keith Suderman
  *
  */
-public class MascDataSource implements DataSource
+public class DataSource implements org.anc.lapps.data.api.DataSource
 {
    private Set<String> keys;
    private static MascIndex index;
 
-   private static Logger logger = LoggerFactory.getLogger(MascDataSource.class);
+   private static Logger logger = LoggerFactory.getLogger(DataSource.class);
    
    static {
       index = new MascIndex();
       index.load();
    }
    
-   public MascDataSource()
+   public DataSource()
    {
       logger.info("Creating a MASC data source.");
       keys = new HashSet<String>();
@@ -45,13 +44,13 @@ public class MascDataSource implements DataSource
       }
    }
 
-   public MascDataSource(Set<String> keys)
+   public DataSource(Set<String> keys)
    {
       logger.info("Creating a filtered MASC data source.");
-      this.keys = keys;
+      this.keys = new HashSet<String>(keys);
    }
    
-   @Override
+   //@Override
    public Data list()
    {        
       logger.info("Listing.");

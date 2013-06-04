@@ -3,7 +3,7 @@
 <beans>
   <bean id="target" class="jp.go.nict.langrid.servicecontainer.handler.TargetServiceFactory" >
     <property name="service">
-      <bean class="org.anc.grid.data.masc.MascDataSource" />
+      <bean class="org.anc.grid.data.masc.RawDataSource" />
     </property>
   </bean>
 </beans>

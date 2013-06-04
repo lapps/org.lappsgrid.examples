@@ -10,7 +10,7 @@
   <packaging>war</packaging>
   <version>1.0.0-SNAPSHOT</version>
   <build>
-  	<finalName>MascDataSource</finalName>
+  	<finalName>DataSource</finalName>
   </build>
   <dependencies>
   	<dependency>
