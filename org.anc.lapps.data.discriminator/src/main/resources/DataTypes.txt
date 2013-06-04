@@ -10,6 +10,7 @@ xml encoded
 json encoded
 ptb encoded
 meta-xml meta xml
+gate xml
 graf
 graf-res-hdr graf meta-xml
 graf-doc-hdr graf meta-xml

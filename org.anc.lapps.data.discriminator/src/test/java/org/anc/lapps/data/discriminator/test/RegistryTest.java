@@ -1,6 +1,7 @@
 package org.anc.lapps.data.discriminator.test;
 
-import org.anc.lapps.data.discriminator.DiscriminatorRegistry;
+//import org.anc.lapps.data.discriminator.DiscriminatorRegistry;
+import org.anc.lapps.data.discriminator.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 
