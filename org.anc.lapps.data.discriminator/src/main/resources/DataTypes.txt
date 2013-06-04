@@ -23,6 +23,6 @@ anc2go virtual
 anc2go-xml anc2go xml
 list meta
 index meta
-input-get input-paramter
-input-list input-parameter
-input-query input-parameter
+input-param-get input-parameter
+input-param-list input-parameter
+input-param-query input-parameter
