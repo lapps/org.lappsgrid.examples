@@ -1,8 +1,5 @@
 package org.anc.lapps.data.api;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 /**
  * Data objects passed between LAPPS web services.

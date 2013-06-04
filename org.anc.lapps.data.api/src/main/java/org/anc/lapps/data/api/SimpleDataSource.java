@@ -3,7 +3,8 @@ package org.anc.lapps.data.api;
 import jp.go.nict.langrid.commons.rpc.intf.Service;
 
 /**
- * A RawDataSource returns {@link Data} objects. 
+ * A SimpleDataSource returns {@link Data} objects in response to
+ * a query. 
  * <p>
  * The type of Data returned by a data source depends on the data 
  * source implementation. Possibilities include, but are not limited
@@ -11,9 +12,9 @@ import jp.go.nict.langrid.commons.rpc.intf.Service;
  * fragments), single words, or lists of annotations.
  * 
  * @author Keith Suderman
- * @author Di Wang
+ *
  */
-@Service(namespace="lapps:raw-datasource")
-public interface RawDataSource {
-	Data query(String query);
+@Service(namespace="lapps:simple-datasource")
+public interface SimpleDataSource {
+	Data query(long type, String query);
 }
