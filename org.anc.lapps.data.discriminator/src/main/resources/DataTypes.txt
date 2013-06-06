@@ -27,3 +27,6 @@ index meta
 input-param-get input-parameter
 input-param-list input-parameter
 input-param-query input-parameter
+sentence encoded
+token encoded
+pos encoded
