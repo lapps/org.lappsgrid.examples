@@ -7,22 +7,19 @@ public class DiscriminatorImpl implements Discriminator
    private static final long serialVersionUID = 1L;
    
    private String name;
-   private long id;
    private int hashCode;
    private Set<Discriminator> parents;
    
-   protected DiscriminatorImpl(String name, long id)
+   protected DiscriminatorImpl(String name)
    {
       this.name = name;
-      this.id = id;
       this.hashCode = name.hashCode();
       this.parents = new HashSet<Discriminator>();
    }
    
-   public DiscriminatorImpl(String name, Discriminator parent, long id)   
+   public DiscriminatorImpl(String name, Discriminator parent)   
    {
       this.name = name;
-      this.id = id;
       this.hashCode = name.hashCode(); 
       this.parents = new HashSet<Discriminator>();
       if (parent != null)
@@ -31,10 +28,9 @@ public class DiscriminatorImpl implements Discriminator
       }
    }
    
-   public DiscriminatorImpl(String name, List<Discriminator> parents, long id)
+   public DiscriminatorImpl(String name, List<Discriminator> parents)
    {
       this.name = name;
-      this.id = id;
       this.hashCode = name.hashCode();
       this.parents = new HashSet<Discriminator>();
       for (Discriminator d : parents)
@@ -43,11 +39,21 @@ public class DiscriminatorImpl implements Discriminator
       }
    }
    
-   public long getId() { return id; }
+   public DiscriminatorImpl(String name, Discriminator[] parents)
+   {
+      this.name = name;
+      this.hashCode = name.hashCode();
+      this.parents = new HashSet<Discriminator>();
+      for (Discriminator d : parents)
+      {
+         this.parents.add(d);
+      }
+   }
+   public String getId() { return name; }
    
    public boolean isa(Discriminator d)
    {
-      if (d.getId() == id)
+      if (name.equals(d.getId()))
       {
          return true;
       }      
@@ -73,7 +79,7 @@ public class DiscriminatorImpl implements Discriminator
       {
          return false;
       }
-      return id == ((Discriminator) d).getId();
+      return name.equals(((Discriminator) d).getId());
    }
 
    @Override

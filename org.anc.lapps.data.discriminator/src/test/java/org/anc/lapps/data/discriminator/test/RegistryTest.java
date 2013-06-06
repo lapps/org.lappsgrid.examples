@@ -11,8 +11,8 @@ public class RegistryTest
    @Test
    public void testError()
    {
-      long id = get("error");
-      assertTrue( id >= 0);
+      String id = DiscriminatorRegistry.get("error");
+      assertTrue( id != null);
    }
    
    @Test
@@ -39,36 +39,20 @@ public class RegistryTest
 
    }
    
-   @Test
-   public void testGet()
-   {
-      long longValue = get("error");
-      String stringValue = get(longValue);
-      assertTrue(stringValue.equals("error"));
-   }
-   
-   @Test
-   public void testAnc2Go()
-   {
-      long value = get("error");
-      long a2g = get("anc2go");
-      assertTrue(value != a2g);
-   }
-   
    protected void isa(String child, String parent)
    {
       assertTrue(child + " is not a " + parent, DiscriminatorRegistry.isa(child, parent));
    }
    
-   protected long get(String id)
-   {
-      return DiscriminatorRegistry.get(id);
-   }
-   
-   protected String get(long id)
-   {
-      return DiscriminatorRegistry.get(id);
-   }
+//   protected long get(String id)
+//   {
+//      return DiscriminatorRegistry.get(id);
+//   }
+//   
+//   protected String get(long id)
+//   {
+//      return DiscriminatorRegistry.get(id);
+//   }
    
    public RegistryTest()
    {

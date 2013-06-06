@@ -15,6 +15,6 @@ package org.anc.lapps.data.discriminator.core;
  */
 public interface Discriminator extends java.io.Serializable
 {   
-   long getId();
+   String getId();
    boolean isa(Discriminator discriminator);
 }

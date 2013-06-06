@@ -34,7 +34,7 @@ public class DiscriminatorRegistry
    
    static private long nextId = 0;
    static private Map<String,Discriminator> registered = new HashMap<String, Discriminator>();
-   static private Map<Long,String> index = new HashMap<Long,String>();
+//   static private Map<Long,String> index = new HashMap<Long,String>();
    
    static {
       initialize();
@@ -47,7 +47,7 @@ public class DiscriminatorRegistry
     * with the registry.
     * 
     */
-   static public long register(String name)
+   static public String register(String name)
    {
       return register(name, (Discriminator)null);
    }
@@ -59,7 +59,7 @@ public class DiscriminatorRegistry
     * with the registry.
     * 
     */
-   static public long register(String name, Discriminator parent)
+   static public String register(String name, Discriminator parent)
    {
       lock.writeLock().lock();
       try
@@ -69,7 +69,7 @@ public class DiscriminatorRegistry
          {
             d = create(name, parent);
             registered.put(name, d);
-            index.put(d.getId(), name);
+//            index.put(d.getId(), name);
          }
          return d.getId();
       }
@@ -86,7 +86,7 @@ public class DiscriminatorRegistry
     * with the registry.
     * 
     */
-   static public long register(String name, List<Discriminator> parents)
+   static public String register(String name, List<Discriminator> parents)
    {
       lock.writeLock().lock();
       try
@@ -96,7 +96,7 @@ public class DiscriminatorRegistry
          {
             d = create(name, parents);
             registered.put(name, d);
-            index.put(d.getId(), name);
+//            index.put(d.getId(), name);
          }
          return d.getId();
       }
@@ -135,7 +135,7 @@ public class DiscriminatorRegistry
     * @return The id value associated with the discriminator name, or
     * -1 if there is no such discriminator.
     */
-   static public long get(String name)
+   static public String get(String name)
    {
       Discriminator d;
       lock.readLock().lock();
@@ -149,27 +149,11 @@ public class DiscriminatorRegistry
       }
       if (d == null)
       {
-         return -1;
+         return "error";
       }
       return d.getId();
    }
 
-   /**
-    * Returns the name of the discriminator associated with the
-    * id value. Returns the string <code>unknown</code> if there
-    * is no such discriminator.
-    *
-    */
-   public static String get(long id)
-   {
-      String result = index.get(id);
-      if (result == null)
-      {
-         return "unknown";
-      }
-      return result;
-   }
-   
    /**
     * Returns true if the discriminator <code>parentName</code>
     * is a super-type of the <code>name</code> discriminator.
@@ -189,26 +173,6 @@ public class DiscriminatorRegistry
       }
       
       return d.isa(parent);
-   }
-   
-   /**
-    * Returns true if the discriminator <code>parentId</code>
-    * is a super-type of the <code>id</code> discriminator.
-    * Returns false otherwise.
-    */
-   public static boolean isa(long id, long parentId)
-   {
-      String name = get(id);
-      if (name == null)
-      {
-         return false;
-      }
-      String parentName = get(parentId);
-      if (parentName == null)
-      {
-         return false;
-      }
-      return isa(name, parentName);
    }
    
    /** Initializes the DiscriminatorRegistry.
@@ -289,11 +253,11 @@ public class DiscriminatorRegistry
       
    static private Discriminator create(String name, Discriminator parent)
    {
-      return new DiscriminatorImpl(name, parent, nextId++);
+      return new DiscriminatorImpl(name, parent);
    }
 
    static private Discriminator create(String name, List<Discriminator> parents)
    {
-      return new DiscriminatorImpl(name, parents, nextId++);
+      return new DiscriminatorImpl(name, parents);
    }
 }
