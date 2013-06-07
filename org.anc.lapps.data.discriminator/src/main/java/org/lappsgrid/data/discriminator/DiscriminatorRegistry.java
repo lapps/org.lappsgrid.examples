@@ -1,4 +1,4 @@
-package org.anc.lapps.data.discriminator;
+package org.lappsgrid.data.discriminator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.anc.lapps.data.discriminator.core.Discriminator;
-import org.anc.lapps.data.discriminator.core.DiscriminatorImpl;
+import org.lappsgrid.data.discriminator.core.Discriminator;
+import org.lappsgrid.data.discriminator.core.DiscriminatorImpl;
 
 
 /**
