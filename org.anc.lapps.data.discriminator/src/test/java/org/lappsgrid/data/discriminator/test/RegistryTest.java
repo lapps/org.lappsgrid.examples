@@ -1,4 +1,4 @@
-package org.anc.lapps.data.discriminator.test;
+package org.lappsgrid.data.discriminator.test;
 
 //import org.anc.lapps.data.discriminator.DiscriminatorRegistry;
 import org.junit.*;
