@@ -186,6 +186,7 @@ public class DiscriminatorRegistry
       lock.writeLock().lock();
       if (initialized)
       {
+         lock.writeLock().unlock();
          return;
       }
       try
@@ -201,7 +202,7 @@ public class DiscriminatorRegistry
             {
                continue;
             }
-            String[] parts = line.split(" ");
+            String[] parts = line.split("\\s+");
             if (parts.length == 1)
             {
                register(parts[0]);
