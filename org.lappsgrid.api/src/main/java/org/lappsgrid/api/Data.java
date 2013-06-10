@@ -19,10 +19,8 @@ import java.io.ObjectOutputStream;
  * @author Keith Suderman
  *
  */
-public final class Data implements LappsSerializable
+public class Data implements LappsSerializable
 {
-   // This value must be updated anytime the readObject and writeObject
-   // methods are changed. Otherwise this value should not be modified.
    private static final long serialVersionUID = 1L;
    
    private long discriminator;
