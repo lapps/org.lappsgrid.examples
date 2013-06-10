@@ -2,9 +2,9 @@ package org.anc.grid.data.masc;
 
 import java.util.Set;
 
-import org.anc.lapps.data.api.Data;
+import org.anc.lapps.api.Data;
 
-public class RawDataSource implements org.anc.lapps.data.api.RawDataSource 
+public class RawDataSource implements org.anc.lapps.api.RawDataSource 
 {
 	protected SimpleDataSource source;
 	
@@ -21,7 +21,7 @@ public class RawDataSource implements org.anc.lapps.data.api.RawDataSource
 	@Override
 	public Data query(String query) 
 	{
-		String[] args = query.split(" ");
+		String[] args = query.split("\\s+");
 		if (args.length == 1)
 		{
 			if (args[0].toLowerCase().equals("list"))

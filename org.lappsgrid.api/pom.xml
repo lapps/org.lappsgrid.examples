@@ -6,7 +6,7 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <groupId>org.lappsgrid</groupId>
-  <artifactId>lapps-api</artifactId>
+  <artifactId>api</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <name>LAPPS API</name>
   <description>Interfaces and exceptions used by all LAPPS services</description>
@@ -16,4 +16,5 @@
   		<artifactId>service-grid-libs</artifactId>
   	</dependency>
   </dependencies>
+  <inceptionYear>2013</inceptionYear>
 </project>

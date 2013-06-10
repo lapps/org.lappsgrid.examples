@@ -7,3 +7,8 @@
 
 # Maven generated output #
 target
+
+# Eclipse files.
+.project
+.classpath
+.settings

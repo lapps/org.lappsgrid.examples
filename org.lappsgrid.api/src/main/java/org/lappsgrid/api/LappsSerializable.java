@@ -10,7 +10,7 @@ import java.io.Serializable;
  * <p>
  * LAPPS objects that are serialized should never rely on the default Java
  * serialization mechanism and should explicitly read and write their
- * data to/from object stream.
+ * data to/from object streams.
  * 
  * @author Keith Suderman
  *

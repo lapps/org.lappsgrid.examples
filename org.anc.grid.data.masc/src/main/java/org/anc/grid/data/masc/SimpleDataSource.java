@@ -2,10 +2,10 @@ package org.anc.grid.data.masc;
 
 import java.util.Set;
 
-import org.anc.lapps.data.api.Data;
+import org.anc.lapps.api.Data;
 import org.anc.lapps.data.discriminator.DiscriminatorRegistry;
 
-public class SimpleDataSource implements org.anc.lapps.data.api.SimpleDataSource 
+public class SimpleDataSource implements org.anc.lapps.api.SimpleDataSource 
 {
 	public static final long GET = DiscriminatorRegistry.get("input-param-get");
 	public static final long LIST = DiscriminatorRegistry.get("input-param-list");

@@ -8,7 +8,7 @@ package org.lappsgrid.api;
  * @author Keith Suderman
  *
  */
-public class InternalException extends Exception
+public class InternalException extends LappsException
 {
    private static final long serialVersionUID = 1L;
 

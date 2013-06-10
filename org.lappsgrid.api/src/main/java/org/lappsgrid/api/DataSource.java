@@ -4,7 +4,7 @@ import jp.go.nict.langrid.commons.rpc.intf.Service;
 
 
 /**
- * A DataSource returns {@link Data} objects. 
+ * A DataSource returns {@link Data} objects based on an input query.
  * <p>
  * The type of Data returned by a data source depends on the data 
  * source implementation. Possibilities include, but are not limited
@@ -18,30 +18,11 @@ import jp.go.nict.langrid.commons.rpc.intf.Service;
 public interface DataSource
 {
    /**
-    * Returns a list of the ID values for the objects managed by
-    * this data source.
-    * @return
-    */
-   Data list();
-   
-   /**
-    * Returns the data object corresponding to the given id.
-    * <p>
-    * If there is no such object then this method should return
-    * an error {@link Data} object and use the <code>payload</code>
-    * field to return an error message. 
-    * 
-    * @param id The id value of the object to be returned.
-    * @return
-    */
-   Data get(String id);
-   
-   /**
-    * Returns a list of the ID values of the data objects that match
+    * Returns a data object corresponding to the given query.
     * the given query.  
     * 
     * @param query
     * @return
     */
-   Data query(String query);
+   Data query(Data query);
 }

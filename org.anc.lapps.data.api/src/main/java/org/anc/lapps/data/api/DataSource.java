@@ -14,7 +14,7 @@ import jp.go.nict.langrid.commons.rpc.intf.Service;
  * @author Keith Suderman
  *
  */
-@Service
+@Service(namespace="lapps:data:source")
 public interface DataSource
 {
    /**
