@@ -1,11 +1,10 @@
-package org.lappsgrid.data.discriminator.test;
+package org.lappsgrid.discriminator.test;
 
 //import org.anc.lapps.data.discriminator.DiscriminatorRegistry;
-import org.junit.*;
-import org.lappsgrid.data.discriminator.*;
-import org.lappsgrid.discriminator.DiscriminatorRegistry;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+import org.lappsgrid.discriminator.DiscriminatorRegistry;
 
 public class RegistryTest
 {
@@ -13,8 +12,14 @@ public class RegistryTest
    @Test
    public void testError()
    {
-      String id = DiscriminatorRegistry.get("error");
-      assertTrue( id != null);
+      long id = DiscriminatorRegistry.get("error");
+      assertTrue( id >= 0 );
+   }
+   
+   @Test
+   public void testInvalidDiscriminatorName()
+   {
+      assertTrue(DiscriminatorRegistry.get("FooBar") < 0);
    }
    
    @Test

@@ -34,7 +34,7 @@ public class DiscriminatorRegistry
    
    static private long nextId = 0;
    static private Map<String,Discriminator> registered = new HashMap<String, Discriminator>();
-//   static private Map<Long,String> index = new HashMap<Long,String>();
+   static private Map<Long,String> index = new HashMap<Long,String>();
    
    static {
       initialize();
@@ -47,7 +47,7 @@ public class DiscriminatorRegistry
     * with the registry.
     * 
     */
-   static public String register(String name)
+   static public long register(String name)
    {
       return register(name, (Discriminator)null);
    }
@@ -59,7 +59,7 @@ public class DiscriminatorRegistry
     * with the registry.
     * 
     */
-   static public String register(String name, Discriminator parent)
+   static public long register(String name, Discriminator parent)
    {
       lock.writeLock().lock();
       try
@@ -86,7 +86,7 @@ public class DiscriminatorRegistry
     * with the registry.
     * 
     */
-   static public String register(String name, List<Discriminator> parents)
+   static public long register(String name, List<Discriminator> parents)
    {
       lock.writeLock().lock();
       try
@@ -135,7 +135,7 @@ public class DiscriminatorRegistry
     * @return The id value associated with the discriminator name, or
     * -1 if there is no such discriminator.
     */
-   static public String get(String name)
+   static public long get(String name)
    {
       Discriminator d;
       lock.readLock().lock();
@@ -149,7 +149,7 @@ public class DiscriminatorRegistry
       }
       if (d == null)
       {
-         return "error";
+         return -1;
       }
       return d.getId();
    }
@@ -254,11 +254,11 @@ public class DiscriminatorRegistry
       
    static private Discriminator create(String name, Discriminator parent)
    {
-      return new DiscriminatorImpl(name, parent);
+      return new DiscriminatorImpl(name, parent, ++nextId);
    }
 
    static private Discriminator create(String name, List<Discriminator> parents)
    {
-      return new DiscriminatorImpl(name, parents);
+      return new DiscriminatorImpl(name, parents, ++nextId);
    }
 }

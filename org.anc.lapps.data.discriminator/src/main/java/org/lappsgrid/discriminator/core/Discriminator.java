@@ -15,6 +15,6 @@ package org.lappsgrid.discriminator.core;
  */
 public interface Discriminator extends java.io.Serializable
 {   
-   String getId();
+   long getId();
    boolean isa(Discriminator discriminator);
 }
