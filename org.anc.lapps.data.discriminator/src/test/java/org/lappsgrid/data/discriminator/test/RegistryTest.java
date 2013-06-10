@@ -3,6 +3,7 @@ package org.lappsgrid.data.discriminator.test;
 //import org.anc.lapps.data.discriminator.DiscriminatorRegistry;
 import org.junit.*;
 import org.lappsgrid.data.discriminator.*;
+import org.lappsgrid.discriminator.DiscriminatorRegistry;
 
 import static org.junit.Assert.*;
 

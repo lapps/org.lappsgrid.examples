@@ -1,4 +1,4 @@
-package org.lappsgrid.data.discriminator.core;
+package org.lappsgrid.discriminator.core;
 
 import java.util.*;
 
