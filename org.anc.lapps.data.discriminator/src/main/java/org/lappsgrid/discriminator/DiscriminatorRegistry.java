@@ -69,7 +69,7 @@ public class DiscriminatorRegistry
          {
             d = create(name, parent);
             registered.put(name, d);
-//            index.put(d.getId(), name);
+            index.put(d.getId(), name);
          }
          return d.getId();
       }
@@ -96,7 +96,7 @@ public class DiscriminatorRegistry
          {
             d = create(name, parents);
             registered.put(name, d);
-//            index.put(d.getId(), name);
+            index.put(d.getId(), name);
          }
          return d.getId();
       }
@@ -154,6 +154,21 @@ public class DiscriminatorRegistry
       return d.getId();
    }
 
+   static public String get(long type)
+   {
+      String name = null;
+      lock.readLock().lock();
+      try
+      {
+         name = index.get(type);
+      }
+      finally
+      {
+         lock.readLock().unlock();
+      }
+      return name;
+   }
+   
    /**
     * Returns true if the discriminator <code>parentName</code>
     * is a super-type of the <code>name</code> discriminator.
@@ -254,11 +269,11 @@ public class DiscriminatorRegistry
       
    static private Discriminator create(String name, Discriminator parent)
    {
-      return new DiscriminatorImpl(name, parent, ++nextId);
+      return new DiscriminatorImpl(name, parent, nextId++);
    }
 
    static private Discriminator create(String name, List<Discriminator> parents)
    {
-      return new DiscriminatorImpl(name, parents, ++nextId);
+      return new DiscriminatorImpl(name, parents, nextId++);
    }
 }
