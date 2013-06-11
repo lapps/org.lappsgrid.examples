@@ -4,13 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.anc.io.UTF8Reader;
-import org.anc.lapps.api.Data;
+import org.lappsgrid.api.Data;
+import org.lappsgrid.api.DataSource;
+import org.lappsgrid.core.DataFactory;
+import org.lappsgrid.discriminator.Types;
+//import org.lappsgrid.discriminator.Types;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,60 +25,57 @@ import org.slf4j.LoggerFactory;
  * @author Keith Suderman
  *
  */
-public class DataSource implements org.anc.lapps.api.DataSource
+public class MascDataSource implements DataSource
 {
-   private Set<String> keys;
+   private List<String> keys;
    private static MascIndex index;
 
-   private static Logger logger = LoggerFactory.getLogger(DataSource.class);
+   private static Logger logger = LoggerFactory.getLogger(MascDataSource.class);
    
    static {
       index = new MascIndex();
       index.load();
    }
    
-   public DataSource()
+   public MascDataSource()
    {
       logger.info("Creating a MASC data source.");
-      keys = new HashSet<String>();
-      for (String key : index.keys())
-      {
-         keys.add(key);
-      }
+      keys = index.keys();
    }
 
-   public DataSource(Set<String> keys)
+   public MascDataSource(Set<String> keys)
    {
       logger.info("Creating a filtered MASC data source.");
-      this.keys = new HashSet<String>(keys);
+      this.keys = new ArrayList<String>(keys);
    }
    
    //@Override
-   public Data list()
+   protected Data list()
    {        
       logger.info("Listing.");
       return new Data(Types.INDEX, collect(keys));
    }
 
-   @Override
-   public Data get(String key)
+//   @Override
+   protected Data get(String key)
    {
+      
       logger.info("Getting document for {}", key);
       File file = index.get(key);
       if (file == null)
       {
          logger.error("No such file.");
-         return new Data(Types.ERROR, "No such file.");
+         return DataFactory.newError("No such file.");
       }
       if (!file.exists())
       {
          logger.error("File not found.");
-         return new Data(Types.ERROR, "File not found.");
+         return DataFactory.newError("File not found.");
       }
       
       UTF8Reader reader = null;
       String payload = null;
-      long type = Types.decode(key);
+      long type = decode(key);
       try
       {
          logger.debug("Loading {}", file.getPath());
@@ -94,18 +94,41 @@ public class DataSource implements org.anc.lapps.api.DataSource
    }
 
    @Override
-   public Data query(String query)
+   public Data query(Data query)
    {
-      List<String> list = new ArrayList<String>();
-      for (String key : keys)
+      Data result;
+      long type = query.getDiscriminator();
+      if (type == Types.QUERY) 
       {
-         if (key.endsWith(query))
-         {
-            list.add(key);
-         }
+         result = DataFactory.newError("Unsupported operation.");
       }
+      else if (type == Types.LIST)
+      {
+         result = list();
+      }
+      else if (type == Types.GET)
+      {
+         result = get(query.getPayload());
+      }
+      else
+      {
+         result = DataFactory.newError("Unknown query type");
+      }
+      return result;
       
-      return new Data(Types.INDEX, collect(list));
+   }
+   
+   protected long decode(String key)
+   {
+      if (key.endsWith("txt"))
+      {
+         return Types.TEXT;
+      }
+      else if (key.endsWith("hdr"))
+      {
+         return Types.GRAF_DOCUMENT_HEADER;
+      }
+      return Types.GRAF_STANDOFF_XML;
    }
    
    /**
