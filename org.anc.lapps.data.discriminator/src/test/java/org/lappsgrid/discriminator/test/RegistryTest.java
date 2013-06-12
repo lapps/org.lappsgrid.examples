@@ -13,7 +13,7 @@ public class RegistryTest
    public void testError()
    {
       long id = DiscriminatorRegistry.get("error");
-      assertTrue( id >= 0 );
+      assertTrue( id == 0 );
    }
    
    @Test
@@ -31,19 +31,57 @@ public class RegistryTest
    @Test
    public void testGraf()
    {
-      isa("graf-xml", "graf");
-      isa("graf-xml", "xml");
-      isa("graf-res-hdr", "graf");
-      isa("graf-res-hdr", "meta-xml");
-      isa("graf-doc-hdr", "graf");
-      isa("graf-doc-hdr", "meta-xml");
-      isa("graf-doc-hdr", "meta");
-      isa("graf-doc-hdr", "xml");
-      isa("graf-txt", "graf");
-      isa("graf-txt", "text");
-      isa("graf-xml", "graf");
-      isa("graf-xml", "xml");
-
+      String[] grafMetaXml = { "graf", "meta-xml", "meta", "xml" };
+      isa("graf-standoff", new String[]{"graf", "xml"});
+      isa("graf-res-hdr", grafMetaXml);
+      isa("graf-doc-hdr", grafMetaXml);
+      isa("graf-txt", new String[] {"graf", "text" });
+   }
+   
+   @Test
+   public void testGate()
+   {
+      isa("gate-document", new String[] {"gate", "document"});
+      isa("gate-sentence", new String[] {"gate", "sentence", "annotation"});
+      isa("gate-token", new String[] {"gate", "token", "annotation"});
+      isa("gate-pos", new String[] {"gate", "pos", "annotation"});
+   }
+   
+   @Test
+   public void testSpecificValue()
+   {
+      check("ok", 1L);
+      check("meta", 2L);
+      check("document", 3L);
+      check("graf", 4096L);
+      check("uima", 5120L);
+      check("gate", 6144L);
+      check("anc2go", 7168L);
+      check("query-type", 8192L);
+   }
+   
+   @Test
+   public void testRoundTrip()
+   {
+      for (long type: DiscriminatorRegistry.types())
+      {
+         String name = get(type);
+         long value = get(name);
+         assertTrue("Round trip failed for " + type + ": " + name, type == value);
+      }
+   }
+   
+   protected void isa(String child, String[] parents)
+   {
+      for (String parent : parents)
+      {
+         assertTrue(child + " is not a " + parent, DiscriminatorRegistry.isa(child, parent));
+      }
+   }
+   
+   protected void check(String name, long value)
+   {
+      assertTrue("Invalid value for " + name, get(name) == value);
    }
    
    protected void isa(String child, String parent)
@@ -51,15 +89,15 @@ public class RegistryTest
       assertTrue(child + " is not a " + parent, DiscriminatorRegistry.isa(child, parent));
    }
    
-//   protected long get(String id)
-//   {
-//      return DiscriminatorRegistry.get(id);
-//   }
-//   
-//   protected String get(long id)
-//   {
-//      return DiscriminatorRegistry.get(id);
-//   }
+   protected long get(String name)
+   {
+      return DiscriminatorRegistry.get(name);
+   }
+   
+   protected String get(long value)
+   {
+      return DiscriminatorRegistry.get(value);
+   }
    
    public RegistryTest()
    {

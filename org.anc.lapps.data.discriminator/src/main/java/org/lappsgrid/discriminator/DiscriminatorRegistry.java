@@ -37,7 +37,15 @@ public class DiscriminatorRegistry
    static private Map<Long,String> index = new HashMap<Long,String>();
    
    static {
-      initialize();
+      try
+      {
+         initialize();
+      }
+      catch (IOException e)
+      {
+         // TODO This exception should be logged.
+         e.printStackTrace();
+      }
    }
    
    /**
@@ -61,6 +69,7 @@ public class DiscriminatorRegistry
     */
    static public long register(String name, Discriminator parent)
    {
+      name = name.toLowerCase();
       lock.writeLock().lock();
       try
       {
@@ -70,6 +79,7 @@ public class DiscriminatorRegistry
             d = create(name, parent);
             registered.put(name, d);
             index.put(d.getId(), name);
+//            System.out.println("Registered " + name + " with id " + d.getId());
          }
          return d.getId();
       }
@@ -88,6 +98,7 @@ public class DiscriminatorRegistry
     */
    static public long register(String name, List<Discriminator> parents)
    {
+      name = name.toLowerCase();
       lock.writeLock().lock();
       try
       {
@@ -97,6 +108,7 @@ public class DiscriminatorRegistry
             d = create(name, parents);
             registered.put(name, d);
             index.put(d.getId(), name);
+//            System.out.println("Registered " + name + " with id " + d.getId());
          }
          return d.getId();
       }
@@ -111,13 +123,18 @@ public class DiscriminatorRegistry
     * by the registry.
     * 
     */
-   static public Long[] types()
+   static public long[] types()
    {
       lock.readLock().lock();
       try
       {
-         Long[] array = new Long[registered.size()];
-         registered.values().toArray(array);
+         int i = 0;
+         long[] array = new long[registered.size()];
+         for (Discriminator d : registered.values())
+         {
+            array[i] = d.getId();
+            ++i;
+         }
          return array;
       }
       finally
@@ -141,7 +158,7 @@ public class DiscriminatorRegistry
       lock.readLock().lock();
       try
       {
-         d = registered.get(name);
+         d = registered.get(name.toLowerCase());
       }
       finally
       {
@@ -196,7 +213,7 @@ public class DiscriminatorRegistry
     * flat text file. In production use the registry should be 
     * initialized from a proper type system of some sort.
     */
-   static public void initialize() //throws IOException
+   static public void initialize() throws IOException
    {
       lock.writeLock().lock();
       if (initialized)
@@ -212,9 +229,11 @@ public class DiscriminatorRegistry
          String line = reader.readLine();
          while (line != null)
          {
+//            System.out.println(line);
             line = trim(line);
             if (line.length() == 0)
             {
+               line = reader.readLine();
                continue;
             }
             String[] parts = line.split("\\s+");
@@ -224,27 +243,37 @@ public class DiscriminatorRegistry
             }
             else if (parts.length > 1)
             {
+               int start = 0;
+               String first = parts[start];
+               if (first.endsWith(":"))
+               {
+                  // If the first part ends with a colon it is the next
+                  // discriminator id value to be used.
+                  ++start;
+                  int end = first.length() - 1;
+                  int value = Integer.parseInt(first.substring(0, end));
+                  if (value < nextId)
+                  {
+                     throw new IOException("Invalid ID value specified in the DataTypes configuration: " + value);
+                  }
+                  nextId = value;
+               }
                List<Discriminator> parents = new ArrayList<Discriminator>();
-               for (int i = 1; i < parts.length; ++i)
+               for (int i = start+1; i < parts.length; ++i)
                {
                   Discriminator parent = registered.get(parts[i]);
                   if (parent == null)
                   {
-                     throw new IOException("Invalid parent type " + parts[1]);
+                     throw new IOException("Invalid parent type " + parts[i]);
                   }
                   parents.add(parent);
                }
-               register(parts[0], parents);
+               register(parts[start], parents);
             }
             line = reader.readLine();
          }
          
          initialized = true;
-      }
-      catch (IOException e)
-      {
-         // TODO In a production environment this error should be
-         // logged.
       }
       finally
       {

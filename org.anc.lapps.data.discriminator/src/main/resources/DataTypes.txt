@@ -1,8 +1,18 @@
-error
+# Base types. The ERROR type should always be 0 (zero).
+0: error
+ok
 meta
 document
-encoded
+annotation
 input-parameter
+list meta
+index meta
+input-param-get input-parameter
+input-param-list input-parameter
+input-param-query input-parameter
+
+# Various document types.
+256: encoded document
 virtual document
 physical document
 text physical
@@ -10,23 +20,46 @@ xml encoded
 json encoded
 ptb encoded
 meta-xml meta xml
-gate xml
-graf
+xmi xml
+
+# Annotation types
+1024: chunk annotation
+sentence chunk
+token chunk
+pos annotation
+coref annotation
+named-entity annotation
+noun-chunk chunk
+verb-chunk chunk
+syntax-tree-node annotation
+
+# GrAF document types
+4096: graf
 graf-res-hdr graf meta-xml
 graf-doc-hdr graf meta-xml
 graf-txt graf text
-graf-xml graf xml
-xmi xml
-uima 
+graf-standoff graf xml
+
+# UIMA document tpes
+5120: uima 
 cas uima xmi
 uima-type-system uima xml
-anc2go virtual
+
+# GATE document and annotation types
+6144: gate
+gate-document gate xml
+gate-token gate token
+gate-sentence gate sentence
+gate-pos gate pos
+
+
+# ANC2Go service
+7168: anc2go virtual
 anc2go-xml anc2go xml
-list meta
-index meta
-input-param-get input-parameter
-input-param-list input-parameter
-input-param-query input-parameter
-sentence encoded
-token encoded
-pos encoded
+
+# Query types.
+8192: query-type input-parameter
+lucene query-type
+jquery query-type
+regex query-type
+query-type-regex

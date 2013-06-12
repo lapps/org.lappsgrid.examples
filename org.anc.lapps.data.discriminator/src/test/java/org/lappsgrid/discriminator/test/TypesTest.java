@@ -1,26 +1,24 @@
 package org.lappsgrid.discriminator.test;
 
-import org.junit.*;
-import org.lappsgrid.discriminator.Types;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.*;
+import java.lang.reflect.Field;
+
+import org.junit.Test;
+import org.lappsgrid.discriminator.Types;
 
 public class TypesTest
 {
    @Test
-   public void testTypes()
+   public void testTypes() throws IllegalArgumentException, IllegalAccessException
    {
       assertTrue(Types.ERROR == 0);
-      assertTrue(Types.DOCUMENT > 0);
-      assertTrue(Types.GATE_DOCUMENT > 0);
-      assertTrue(Types.GET > 0);
-      assertTrue(Types.GRAF_DOCUMENT_HEADER > 0);
-      assertTrue(Types.GRAF_RESOURCE_HEADER > 0);
-      assertTrue(Types.GRAF_STANDOFF_XML > 0);
-      assertTrue(Types.INDEX > 0);
-      assertTrue(Types.LIST > 0);
-      assertTrue(Types.QUERY > 0);
-      assertTrue(Types.TEXT > 0);
-      assertTrue(Types.XML > 0);
+      Field[] fields = Types.class.getDeclaredFields();
+      for (Field field : fields)
+      {
+         long value = field.getLong(null);
+         assertTrue("Invalid value for " + field.getName(), value >= 0);
+      }
    }
+   
 }
