@@ -19,7 +19,19 @@ public interface WebService
    long[] produces();
    
    /**
-    * Executes a web service on the given input.
+    * Executes a web service on the given input. Returns the output, if any,
+    * of the web service in a {@link Data} object.
     */
    Data execute(Data input);
+   
+   /**
+    * Configures a DataSource.
+    * <p>
+    * Returns any errors in a {@link Data} object. Otherwise returns a Data
+    * object with the "ok" Discriminator type.
+    * 
+    * @param config
+    * @return
+    */
+   Data configure(Data config);
 }

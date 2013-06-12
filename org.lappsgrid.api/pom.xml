@@ -10,11 +10,12 @@
   <version>1.0.0-SNAPSHOT</version>
   <name>LAPPS API</name>
   <description>Interfaces and exceptions used by all LAPPS services</description>
+  <inceptionYear>2013</inceptionYear>
   <dependencies>
   	<dependency>
   		<groupId>org.lappsgrid</groupId>
   		<artifactId>service-grid-libs</artifactId>
+  		<scope>runtime</scope>
   	</dependency>
   </dependencies>
-  <inceptionYear>2013</inceptionYear>
 </project>

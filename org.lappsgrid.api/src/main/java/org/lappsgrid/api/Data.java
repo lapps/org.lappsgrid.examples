@@ -3,6 +3,7 @@ package org.lappsgrid.api;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
 
 
 /**
@@ -21,12 +22,24 @@ import java.io.ObjectOutputStream;
  */
 public class Data implements LappsSerializable
 {
-   private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 2L;
+   private static final String UTF8 = "UTF-8";
    
    private long discriminator;
-   private String payload;
+   private byte[] payload;
+   
+   public Data(long type)
+   {
+      this.discriminator = type;
+   }
    
    public Data(long type, String payload)
+   {
+      this.discriminator = type;           
+      this.payload = payload.getBytes();
+   }
+   
+   public Data(long type, byte[] payload)
    {
       this.discriminator = type;
       this.payload = payload;
@@ -39,6 +52,15 @@ public class Data implements LappsSerializable
    
    public String getPayload()
    {     
+      if (payload == null)
+      {
+         return null;
+      }
+      return new String(payload);
+   }
+   
+   public byte[] getBytes()
+   {
       return payload;
    }
    
@@ -49,15 +71,22 @@ public class Data implements LappsSerializable
    
    public void setPayload(String payload)
    {
-      this.payload = payload;
+      this.payload = payload.getBytes();
    }
 
+   public void setPayload(byte[] bytes)
+   {
+      this.payload = bytes;
+   }
+   
    @Override
    public void readObject(ObjectInputStream stream) throws IOException,
          ClassNotFoundException
    {
       discriminator = stream.readLong();
-      payload = stream.readUTF();
+      int size = stream.readInt();
+      payload = new byte[size];
+      stream.read(payload);
    }
 
    @Override
@@ -65,7 +94,8 @@ public class Data implements LappsSerializable
          ClassNotFoundException
    {
       stream.writeLong(discriminator);
-      stream.writeUTF(payload);
+      stream.writeInt(payload.length);
+      stream.write(payload);
    }
    
    
