@@ -35,11 +35,20 @@
 			</roles>
 		</developer>
 		<developer>
-			<id>Digo</id>
-			<name>Di Wang</name>
-			<email>diwang@cs.cmu.edu</email>
-			<organization>Carnegie Mellon University</organization>
-			<organizationUrl>http://www.cs.cmu.edu/</organizationUrl>
+			<id>mverhagen</id>
+			<name>Marc Verhagen</name>
+			<email>marc@cs.brandeis.edu</email>
+			<organization>Brandeis University</organization>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>jwright</id>
+			<name>Jonathan Wright</name>
+			<email>jdwright@ldc.upenn.edu</email>
+			<organization>Linguistic Data Consortium</organization>
+			<organizationUrl>http://www.ldc.upenn.edu</organizationUrl>
 			<roles>
 				<role>Developer</role>
 			</roles>
@@ -83,11 +92,6 @@
 						</fileset>
 					</filesets>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.anc.maven</groupId>
-				<artifactId>anc-maven-plugin</artifactId>
-				<version>1.0.4</version>
 			</plugin>
 		</plugins>
 		<pluginManagement>
