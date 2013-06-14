@@ -36,6 +36,8 @@ public class DiscriminatorRegistry
    static private Map<String,Discriminator> registered = new HashMap<String, Discriminator>();
    static private Map<Long,String> index = new HashMap<Long,String>();
    
+   static protected final long BANK_SIZE = 1024;
+   
    static {
       try
       {
@@ -207,6 +209,18 @@ public class DiscriminatorRegistry
       return d.isa(parent);
    }
    
+   /**
+    * Returns true if the discriminator <code>parentName</code>
+    * is a super-type of the <code>type</code> discriminator.
+    * Returns false otherwise.
+    */
+   public static boolean isa(long type, long parentType)
+   {
+      String name = get(type);
+      String parent = get(parentType);
+      return isa(name, parent);
+   }
+   
    /** Initializes the DiscriminatorRegistry.
     * <p>
     * Currently the registry is initialized with values read from a
@@ -251,7 +265,16 @@ public class DiscriminatorRegistry
                   // discriminator id value to be used.
                   ++start;
                   int end = first.length() - 1;
-                  int value = Integer.parseInt(first.substring(0, end));
+                  String token = first.substring(0,end);
+                  long value = -1;
+                  if (token.toLowerCase().startsWith("bank"))
+                  {
+                     value = Integer.parseInt(token.substring(4)) * BANK_SIZE;
+                  }
+                  else
+                  {
+                     value = Integer.parseInt(token);
+                  }
                   if (value < nextId)
                   {
                      throw new IOException("Invalid ID value specified in the DataTypes configuration: " + value);

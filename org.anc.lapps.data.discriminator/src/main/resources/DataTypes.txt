@@ -1,3 +1,11 @@
+# Specific offset values can be specified as literal values followed by
+# a colon, or a "bank" number followed by a colon.  Banks are blocks of
+# 1K (1024) continuous values. So bank4 starts at 4096 , bank8 starts at
+# 8192 etc.
+#
+# Values must be specified in other, that is, bankN must appear before
+# bankN+1.
+
 # Base types. The ERROR type should always be 0 (zero).
 0: error
 ok
@@ -11,8 +19,17 @@ input-param-get input-parameter
 input-param-list input-parameter
 input-param-query input-parameter
 
+# License types.
+512: public-domain
+open-source
+commercial
+apache2 open-source
+gpl open-source
+lgpl open-source
+bsd open-source
+
 # Various document types.
-256: encoded document
+bank1: encoded document
 virtual document
 physical document
 text physical
@@ -23,43 +40,58 @@ meta-xml meta xml
 xmi xml
 
 # Annotation types
-1024: chunk annotation
+bank2: chunk annotation
 sentence chunk
 token chunk
+lemma annotation
 pos annotation
+msd annotation
+penn-pos pos
 coref annotation
 named-entity annotation
 noun-chunk chunk
 verb-chunk chunk
 syntax-tree-node annotation
+offset annotation
+start offset
+end offset
 
 # GrAF document types
-4096: graf
+bank5: graf
 graf-res-hdr graf meta-xml
 graf-doc-hdr graf meta-xml
 graf-txt graf text
 graf-standoff graf xml
 
 # UIMA document tpes
-5120: uima 
+bank6: uima 
 cas uima xmi
 uima-type-system uima xml
 
 # GATE document and annotation types
-6144: gate
+bank7: gate
 gate-document gate xml
 gate-token gate token
 gate-sentence gate sentence
 gate-pos gate pos
 
-
 # ANC2Go service
-7168: anc2go virtual
+bank8: anc2go virtual
 anc2go-xml anc2go xml
+anc2go-conll anc2go
+anc2go-nltk anc2go
 
 # Query types.
-8192: query-type input-parameter
+bank9: query input-parameter
 lucene query-type
-jquery query-type
 regex query-type
-query-type-regex
+
+# Output types from the Stanford NLP tools.
+bank10: stanford 
+stanford-xml stanford xml
+stanford-token stanford token
+stanford-sentence stanford sentence
+stanford-pos stanford pos
+stanford-ne stanford named-entity
+stanford-coref stanford coref
+stanford-lemma stanford lemma

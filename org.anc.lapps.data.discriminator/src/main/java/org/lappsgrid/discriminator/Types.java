@@ -28,6 +28,12 @@ public final class Types
    public static final long QUERY_JQUERY = get("jquery");
    public static final long QUERY_REGEX = get("regex");
    
+   public static final long TOKEN = get("token");
+   public static final long SENTENCE = get("sentence");
+   public static final long POS = get("pos");
+   public static final long NAMED_ENTITES = get("named-entities");
+   
+   
    // Don't allow instances of this class to be created.
    private Types()
    {

@@ -53,11 +53,9 @@ public class RegistryTest
       check("ok", 1L);
       check("meta", 2L);
       check("document", 3L);
-      check("graf", 4096L);
-      check("uima", 5120L);
-      check("gate", 6144L);
-      check("anc2go", 7168L);
-      check("query-type", 8192L);
+      check("graf", 5L*1024);
+      check("uima", 6L*1024);
+      check("gate", 7L*1024);
    }
    
    @Test
