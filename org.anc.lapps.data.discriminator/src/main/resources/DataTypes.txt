@@ -1,6 +1,6 @@
 # Specific offset values can be specified as literal values followed by
 # a colon, or a "bank" number followed by a colon.  Banks are blocks of
-# 1K (1024) continuous values. So bank4 starts at 4096 , bank8 starts at
+# 1K (1024) contiguous values. So bank4 starts at 4096 , bank8 starts at
 # 8192 etc.
 #
 # Values must be specified in other, that is, bankN must appear before
@@ -27,6 +27,7 @@ apache2 open-source
 gpl open-source
 lgpl open-source
 bsd open-source
+eclipse open-source
 
 # Various document types.
 bank1: encoded document
