@@ -4,9 +4,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.lappsgrid.discriminator.Types;
 
+@Ignore
 public class TypesTest
 {
    @Test

@@ -1,98 +1,46 @@
-# Specific offset values can be specified as literal values followed by
-# a colon, or a "bank" number followed by a colon.  Banks are blocks of
-# 1K (1024) contiguous values. So bank4 starts at 4096 , bank8 starts at
-# 8192 etc.
-#
-# Values must be specified in other, that is, bankN must appear before
-# bankN+1.
-
 # Base types. The ERROR type should always be 0 (zero).
 0: error
 ok
 meta
-document
-annotation
-input-parameter
-list meta
-index meta
-input-param-get input-parameter
-input-param-list input-parameter
-input-param-query input-parameter
+text
+xml
+
+bank1: document
+gate document xml
+uima document xml
+stanford document
+opennlp document
+graf document xml
+ptb document
+
+bank2: annotation
+chunk annotation
+paragraph chunk
+sentence chunk
+token chunk
+pos annotation
+coref annotation
+ne annotation
+person ne
+location ne
+date ne
+organization ne
+
+bank3:  query
+get
+index
+list
+lucene query
+sql query
+sparql query
 
 # License types.
-512: public-domain
+bank512: public-domain
 open-source
-commercial
 apache2 open-source
 gpl open-source
 lgpl open-source
 bsd open-source
 eclipse open-source
-
-# Various document types.
-bank1: encoded document
-virtual document
-physical document
-text physical
-xml encoded
-json encoded
-ptb encoded
-meta-xml meta xml
-xmi xml
-
-# Annotation types
-bank2: chunk annotation
-sentence chunk
-token chunk
-lemma annotation
-pos annotation
-msd annotation
-penn-pos pos
-coref annotation
-named-entity annotation
-noun-chunk chunk
-verb-chunk chunk
-syntax-tree-node annotation
-offset annotation
-start offset
-end offset
-
-# GrAF document types
-bank5: graf
-graf-res-hdr graf meta-xml
-graf-doc-hdr graf meta-xml
-graf-txt graf text
-graf-standoff graf xml
-
-# UIMA document tpes
-bank6: uima 
-cas uima xmi
-uima-type-system uima xml
-
-# GATE document and annotation types
-bank7: gate
-gate-document gate xml
-gate-token gate token
-gate-sentence gate sentence
-gate-pos gate pos
-
-# ANC2Go service
-bank8: anc2go virtual
-anc2go-xml anc2go xml
-anc2go-conll anc2go
-anc2go-nltk anc2go
-
-# Query types.
-bank9: query input-parameter
-lucene query-type
-regex query-type
-
-# Output types from the Stanford NLP tools.
-bank10: stanford 
-stanford-xml stanford xml
-stanford-token stanford token
-stanford-sentence stanford sentence
-stanford-pos stanford pos
-stanford-ne stanford named-entity
-stanford-coref stanford coref
-stanford-lemma stanford lemma
+no-commercial
+restricted
