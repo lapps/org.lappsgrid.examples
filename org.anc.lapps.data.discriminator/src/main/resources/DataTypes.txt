@@ -4,7 +4,9 @@ ok
 meta
 text
 xml
+string-list
 
+# Document types.
 bank1: document
 gate document xml
 uima document xml
@@ -13,6 +15,7 @@ opennlp document
 graf document xml
 ptb document
 
+# Annotation types.
 bank2: annotation
 chunk annotation
 paragraph chunk
@@ -26,6 +29,7 @@ location ne
 date ne
 organization ne
 
+# Query types.
 bank3:  query
 get
 index
@@ -33,6 +37,8 @@ list
 lucene query
 sql query
 sparql query
+regex query
+composite
 
 # License types.
 bank512: public-domain
