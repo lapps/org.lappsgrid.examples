@@ -2,8 +2,6 @@ package org.lappsgrid.api;
 
 import jp.go.nict.langrid.commons.rpc.intf.Service;
 
-import org.lappsgrid.api.Data;
-
 @Service(namespace="lapps:service")
 public interface WebService
 {

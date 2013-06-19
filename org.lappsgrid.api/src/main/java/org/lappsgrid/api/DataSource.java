@@ -1,6 +1,6 @@
 package org.lappsgrid.api;
 
-import jp.go.nict.langrid.commons.rpc.intf.Service;
+import jp.go.nict.langrid.commons.rpc.intf.*;
 
 
 /**

@@ -65,12 +65,12 @@ public class MascDataSource implements DataSource
       if (file == null)
       {
          logger.error("No such file.");
-         return DataFactory.newError("No such file.");
+         return DataFactory.error("No such file.");
       }
       if (!file.exists())
       {
          logger.error("File not found.");
-         return DataFactory.newError("File not found.");
+         return DataFactory.error("File not found.");
       }
       
       UTF8Reader reader = null;
@@ -100,7 +100,7 @@ public class MascDataSource implements DataSource
       long type = query.getDiscriminator();
       if (type == Types.QUERY) 
       {
-         result = DataFactory.newError("Unsupported operation.");
+         result = DataFactory.error("Unsupported operation.");
       }
       else if (type == Types.LIST)
       {
@@ -112,7 +112,7 @@ public class MascDataSource implements DataSource
       }
       else
       {
-         result = DataFactory.newError("Unknown query type");
+         result = DataFactory.error("Unknown query type");
       }
       return result;
       
@@ -126,9 +126,9 @@ public class MascDataSource implements DataSource
       }
       else if (key.endsWith("hdr"))
       {
-         return Types.GRAF_DOCUMENT_HEADER;
+         return Types.XML;
       }
-      return Types.GRAF_STANDOFF_XML;
+      return Types.GRAF;
    }
    
    /**
