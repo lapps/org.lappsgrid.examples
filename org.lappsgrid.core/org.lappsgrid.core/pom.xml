@@ -11,6 +11,9 @@
   <name>LAPPS Core</name>
   <description>Core classes for the LAPPS Grid</description>
   <inceptionYear>2013</inceptionYear>
+    <build>
+        <finalName>${groupId}.${artifactId}-${version}</finalName>
+    </build>
   <dependencies>
   	<dependency>
   		<groupId>org.lappsgrid</groupId>
