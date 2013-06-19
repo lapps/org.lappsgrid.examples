@@ -12,3 +12,6 @@ target
 .project
 .classpath
 .settings
+
+# IntelliJ IDEA files.
+.idea
