@@ -1,0 +1,52 @@
+# Base types. The ERROR type should always be 0 (zero).
+0: error
+ok
+meta
+text
+xml
+string-list
+
+# Document types.
+bank1: document
+gate document xml
+uima document xml
+stanford document
+opennlp document
+graf document xml
+ptb document
+
+# Annotation types.
+bank2: annotation
+chunk annotation
+paragraph chunk
+sentence chunk
+token chunk
+pos annotation
+coref annotation
+ne annotation
+person ne
+location ne
+date ne
+organization ne
+
+# Query types.
+bank3:  query
+get
+index
+list
+lucene query
+sql query
+sparql query
+regex query
+composite
+
+# License types.
+bank512: public-domain
+open-source
+apache2 open-source
+gpl open-source
+lgpl open-source
+bsd open-source
+eclipse open-source
+no-commercial
+restricted
