@@ -100,7 +100,7 @@ public class MascDataSource implements DataSource
       long type = query.getDiscriminator();
       if (type == Types.QUERY) 
       {
-         result = DataFactory.error("Unsupported operation.");
+         result = doQuery(query.getPayload());
       }
       else if (type == Types.LIST)
       {
@@ -117,7 +117,20 @@ public class MascDataSource implements DataSource
       return result;
       
    }
-   
+
+   protected Data doQuery(String queryString)
+   {
+      List<String> list = new ArrayList<String>();
+      for (String key : keys)
+      {
+         if (key.contains(queryString))
+         {
+            list.add(key);
+         }
+      }
+      return DataFactory.index(collect(list));
+   }
+
    protected long decode(String key)
    {
       if (key.endsWith("txt"))
