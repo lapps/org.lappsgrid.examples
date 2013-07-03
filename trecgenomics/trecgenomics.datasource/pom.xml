@@ -11,14 +11,6 @@
 	<artifactId>trecgenomics-service</artifactId>
 	<packaging>war</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.lappsgrid</groupId>
-			<artifactId>core</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
