@@ -3,18 +3,23 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.lapps</groupId>
-		<artifactId>datasource-parent</artifactId>
+		<groupId>edu.cmu.lti.oaqa.datasource.trecgenomics</groupId>
+		<artifactId>trecgenomics-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>datasource-client</artifactId>
+	<artifactId>trecgenomics-client</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.lapps</groupId>
-			<artifactId>datasource-api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>org.lappsgrid</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.lappsgrid</groupId>
+			<artifactId>client</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 
@@ -39,6 +44,9 @@
 					<xnocompile>true</xnocompile>
 				</configuration>
 			</plugin>
+
+			
+
 		</plugins>
 	</build>
 </project>

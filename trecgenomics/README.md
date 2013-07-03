@@ -8,10 +8,10 @@ To build the projects:
 
 To start server the example server:
 
-    cd ./datasource-trecgenomics/
+    cd ./trecgenomics.datasource/
     mvn jetty:run
 
 To run a simple client-side test querying the example server:
 
-    cd ./datasource-client/
+    cd ./trecgenomics.client/
     mvn compile exec:java -Dexec.mainClass=org.lapps.datasource.trecgenomics.HelloDatasourceTest

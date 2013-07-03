@@ -3,11 +3,7 @@
 	<jxb:bindings schemaLocation="http://localhost:9090/TrecPrimitiveDataSourceWS?xsd=1"
 		node="/xs:schema">
 		<jxb:bindings node="//xs:complexType[@name='data']">
-			<jxb:class ref="org.lapps.datasource.Data">
-			</jxb:class>
-		</jxb:bindings>
-		<jxb:bindings node="//xs:complexType[@name='dataQuery']">
-			<jxb:class ref="org.lapps.datasource.DataQuery">
+			<jxb:class ref="org.lappsgrid.api.Data">
 			</jxb:class>
 		</jxb:bindings>
 	</jxb:bindings>

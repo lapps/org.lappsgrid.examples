@@ -1,0 +1,12 @@
+<bindings xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://java.sun.com/xml/ns/jaxws"
+	wsdlLocation="http://localhost:9090/TrecPrimitiveDataSourceWS?wsdl=1">
+	<!-- wsdl:portType customization -->
+	<bindings node="wsdl:definitions/wsdl:portType[@name='DataSource']">
+		<!-- change the generated SEI class -->
+		<class name="org.lappsgrid.api.DataSource" />
+		<!-- you can also override the following customization settings -->
+		<enableWrapperStyle>true</enableWrapperStyle>
+		<enableAsyncMapping>false</enableAsyncMapping>
+	</bindings>
+</bindings>
