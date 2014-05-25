@@ -45,9 +45,7 @@
 		<servlet-class>jp.go.nict.langrid.servicecontainer.handler.axis.SGAxisServlet</servlet-class>
 		<init-param>
 			<param-name>wsddBeanNamespaceMappings</param-name>
-			<param-value>
-				org.lappsgrid, http://lapps.anc.org/
-			</param-value>
+			<param-value></param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
