@@ -7,13 +7,7 @@ import org.lappsgrid.api.Data;
 import org.lappsgrid.core.DataFactory;
 import org.lappsgrid.discriminator.DiscriminatorRegistry;
 import org.lappsgrid.discriminator.Types;
-import org.lappsgrid.serialization.json.JSONObject;
-import org.lappsgrid.serialization.json.JsonTaggerSerialization;
-import org.lappsgrid.serialization.json.JsonTokenizerSerialization;
-import org.lappsgrid.vocabulary.Annotations;
-import org.lappsgrid.vocabulary.Features;
-
-import java.util.*;
+import org.lappsgrid.api.WebService;
 
 public class WhitespaceTokenizer implements WebService {
     public static final  String VERSION = "0.0.1-SNAPSHOT";
@@ -33,98 +27,94 @@ public class WhitespaceTokenizer implements WebService {
 
     @Override
     public Data execute(Data data) {
+        long discriminator = data.getDiscriminator();
+        if (discriminator == Types.ERROR)
         {
-            long discriminator = data.getDiscriminator();
-            if (discriminator == Types.ERROR)
-            {
-                return data;
-            }
-            else  if (discriminator == Types.TEXT) {
-                String text = data.getPayload();
-                JsonTokenizerSerialization json = new JsonTokenizerSerialization();
-                json.setTextValue(text);
-                json.setProducer(this.getClass().getName() + ":" + VERSION);
-                json.setType("annotation:tokenizer");
+            return data;
+        }
+        else  if (discriminator == Types.TEXT) {
+            String text = data.getPayload();
+            Container container = new Container(false);
+            container.setText(text);
+            container.setLanguage("en");
+            ProcessingStep processingStep = container.newStep();
+            processingStep.addContains("Token", this.getClass().getName() + ":" + VERSION, "annotation:tokenizer");
 
-                int start = 0;
-                int end = 0;
-                for (int i = 0; i < text.length(); i++) {
-                    char ch = text.charAt(i);
-                    // is digital or letter
-                    if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) {
-                        end ++;
-                        if (end == text.length()) {
-                            JSONObject ann = json.newAnnotation();
-                            json.setEnd(ann,end);
-                            json.setStart(ann, start);
-                            json.setWord(ann, text.substring(start, end));
-                        }
-                    } else {
-                        if (end > start) {
-                            JSONObject ann = json.newAnnotation();
-                            json.setEnd(ann,end);
-                            json.setStart(ann, start);
-                            json.setWord(ann, text.substring(start, end));
-                        }
-                        start = i + 1;
-                        end = start;
-                        if(ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == '\f') {
-                            // white space.
-                        } else {  // punctuation
-                            JSONObject ann = json.newAnnotation();
-                            json.setStart(ann, i);
-                            json.setEnd(ann, i+1);
-                            json.setWord(ann, text.substring(i, i + 1));
-                        }
+            int start = 0;
+            int end = 0;
+            for (int i = 0; i < text.length(); i++) {
+                char ch = text.charAt(i);
+                // is digital or letter
+                if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) {
+                    end ++;
+                    if (end == text.length()) {
+                        Annotation ann = processingStep.newAnnotation("Token", start, end);
+                        ann.addFeature("string", text.substring(start, end));
+                    }
+                } else {
+                    if (end > start) {
+                        Annotation ann = processingStep.newAnnotation("Token", start, end);
+                        ann.addFeature("string", text.substring(start, end));
+                    }
+                    start = i + 1;
+                    end = start;
+                    if(ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == '\f') {
+                        // white space.
+                    } else {  // punctuation
+                        Annotation ann = processingStep.newAnnotation("Token", i, i + 1);
+                        ann.addFeature("string", text.substring(i, i + 1));
                     }
                 }
-                return DataFactory.json(json.toString());
+            }
+            return DataFactory.json(container.toString());
 
-            } else  if (discriminator == Types.JSON) {
-                String textjson = data.getPayload();
-                JsonTaggerSerialization json = new JsonTaggerSerialization(textjson);
-                json.setProducer(this.getClass().getName() + ":" + VERSION);
-                json.setType("annotation:tokenizer");
-                String text = json.getTextValue();
-                int start = 0;
-                int end = 0;
-                for (int i = 0; i < text.length(); i++) {
-                    char ch = text.charAt(i);
-                    // is digital or letter
-                    if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) {
-                        end ++;
-                        if (end == text.length()) {
-                            JSONObject ann = json.newAnnotation();
-                            json.setEnd(ann,end);
-                            json.setStart(ann, start);
-                            json.setWord(ann, text.substring(start, end));
-                        }
-                    } else {
-                        if (end > start) {
-                            JSONObject ann = json.newAnnotation();
-                            json.setEnd(ann,end);
-                            json.setStart(ann, start);
-                            json.setWord(ann, text.substring(start, end));
-                        }
-                        start = i + 1;
-                        end = start;
-                        if(ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == '\f') {
-                            // white space.
-                        } else {  // punctuation
-                            JSONObject ann = json.newAnnotation();
-                            json.setStart(ann, i);
-                            json.setEnd(ann, i+1);
-                            json.setWord(ann, text.substring(i, i + 1));
-                        }
+        } else  if (discriminator == Types.JSON) {
+            String textjson = data.getPayload();
+
+
+            Container container = new Container(textjson);
+            container.setLanguage("en");
+            ProcessingStep processingStep = container.newStep();
+            processingStep.addContains("Token", this.getClass().getName() + ":" + VERSION, "annotation:tokenizer");
+            String text = container.getText();
+
+            int start = 0;
+            int end = 0;
+            for (int i = 0; i < text.length(); i++) {
+                char ch = text.charAt(i);
+                // is digital or letter
+                if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) {
+                    end ++;
+                    if (end == text.length()) {
+                        Annotation ann = processingStep.newAnnotation("Token", start, end);
+                        ann.addFeature("string", text.substring(start, end));
+                    }
+                } else {
+                    if (end > start) {
+                        Annotation ann = processingStep.newAnnotation("Token", start, end);
+                        ann.addFeature("string", text.substring(start, end));
+                    }
+                    start = i + 1;
+                    end = start;
+                    if(ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == '\f') {
+                        // white space.
+                    } else {  // punctuation
+                        Annotation ann = processingStep.newAnnotation("Token", i, i + 1);
+                        ann.addFeature("string", text.substring(i, i + 1));
                     }
                 }
-                return DataFactory.json(json.toString());
-            } else {
-                String name = DiscriminatorRegistry.get(discriminator);
-                String message = "Invalid input type. Expected Text but found " + name;
-                return DataFactory.error(message);
             }
+            return DataFactory.json(container.toString());
+        } else {
+            String name = DiscriminatorRegistry.get(discriminator);
+            String message = "Invalid input type. Expected Text but found " + name;
+            return DataFactory.error(message);
         }
     }
+
+    public Data configure(Data config) {
+        return null;
+    }
+
 
 }
