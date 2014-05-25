@@ -9,6 +9,12 @@
       Lapps Web Services wrapping example for Whitespace Tokenizer
   </description>
 
+  <parent>
+      <artifactId>war-parent-pom</artifactId>
+      <groupId>org.lappsgrid.maven</groupId>
+      <version>1.2.1</version>
+  </parent>
+
     <properties>
         <lapps.version>1.0.1</lapps.version>
         <lapps.core.version>1.2.0</lapps.core.version>
