@@ -27,6 +27,8 @@ For this tutorial you will require:
 1. Maven 3.0.x
 1. An IDE such as IntelliJ or Eclipse
 
+It is assumed that you know how to create a Maven project either using your IDE or via
+the command line.  Maven usage is beyond the scope of this tutorial.
 
 ## Maven
 
@@ -43,15 +45,44 @@ until that time Lappsgrid artifacts are deployed to the ANC's Nexus instance.
 
 # Project Setup
 
+Create a new Maven project.
+
 ```xml
-<parent>
-</parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.lappsgrid.tutorial</groupId>
+  <artifactId>whitespace_tokenizer</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>Java Whitespace Tokenizer Example</name>
+  <description>
+      Lapps Web Services wrapping example for Whitespace Tokenizer
+  </description>
+
+  <parent>
+      <artifactId>war-parent-pom</artifactId>
+      <groupId>org.lappsgrid.maven</groupId>
+      <version>2.0.1</version>
+  </parent>
 ```
 
-# Lapps Interfaces
+It is important to use the `org.lappsgrid.maven:war-parent-pom` as it defines the
+Service Grid and Lappsgrid dependencies required to implement a service on the Language 
+Application Grid.
 
-Lapps Grid Service Wrapping Examples
+Also be sure to set the `packaging` to `war`.
+
+# Lappsgrid Interfaces
 
 
-Stanford NLP Core Tagger Example.
+# Service Implementation
+
+## Serializing to LIF (Lappsgrid Interchange Format)
+
+# Service Metadata
+
+# The war File and web.xml
+
+# Deployment
+
 
