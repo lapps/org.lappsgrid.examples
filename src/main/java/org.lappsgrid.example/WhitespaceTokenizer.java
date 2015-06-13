@@ -1,32 +1,15 @@
 package org.lappsgrid.example;
 
-import org.anc.lapps.serialization.Annotation;
-import org.anc.lapps.serialization.Container;
-import org.anc.lapps.serialization.ProcessingStep;
-import org.lappsgrid.api.Data;
 import org.lappsgrid.core.DataFactory;
-import org.lappsgrid.discriminator.DiscriminatorRegistry;
-import org.lappsgrid.discriminator.Types;
 import org.lappsgrid.api.WebService;
 
 public class WhitespaceTokenizer implements WebService {
-    public static final  String VERSION = "0.0.1-SNAPSHOT";
 
     public WhitespaceTokenizer(){
     }
 
     @Override
-    public long[] requires() {
-        return new long[]{};
-    }
-
-    @Override
-    public long[] produces() {
-        return new long[]{};
-    }
-
-    @Override
-    public Data execute(Data data) {
+    public String execute(String data) {
         long discriminator = data.getDiscriminator();
         if (discriminator == Types.ERROR)
         {
