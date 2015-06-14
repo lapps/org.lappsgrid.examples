@@ -118,11 +118,11 @@ public class WhitespaceTokenizer implements WebService
 
 		char[] buffer = container.getText().toCharArray();
 		int start = skipWhiteSpace(buffer, 0);
-		int id = 0;
+		int id = -1;
 		while (start < buffer.length)
 		{
 			int end = skipCharacters(buffer, start);
-			Annotation a = view.newAnnotation("tok" + id, Uri.TOKEN, start, end);
+			Annotation a = view.newAnnotation("tok" + (++id), Uri.TOKEN, start, end);
 			a.addFeature(Features.Token.WORD, new String(buffer, start, end-start));
 			start = skipWhiteSpace(buffer, end);
 		}
