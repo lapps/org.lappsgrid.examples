@@ -1,0 +1,18 @@
+{
+  "$schema" : "http://vocab.lappsgrid.org/schema/service-schema-1.0.0.json",
+  "name" : "org.lappsgrid.example.WhitespaceTokenizer",
+  "version" : "1.0.0-SNAPSHOT",
+  "description" : "Splits the input on whitespace.",
+  "vendor" : "http://www.anc.org",
+  "allow" : "http://vocab.lappsgrid.org/ns/allow#any",
+  "license" : "http://vocab.lappsgrid.org/ns/license#apache-2.0",
+  "requires" : {
+    "encoding" : "UTF-8",
+    "format" : [ "http://vocab.lappsgrid.org/ns/media/text", "http://vocab.lappsgrid.org/ns/media/jsonld#lif" ]
+  },
+  "produces" : {
+    "encoding" : "UTF-8",
+    "format" : [ "http://vocab.lappsgrid.org/ns/media/jsonld#lif" ],
+    "annotations" : [ "http://vocab.lappsgrid.org/Token" ]
+  }
+}
