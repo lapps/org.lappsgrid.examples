@@ -34,10 +34,15 @@ import java.util.Map;
  */
 public class WhitespaceTokenizer implements WebService
 {
+	/**
+	 * The Json String required by getMetadata()
+	 */
 	private String metadata;
+
 
 	public WhitespaceTokenizer()
 	{
+		// Create and populate the metadata object
 		ServiceMetadata metadata = new ServiceMetadata();
 		metadata.setName(this.getClass().getName());
 		metadata.setDescription("Whitespace tokenizer");
@@ -58,6 +63,8 @@ public class WhitespaceTokenizer implements WebService
 		produces.addAnnotation(Uri.TOKEN);
 		metadata.setProduces(produces);
 
+		// Serialize the metadata to a string and save for the
+		// getMetadata() method.
 		Data<ServiceMetadata> data = new Data<ServiceMetadata>(Uri.META, metadata);
 		this.metadata = data.asPrettyJson();
 	}
@@ -66,18 +73,18 @@ public class WhitespaceTokenizer implements WebService
 	public String execute(String json)
 	{
 		Data data = Serializer.parse(json, Data.class);
-		if (is(data, Uri.ERROR))
+		if (checkType(data, Uri.ERROR))
 		{
 			// Return errors unmodified.
 			return json;
 		}
 
 		Container container;
-		if (is(data, Uri.LAPPS))
+		if (checkType(data, Uri.LAPPS))
 		{
 			container = new Container((Map) data.getPayload());
 		}
-		else if (is(data, Uri.TEXT))
+		else if (checkType(data, Uri.TEXT))
 		{
 			container = new Container();
 			container.setText(data.getPayload().toString());
@@ -156,7 +163,7 @@ public class WhitespaceTokenizer implements WebService
 	 * Returns true if the Data object's discriminator is equal to the
 	 * specified type.
 	 */
-	private boolean is(Data<? extends Object> data, String type)
+	private boolean checkType(Data<? extends Object> data, String type)
 	{
 		return type.equals(data.getDiscriminator());
 	}
