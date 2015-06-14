@@ -1,51 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-	<display-name>Lapps Grid Whitespace Tokenizer (Java) Example</display-name>
+	<!-- Change the display-name only. -->
+	<display-name>Whitespace Tokenizer Example</display-name>
+
+	<!--  Do not change anything below this point. -->
 
 	<context-param>
 		<param-name>servicesPath</param-name>
 		<param-value>WEB-INF/serviceimpl</param-value>
 	</context-param>
 
-<!--
-	<filter>
-		<filter-name>ApplicationAuthenticator</filter-name>
-		<filter-class>jp.go.nict.langrid.servlet.filter.auth.ApplicationAuthenticator</filter-class>
-		<init-param>
-			<param-name>parameterPrefix</param-name>
-			<param-value>fromCoreNode.appAuth.</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>ApplicationAuthenticator</filter-name>
-		<url-pattern>/services/*</url-pattern>
-		<url-pattern>/pbServices/*</url-pattern>
-	</filter-mapping>
-	
-	<filter>
-		<filter-name>SentinelAuthenticator</filter-name>
-		<filter-class>jp.go.nict.langrid.servlet.filter.auth.SentinelAuthenticator</filter-class>
-		<init-param>
-			<param-name>ignorePattern</param-name>
-			<param-value>(.*\?wsdl)|(.*/services$)</param-value>
-		</init-param>
-		<init-param>
-			<param-name>realmName</param-name>
-			<param-value>Service Grid Service Engine</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>SentinelAuthenticator</filter-name>
-		<url-pattern>/services/*</url-pattern>
-	</filter-mapping>
--->
-
 	<servlet>
 		<servlet-name>AxisServlet</servlet-name>
 		<servlet-class>jp.go.nict.langrid.servicecontainer.handler.axis.SGAxisServlet</servlet-class>
 		<init-param>
 			<param-name>wsddBeanNamespaceMappings</param-name>
-			<param-value></param-value>
+			<param-value>
+				jp.go.nict.langrid.service_1_2,http://langrid.nict.go.jp/ws_1_2/
+			</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
