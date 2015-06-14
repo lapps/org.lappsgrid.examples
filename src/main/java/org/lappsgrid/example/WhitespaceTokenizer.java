@@ -103,7 +103,7 @@ public class WhitespaceTokenizer implements WebService
 	 * Splits the container's text into whitespace delimited tokens.
 	 *
 	 * Token annotations will be added to a new View in the container.
-\	 */
+	 */
 	protected void tokenize(Container container)
 	{
 		View view = container.newView();
