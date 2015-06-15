@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 target
 *.iml
 *.ipr
@@ -5,3 +6,9 @@ target
 *.jar
 *.war
 VERSION
+=======
+
+.idea/**
+*.iml
+target/**
+>>>>>>> c8e90d66eda1eea8951e4087923cf2b326150bef
