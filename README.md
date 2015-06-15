@@ -1,11 +1,11 @@
-Wrapping Web Services : Step 2
+Wrapping Web Services : Step 3
 =====================
 
 # Sections To Be Written
 
 - [x] Maven setup
 - [x] Project setup
-- [ ] Lapps interfaces
+- [x] Lapps interfaces
 - [ ] Serializing Lapps objects
 - [ ] Implementing required methods
   - [ ] Metadata and annotations
@@ -14,10 +14,7 @@ Wrapping Web Services : Step 2
 
 # Introduction
 
-This is a short introduction to creating web services that can be deployed to
-any Language Grid server.  The [Service Grid](http://servicegrid.net/en/index.html) uses
-SOAP for inter-service communications, however the complexities of working with SOAP
-have been abstracted away by the Service Grid and Language Grid layers.
+This part contains a brief introduction to LAPPS Exchange Data Structures (LEDS), a guide to use LAPPS Serialization package for compatible I/O operations of a service, and finally how to implement 'getMetadata()' method, a requirement for a LAPPS service.
 
 # Requirements
 
@@ -28,17 +25,14 @@ For this tutorial you will require:
 1. An IDE such as IntelliJ or Eclipse
 1. About 15 minues
 
-It is assumed that you know how to create a Maven project either using your IDE or via
-the command line.  Maven usage is beyond the scope of this tutorial.
-
+It is assumed that you know how to create a Maven project either using your IDE or via the command line.  Maven usage is beyond the scope of this tutorial.
 
 # Up Next
 
-In Step three of the tutorial we add annotations to our implementation class to
-automatically generate the JSON metadata returned by the `getMetadata()` method.
+In Step four of the tutorial, we will implement another required method, 'execute()'.
 
 To advance to step two run the command:
 
 ```bash
-> git checkout Step3-Metadata
+> git checkout Step3-Execute
 ```
