@@ -77,8 +77,16 @@ service to the Lappsgrid; albeit not a particularly interesting service...
 All of the Strings passed to and from Lappsgrid services are JSON strings containing
 [org.lappsgrid.serialization.Data](http://lapps.github.io/org.lappsgrid.serialization/index.html?org/lappsgrid/serialization/Data.html)
 objects.  Each `Data` object consists of a `discriminator`, which is a URI from the
-[Lappsgrid URI Inventory](http://vocab.lappsgrid.org/discriminators.html) and a payload.
-The `discriminator` is used to determine the contents of the `payload`.  The
+[Lappsgrid URI Inventory](http://vocab.lappsgrid.org/discriminators.html), and a payload.
+The `discriminator` is used to determine the contents of the `payload`.  
+
+```java
+Data<String> data = new Data<String>();
+
+
+```
+
+The
 [org.lappsgrid.discriminator.Discriminators.Uri](http://lapps.github.io/org.lappsgrid.discriminator/index.html?org/lappsgrid/discriminator/Discriminators.html) 
 class contains constant definitions of the URI in the Lappsgrid inventory so users don't 
 have to remember the URIs:
