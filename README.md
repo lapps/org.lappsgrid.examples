@@ -29,7 +29,7 @@ It is assumed that you know how to create a Maven project either using your IDE 
 # Pack things up
 
 A service needs to be packaged into a .war file before deployed to Lappsgrid. 
-To pack things up, a developer first needs to config manifest files.
+To pack things up, a developer first needs to config manifest files for maven compilation.
 We provide here [webapp.zip](https://github.com/lapps/org.lappsgrid.example.java.whitespacetokenizer/blob/Step5-Packaing/webapp.zip)
  file contains templates of necessary manifest files.
 
@@ -47,7 +47,7 @@ webapp
             YOUR_CLASS_NAME.xml
 ```
 
-Only files that need changes are 
+Files we need to edit are:
 
 1. `web.xml` in `webapp/WEB-INF/`
 1. `YOUR_CLASS_NAME.xml` in `webapp/WEB-INF/serviceimpl/`
@@ -60,7 +60,7 @@ At the top of web.xml file, you will find `display-name` tag. Put your service n
 <display-name>===YOUR SERVICE NAME HERE===</display-name>
 ```
 
-With the whitespace tokenizer example, `web.xml` will look like
+With the whitespace tokenizer example, `web.xml` will look like:
 
 ```xml
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
@@ -75,15 +75,15 @@ With the whitespace tokenizer example, `web.xml` will look like
 ## Adding services configuration to serviceimpl
 
 In `webapp/WEB-INF/serviceimpl` directory, There is `YOUR_CLASS_NAME.xml`. 
-Here you need to create corresponding xml files for each class that has `execute()` and `getMetadata()` methods.
-Since we only have one such class, `WhitespaceTokonizer`, all we need is `WhitespaceTokenizer.xml`. Rename it.
+Here you need to create corresponding xml files for each service class that has `execute()` and `getMetadata()` methods.
+Since, in this exmaple, we only have one such class, `WhitespaceTokonizer`, all we need is `WhitespaceTokenizer.xml`. Rename it.
 Then we also need to edit the xml file, change `class` attribute of inner `bean` tag
 
 ```xml
 <bean class="===YOUR CLASS NAME HERE===">
 ```
 
-Final `WhitespaceTokenizer.xml` would be this:
+Finally, `WhitespaceTokenizer.xml` would look like this:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -100,10 +100,11 @@ Final `WhitespaceTokenizer.xml` would be this:
 
 ## Maven packing
 
-Now we set up all necessary configuration to pack things up. 
-One last step before we pack is to put those configurations in the right place. 
-Move `webapp` directory in source `src/main/`.
-Final command is to use maven to compile the package into a war file:
+We complete to set up all necessary configuration to pack things up. 
+Now, we are one step away; put those configurations in the right place. 
+Move `webapp` directory in source directory `src/main/`.
+
+Finally, it's time to compile. Use maven to compile the package into a war file.
 
 ```bash
 mvn clean package
