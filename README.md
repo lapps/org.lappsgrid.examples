@@ -37,17 +37,20 @@ We provide here [webapp.zip](https://github.com/lapps/org.lappsgrid.example.java
 
 In the compressed file, one can find these files
 
-+-- webapp
-    +-- WEB-INF
-        +-- serviceimpl
-            +-- YOUR_CLASS_NAME.xml
-        +-- server-config.wsdd
-        +-- web.xml
+```
+webapp
+└───WEB-INF
+    │   server-config.wsdd
+    │   web.xml
+    │
+    └───serviceimpl
+            YOUR_CLASS_NAME.xml
+```
 
 Only files that need changes are 
 
-1. web.xml in webapp/WEB-INF/
-1. YOUR_CLASS>NAME.xml in webapp/WEB-INF/serviceimpl
+1. `web.xml` in `webapp/WEB-INF/`
+1. `YOUR_CLASS_NAME.xml` in `webapp/WEB-INF/serviceimpl/`
 
 ## Updating web.xml
 
@@ -67,20 +70,20 @@ With the whitespace tokenizer example, `web.xml` will look like
         <param-value>WEB-INF/serviceimpl</param-value>
     </context-param>
     ...
-    ```
+```
 
 ## Adding services configuration to serviceimpl
 
 In `webapp/WEB-INF/serviceimpl` directory, There is `YOUR_CLASS_NAME.xml`. 
 Here you need to create corresponding xml files for each class that has `execute()` and `getMetadata()` methods.
-Since we only have one such class, `WhitespaceTokonizer`, all we need is `WhitespaceTokenizer.xml`.
+Since we only have one such class, `WhitespaceTokonizer`, all we need is `WhitespaceTokenizer.xml`. Rename it.
 Then we also need to edit the xml file, change `class` attribute of inner `bean` tag
 
 ```xml
 <bean class="===YOUR CLASS NAME HERE===">
 ```
 
-Finally `WhitespaceTokenizer.xml` would be this:
+Final `WhitespaceTokenizer.xml` would be this:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -112,5 +115,4 @@ If you want to run all tests before compilation, use `test` flag
 mvn clean test package
 ```
 
-.war file is located in `target` directory in project root.
-
+The maven-generated .war file will be located in `target` directory in project root.
