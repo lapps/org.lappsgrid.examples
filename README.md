@@ -1,15 +1,12 @@
-Wrapping Web Services : Step 3
+Wrapping Web Services : Step 4
 =====================
 
 # Sections To Be Written
 
- - [ ] Implementing required methods
-     - [x] `execute` method (in prev section)
-     - [ ] `getMetadata`
-         - [ ] generate with annotations
-         - [ ] generate with ServiceMetadata class
-  
-
+ - [ ] Testing
+     - [ ] Unit testing methods
+     - [ ] Service testiing (SoapUI, mvn jetty:run)
+ 
 # Introduction
 
 
@@ -27,10 +24,10 @@ It is assumed that you know how to create a Maven project either using your IDE 
 
 # Up Next
 
-In Step four of the tutorial, we would write some test methods to test out services
+In Step four of the tutorial, we pack up our service into a WAR package using maven, make it ready to be deployed.
 
 To advance to step two run the command:
 
 ```bash
-> git checkout Step4-Testing
+> git checkout Step5-Packaging
 ```
