@@ -1,18 +1,15 @@
-Wrapping Web Services : Step 3
+Wrapping Web Services : Step 5
 =====================
 
 # Sections To Be Written
 
- - [ ] Implementing required methods
-     - [x] `execute` method (in prev section)
-     - [ ] `getMetadata`
-         - [ ] generate with annotations
-         - [ ] generate with ServiceMetadata class
-  
+ - [ ] Generating the .war file
+     - [ ] update web.xml
+     - [ ] adding configuration file to serviceimpl directory
 
 # Introduction
 
-
+In this section,
 
 # Requirements
 
@@ -24,13 +21,3 @@ For this tutorial you will require:
 1. About 15 minues
 
 It is assumed that you know how to create a Maven project either using your IDE or via the command line.  Maven usage is beyond the scope of this tutorial.
-
-# Up Next
-
-In Step four of the tutorial, we would write some test methods to test out services
-
-To advance to step two run the command:
-
-```bash
-> git checkout Step4-Testing
-```
