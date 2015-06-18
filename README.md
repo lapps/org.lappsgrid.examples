@@ -3,18 +3,16 @@ Wrapping Web Services : Step 3
 
 # Sections To Be Written
 
-- [x] Maven setup
-- [x] Project setup
-- [x] Lapps interfaces
-- [ ] Serializing Lapps objects
-- [ ] Implementing required methods
-  - [ ] Metadata and annotations
-  - [ ] `execute` method
+ - [ ] Implementing required methods
+     - [x] `execute` method (in prev section)
+     - [ ] `getMetadata`
+         - [ ] generate with annotations
+         - [ ] generate with ServiceMetadata class
   
 
 # Introduction
 
-This part contains a brief introduction to LAPPS Exchange Data Structures (LEDS), a guide to use LAPPS Serialization package for compatible I/O operations of a service, and finally how to implement 'getMetadata()' method, a requirement for a LAPPS service.
+
 
 # Requirements
 
@@ -29,10 +27,10 @@ It is assumed that you know how to create a Maven project either using your IDE 
 
 # Up Next
 
-In Step four of the tutorial, we will implement another required method, 'execute()'.
+In Step four of the tutorial, we would write some test methods to test out services
 
 To advance to step two run the command:
 
 ```bash
-> git checkout Step3-Execute
+> git checkout Step4-Testing
 ```
