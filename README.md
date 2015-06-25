@@ -197,7 +197,7 @@ First thing to do is to import `MetadataProcess` as a compiler plugin for maven 
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <annotationProcessors>
-                        <annotationProcessor>org.lappsgrid.experimental.annotation.processing.MetadataProcessor</annotationProcessor>
+                        <annotationProcessor>org.lappsgrid.annotation.processing.MetadataProcessor</annotationProcessor>
                     </annotationProcessors>
                 </configuration>
             </plugin>
@@ -205,8 +205,6 @@ First thing to do is to import `MetadataProcess` as a compiler plugin for maven 
     </build>
 </project>
 ```
-
-[ ] **TODO**: change package path when `annotatiaon` becomes non-experimental.
 
 Then give an annotation to your service class using these keywords:
 
@@ -240,10 +238,8 @@ For keys that require discriminator(s), you can simply give their aliases from [
     
 Here is an example:
 
-[ ] **TODO**: change package path when `annotatiaon` becomes non-experimental.
-
 ```java
-    import org.lappsgrid.experimental.annotations.ServiceMetadata;
+    import org.lappsgrid.annotations.ServiceMetadata;
     
     @ServiceMetadata(
         vendor = "http://www.anc.org",
