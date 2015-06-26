@@ -11,7 +11,6 @@ Wrapping Web Services : Step 3
          - [x] Generating metadata with annotations
          - [x] Returning metadata
   
-
 # Introduction
 
 This is a short introduction to creating web services that can be deployed to
@@ -42,45 +41,45 @@ as well as the service's I/O specification.
 
 Default JSON schema for a service consists of these fields:
 
-* **$schema**(String)
+* **$schema** (String)
     * The JSON schema that describes the JSON format
     * Defaults to "http://vocab.lappsgrid.org/schema/service-schema-1.0.0.json".
-* **name**(String)
+* **name** (String)
     * A human readable name for the service. 
-* **vendor**(String)
+* **vendor** (String)
     * Name or URI of the organization providing the service. 
-* **version**(String)
+* **version** (String)
     * The service version number in [major].[minor].[revision] format with an optional trailing qualifier. 
     * E.G. 1.1.0-SNAPSHOT 
-* **description**(String)
+* **description** (String)
     * A plain text description of the service or the URL to an online description. 
-* **allow**(URI)
+* **allow** (URI)
     * Permitted uses of this service. URI describes the allowable usages, e.g. commerial, research, etc. 
     * By default, it gets "allowed for any purpose".
-* **license**(URI)
+* **license** (URI)
     * The license for this service.
-* **url**(URI)
+* **url** (URI)
     * The full URL used to invoke the service.
-* **parameters**(List)
+* **parameters** (List)
     * Descriptions of the parameters required by the service.
-* **requires**(JSON)
+* **requires** (JSON)
     * Input requirements of the service.  
-* **produces**(JSON)
+* **produces** (JSON)
     * Output format specification.
 
 ### Metadata specifying input/output data
 
 I/O specifications are nested JSON string which consist of:
 
-* **encoding**(String)
+* **encoding** (String)
     * The character encoding of input or output.
     * Defaults to UTF-8.
-* **language**(List)
-    * A list of ISO language codes of acceptable/produced languages of I/O.
-    * E.G. A Chinese-to-English translator service might requires "zh" and produces "en"
-* **format**(List)
+* **language** (List)
+    * A list of [ISO language codes](http://www.loc.gov/standards/iso639-2/php/code_list.php) of acceptable/produced languages as input or output.
+    * E.G. A Chinese-to-English translator service might require "zh" and produce "en"
+* **format** (List)
     * A list of URI from the Lapps vocabulary specifying the format of I/O.
-* **annotations**(List)
+* **annotations** (List)
     * A list of URI from the Lapps vocabulary specifying the annotation types of I/O.
 
 ### Metadata JSON example
@@ -189,7 +188,7 @@ First thing to do is to import `MetadataProcess` as a compiler plugin for maven 
     <dependencies> ... </dependencies>
     <repositories> ... </repositories>
     
-    <!-- add as a plugin>
+    <!-- add as a plugin -->
     <build>
         <finalName> YOUR_ARTIFACT_NAME </finalName>
         <plugins>
@@ -215,6 +214,7 @@ Here is the list of all annotation keys supported by `annotation` module
     
 * Service information
     * **schema**
+    * **name**
     * **vendor**
     * **version**
     * **description**
@@ -224,17 +224,17 @@ Here is the list of all annotation keys supported by `annotation` module
     * **requires_encoding**: input encoding
     * **produces_encoding**: output encoding
     * **encoding**: use if input and output uses the same encoding
-    * **requires_language**(list): source language
-    * **produces_language**(list): target language
+    * **requires_language** (list): source language
+    * **produces_language** (list): target language
     * **language**: use if input and output are in the same language
-    * **requires_format**(list): acceptable formats
-    * **produces_format**(list): produced foramts
+    * **requires_format** (list): acceptable formats
+    * **produces_format** (list): produced foramts
     * **format**: use if input and output share the same format
-    * **requires**(list): input annotations
-    * **produces**(list): produced annotations
+    * **requires** (list): input annotations
+    * **produces** (list): produced annotations
     
+Note that `name` and `version` are optional. If `name` is not specified, the compiler gets its value automatically from the class name. When `version` is omitted, compiler first try to find a file named `VERSION` with version information, if the file isn't there, then, it gets the version from `pom.xml` Be careful when the service is not a maven project; `version` should be specified in java annotation or in `VERSION` file.
 For keys that require discriminator(s), you can simply give their aliases from [Lappsgrid URI Inventory](http://vocab.lappsgrid.org/discriminators.html).
-(Note that `name` gets its value automatically by compiler plugin.)
     
 Here is an example:
 
