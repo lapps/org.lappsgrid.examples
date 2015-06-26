@@ -73,7 +73,7 @@ public class TestWhitespaceTokenizer
 
 		assertEquals("Vendor is not correct", "http://www.anc.org", metadata.getVendor());
 		assertEquals("Name is not correct", WhitespaceTokenizer.class.getName(), metadata.getName());
-		assertEquals("Version is not correct.", Version.getVersion(), metadata.getVersion());
+		assertEquals("Version is not correct.","1.0.0-SNAPSHOT" , metadata.getVersion());
 		assertEquals("License is not correct", Uri.APACHE2, metadata.getLicense());
 
 		IOSpecification produces = metadata.getProduces();
