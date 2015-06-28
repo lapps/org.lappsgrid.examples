@@ -30,10 +30,9 @@ It is assumed that you know how to create a Maven project either using your IDE 
 
 ## Testing methods
 
-Regular Java unit test should work for a LAPPS grid service. 
-Prepare a separate test class in `src/test/java/YOUR/PACKAGE/STRUCTURE/TestClass.java`
-Unit tests in this tutorial will use `junit` package.
-Example program is at `src/test/java/org/lappsgrid/example/TestWhitespaceTokenizer.java`
+Regular Java unit test using `junit` should work for a LAPPS grid service. 
+First of all, prepare a separate test class in `src/test/java/YOUR/PACKAGE/STRUCTURE/TestClass.java`
+We start with following skeleton.
 
 ```java
     package org.lappsgrid.example;
@@ -116,9 +115,18 @@ Now, we will see the program generates correct metadata.
 
 ### Test `execute()` method
 
-We will test `execute()` as well. Since our `WhitespaceTokenizer` produces `LIF` format, `execute()` will return a JSON serialization. We need to handle this string, just like we did in `testMetadata()`.
+We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF* format, `execute()` will return a JSON serialization. We need to handle this string, just like we did in `testMetadata()`. See the folowing test method.
 
 ```java
+    
+    import static org.lappsgrid.discriminator.Discriminators.Uri;
+    import org.lappsgrid.metadata.*;
+    import org.lappsgrid.serialization.*;
+    import org.lappsgrid.serialization.lif.*;
+    import org.lappsgrid.vocabulary.Features;
+
+    ...
+
     @Test
     public void testExecute() {
 
@@ -132,34 +140,31 @@ We will test `execute()` as well. Since our `WhitespaceTokenizer` produces `LIF`
 
         // Now, see all annotations in curretn view is correct
         List<View> views = container.getViews();
-        if (views.size() != 1)
-        {
+        if (views.size() != 1) {
             fail(String.format("Expected 1 view. Found: %d", views.size()));
         }
         View view = views.get(0);
         assertTrue("View does not contain tokens", view.contains(Uri.TOKEN));
         List<Annotation> annotations = view.getAnnotations();
-        if (annotations.size() != 2)
-        {
-            fail(String.format("Expected 2 annotations. Found %d", annotations.size()));
+        if (annotations.size() != 2) {
+            fail(String.format("Expected 2 tokens. Found %d", annotations.size()));
         }
         Annotation tok1 = annotations.get(0);
         assertEquals("Token 1: wrong label", Uri.TOKEN, tok1.getLabel());
         assertEquals("Token 1: wrong start", 3L, tok1.getStart().longValue());
-        assertEquals("Token 1: wrong end", 6L, tok1.getEnd().longValue());
         assertEquals("Token 1: wrong word", "abc", tok1.getFeature(Features.Token.WORD));
 
         Annotation tok2 = annotations.get(1);
-        assertEquals("Token 2: wrong label", Uri.TOKEN, tok2.getLabel());
-        assertEquals("Token 2: wrong start", 7L, tok2.getStart().longValue());
         assertEquals("Token 2: wrong end", 10L, tok2.getEnd().longValue());
         assertEquals("Token 2: wrong word", "def", tok2.getFeature(Features.Token.WORD));
     }
 ```
 
+The full example code can be found at `src/test/java/org/lappsgrid/example/TestWhitespaceTokenizer.java`
+
 ## Testing the service as a web application
 
-We will use [jetty Maven plugin](http://mvnrepository.com/artifact/org.mortbay.jetty/jetty-maven-plugin) for rapid testing. 
+We will use [jetty Maven plugin](http://mvnrepository.com/artifact/org.eclipse.jetty) for web-app testing. 
 As we stated, this tutorial is not focused on details about Maven. 
 For more details about the plugin, please refer to [the documentation from Eclipse](http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html#running-assembled-webapp-as-war)
 
@@ -192,7 +197,7 @@ First, we need to set up the plugin at `pom.xml` so that Maven automatically run
 </project>
 ```
 
-Then run Maven to compile the project then start server.
+Then run Maven to compile the project then start jetty server for rapid testing.
 
 ```bash
 maven jetty:run
