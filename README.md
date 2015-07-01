@@ -28,7 +28,7 @@ It is assumed that you know how to create a Maven project either using your IDE 
 
 # Testing
 
-## Testing methods
+## Unit Testing
 
 Regular Java unit test using `junit` should work for a LAPPS grid service. 
 First of all, prepare a separate test class in `src/test/java/YOUR/PACKAGE/STRUCTURE/TestClass.java`
@@ -138,7 +138,7 @@ We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF*
         Container container = execute(text);
         assertEquals("Text not set correctly", text, container.getText());
 
-        // Now, see all annotations in curretn view is correct
+        // Now, see all annotations in current view is correct
         List<View> views = container.getViews();
         if (views.size() != 1) {
             fail(String.format("Expected 1 view. Found: %d", views.size()));
@@ -162,46 +162,18 @@ We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF*
 
 The full example code can be found at `src/test/java/org/lappsgrid/example/TestWhitespaceTokenizer.java`
 
-## Testing the service as a web application
+# Integration Testing
 
-We will use [jetty Maven plugin](http://mvnrepository.com/artifact/org.eclipse.jetty) for web-app testing. 
-As we stated, this tutorial is not focused on details about Maven. 
-For more details about the plugin, please refer to [the documentation from Eclipse](http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html#running-assembled-webapp-as-war)
-
-First, we need to set up the plugin at `pom.xml` so that Maven automatically run jetty server for testing.
-
-```xml
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion/>
-    <groupId/>
-    <artifactId/>
-    <version/>
-    <packaging/>
-    <name/>
-    <description/>
-    <parent> ... </parent>
-    <dependencies> ... </dependencies>
-    <repositories> ... </repositories>
-    
-    <!-- add jetty plugin -->
-    <build>:
-        <finalName> YOUR_ARTIFACT_NAME </finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-</project>
-```
-
-Then run Maven to compile the project then start jetty server for rapid testing.
+The LAPPS Grid parent pom includes the [Jetty Maven plugin](http://mvnrepository.com/artifact/org.eclipse.jetty)
+plugin to enable the service can be launched from the command line. To launch the service invoke
+the `jetty:run` goal.
 
 ```bash
-maven jetty:run
+    mvn jetty:run
 ```
+
+
+For more details about the Jetty Maven plugin, please refer to [the documentation](http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html#running-assembled-webapp-as-war).
 
 **TODO** now, how to test the service with SOAP-UI
 
