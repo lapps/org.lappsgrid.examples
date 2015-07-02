@@ -1,15 +1,6 @@
 Wrapping Web Services : Step 2
 =====================
 
-# Sections To Be Written
-
- - [x] Lappsgrid interfaces
- - [x] LEDS
-   - [x] Creating Data
-   - [x] Returning errors
-   - [x] Creating LIF objects
- - [x] Simple execute method.   
-
 # Introduction
 
 This is a short introduction to creating web services that can be deployed to
