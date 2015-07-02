@@ -172,6 +172,8 @@ the `jetty:run` goal.
     mvn jetty:run
 ```
 
+After a short time you should see the message that the WhitespaceTokenizer is running on
+port 8080
 
 For more details about the Jetty Maven plugin, please refer to [the documentation](http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html#running-assembled-webapp-as-war).
 
