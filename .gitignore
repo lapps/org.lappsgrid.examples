@@ -1,5 +1,8 @@
-/.classpath
-/.project
+.classpath
+.project
 *.iml
-/.idea
+.idea
 target
+VERSION
+Version.java
+
