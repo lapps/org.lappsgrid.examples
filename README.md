@@ -107,7 +107,7 @@ can be used to reliably generate conformant JSON.  The three main `LEDS` classes
 The `Container` is the main wrapper for LIF objects.  A `Container` consists of some 
 metadata and a list of Views.
 1. `View`<br/>
-A `View` holds related annotations and consists of some metadata and a list of Annotations.
+A `View` consists of some metadata and a list of Annotations.
 1. `Annotation`<br/>
 A single annotation.
 
@@ -159,7 +159,8 @@ the `discriminator` is not `http://vocab.lappsgrid.org/ns/error`.
   1. Otherwise reuse the existing container.
 1. Create a new `View`.
 1. Tokenize the text and add annotations to the view.
-1. Create a new `DataContainer` object with the container.
+1. Add information about the tokens to the view's metadata
+1. Create a new `DataContainer` object to wrap the container.
 1. Serialize the `DataContainer` and return the JSON string.
 
 ```java
@@ -207,10 +208,15 @@ public String execute(String input) {
 		a.addFeature(Features.Token.WORD, word);
 	}
 
-	// Step #5: Create a DataContainer with the result.
+	// Step #6: Update the view's metadata. Each view contains metadata about the
+	// annotations it contains, in particular the name of the tool that produced the
+	// annotations.
+	view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
+	
+	// Step #7: Create a DataContainer with the result.
 	data = new DataContainer(container);
 
-	// Step #6: Serialize the data object and return the JSON.
+	// Step #8: Serialize the data object and return the JSON.
 	return data.asJson();
 }
 ```
