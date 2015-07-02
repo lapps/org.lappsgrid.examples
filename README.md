@@ -1,16 +1,6 @@
 Wrapping Web Services : Step 3
 =====================
 
-# Sections To Be Written
-
- - [x] Implementing required methods
-     - [x] `execute` method (in prev section)
-     - [x] `getMetadata`
-         - [x] What's in the metadata?
-         - [x] Generating metadata with Metadata module
-         - [x] Generating metadata with annotations
-         - [x] Returning metadata
-  
 # Introduction
 
 This is a short introduction to creating web services that can be deployed to
