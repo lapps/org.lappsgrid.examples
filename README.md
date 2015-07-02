@@ -164,16 +164,21 @@ The full example code can be found at `src/test/java/org/lappsgrid/example/TestW
 
 # Integration Testing
 
-The LAPPS Grid parent pom includes the [Jetty Maven plugin](http://mvnrepository.com/artifact/org.eclipse.jetty)
-plugin to enable the service can be launched from the command line. To launch the service invoke
+The LAPPS Grid war-parent-pom includes the [Jetty Maven plugin](http://mvnrepository.com/artifact/org.eclipse.jetty)
+plugin so services can be launched from the command line. To launch the service invoke
 the `jetty:run` goal.
 
 ```bash
     mvn jetty:run
 ```
 
-After a short time you should see the message that the WhitespaceTokenizer is running on
-port 8080
+After a short time you should see the message
+```bash
+    [INFO] Started Jetty Server
+```
+To verify the server is running visit 
+[http://localhost:8080/whitespace_tokenizer/jsServices](http://localhost:8080/whitespace_tokenizer/jsServices).
+
 
 For more details about the Jetty Maven plugin, please refer to [the documentation](http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html#running-assembled-webapp-as-war).
 
