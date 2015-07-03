@@ -1,4 +1,9 @@
+/.classpath
+/.project
+/.idea
 target
 *.iml
 *.ipr
 *.iws
+VERSION
+**/Version.java
