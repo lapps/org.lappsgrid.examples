@@ -27,7 +27,7 @@ It is assumed that you know how to create a Maven project either using your IDE 
 
 # Testing
 
-We will use JUnit, which is included by the LAPPS Grid parent pom, of unit testing and
+We will use JUnit, which is included by the LAPPS Grid parent pom, for unit testing and
 Jetty/SoapUI for (simple) integration testing.  The unit tests will verify that the 
 WhitespaceTokenizer class does what it claims it does, while the integration tests ensure
 the projects runs as a web service and doesn't return error messages.
