@@ -3,3 +3,5 @@
 *.iml
 /.idea
 target
+VERSION
+Version.java
