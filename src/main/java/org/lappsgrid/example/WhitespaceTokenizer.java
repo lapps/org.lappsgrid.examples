@@ -2,6 +2,9 @@ package org.lappsgrid.example;
 
 import org.lappsgrid.api.ProcessingService;
 import static org.lappsgrid.discriminator.Discriminators.Uri;
+
+import org.lappsgrid.metadata.IOSpecification;
+import org.lappsgrid.metadata.ServiceMetadata;
 import org.lappsgrid.serialization.Data;
 import org.lappsgrid.serialization.DataContainer;
 import org.lappsgrid.serialization.Serializer;
@@ -13,15 +16,49 @@ import org.lappsgrid.vocabulary.Features;
 import java.util.Map;
 
 /**
- * Step Two the the Lappsgrid tutorial.
+ * Tutorial step #5: Packaging
  * 
  */
 public class WhitespaceTokenizer implements ProcessingService
 {
-	public WhitespaceTokenizer() { }
+	/**
+	 * The Json String required by getMetadata()
+	 */
+	private String metadata;
+
+	public WhitespaceTokenizer() {
+		// Create and populate the metadata object
+		ServiceMetadata metadata = new ServiceMetadata();
+		metadata.setName(this.getClass().getName());
+		metadata.setDescription("Whitespace tokenizer");
+		metadata.setVersion("1.0.0-SNAPSHOT");
+		metadata.setVendor("http://www.lappsgrid.org");
+		metadata.setLicense(Uri.APACHE2);
+
+		IOSpecification requires = new IOSpecification();
+		requires.addFormat(Uri.TEXT);
+		requires.addFormat(Uri.LAPPS);
+		requires.addFormat(Uri.LIF);
+		requires.setEncoding("UTF-8");
+		metadata.setRequires(requires);
+
+		IOSpecification produces = new IOSpecification();
+		produces.addFormat(Uri.LAPPS);
+		produces.setEncoding("UTF-8");
+		produces.addAnnotation(Uri.TOKEN);
+		metadata.setProduces(produces);
+
+		// Serialize the metadata to a string and save for the
+		// getMetadata() method.
+		Data<ServiceMetadata> data = new Data<>(Uri.META, metadata);
+		this.metadata = data.asPrettyJson();
+	}
 
 	@Override
-	public String getMetadata() { return null; }
+	public String getMetadata()
+	{
+		return metadata;
+	}
 
 	@Override
 	public String execute(String input) {
@@ -68,10 +105,13 @@ public class WhitespaceTokenizer implements ProcessingService
 			a.addFeature(Features.Token.WORD, word);
 		}
 
-		// Step #5: Create a DataContainer with the result.
+		// Step #6: Update the metadata for the view
+		view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
+
+		// Step #7: Create a DataContainer with the result.
 		data = new DataContainer(container);
 
-		// Step #6: Serialize the data object and return the JSON.
-		return data.asJson();
+		// Step #8: Serialize the data object and return the JSON.
+		return data.asPrettyJson();
 	}
 }
