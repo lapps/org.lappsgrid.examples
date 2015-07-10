@@ -34,7 +34,7 @@ public class WhitespaceTokenizer implements ProcessingService
         metadata.setName(this.getClass().getName());
         metadata.setDescription("Whitespace tokenizer");
         metadata.setVersion("1.0.0-SNAPSHOT");
-        metadata.setVendor("http://www.anc.org");
+        metadata.setVendor("http://www.lappsgrid.org");
         metadata.setLicense(Uri.APACHE2);
 
         IOSpecification requires = new IOSpecification();
