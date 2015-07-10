@@ -1,13 +1,6 @@
 Wrapping Web Services : Step 5
 =====================
 
-# Sections To Be Written
-
- - [x] Generating the .war file
-     - [x] Update web.xml
-     - [x] Adding configuration file to serviceimpl directory
-     - [x] Package into war file using maven
-
 # Introduction
 
 This is a short introduction to creating web services that can be deployed to
