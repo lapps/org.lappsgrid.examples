@@ -71,7 +71,7 @@ public class TestWhitespaceTokenizer
 
 		ServiceMetadata metadata = new ServiceMetadata((Map) data.getPayload());
 
-		assertEquals("Vendor is not correct", "http://www.anc.org", metadata.getVendor());
+		assertEquals("Vendor is not correct", "http://www.lappsgrid.org", metadata.getVendor());
 		assertEquals("Name is not correct", WhitespaceTokenizer.class.getName(), metadata.getName());
 		assertEquals("Version is not correct.","1.0.0-SNAPSHOT" , metadata.getVersion());
 		assertEquals("License is not correct", Uri.APACHE2, metadata.getLicense());
