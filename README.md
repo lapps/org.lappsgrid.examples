@@ -1,11 +1,10 @@
-Wrapping Web Services : Step 4
+Wrapping Web Services : Step 4 Testing
 =====================
 
-# Sections To Be Written
+### Contents
 
- - [ ] Testing
-     - [x] Unit testing methods
-     - [ ] Service testing (SoapUI, mvn jetty:run)
+ - [Unit Testing](#unit-testing)
+ - [Integration Testing](#integration-testing)
  
 # Introduction
 
@@ -18,7 +17,7 @@ have been abstracted away by the Service Grid and Language Grid layers.
 
 For this tutorial you will require:
 
-1. Java 1.7
+1. Java 1.7 (or later)
 1. Maven 3.0.x
 1. An IDE such as IntelliJ or Eclipse
 1. About 15 minutes
@@ -28,10 +27,14 @@ It is assumed that you know how to create a Maven project either using your IDE 
 
 # Testing
 
-## Testing methods
+We will use JUnit, which is included by the LAPPS Grid parent pom, for unit testing and
+Jetty/SoapUI for (simple) integration testing.  The unit tests will verify that the 
+WhitespaceTokenizer class does what it claims it does, while the integration tests ensure
+the projects runs as a web service and doesn't return error messages.
 
-Regular Java unit test using `junit` should work for a LAPPS grid service. 
-First of all, prepare a separate test class in `src/test/java/YOUR/PACKAGE/STRUCTURE/TestClass.java`
+## Unit Testing
+
+Create a new test class in `src/test/java/org/lappsgrid.example/TestWhitespaceTokenizer.java`
 We start with following skeleton.
 
 ```java
@@ -138,7 +141,7 @@ We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF*
         Container container = execute(text);
         assertEquals("Text not set correctly", text, container.getText());
 
-        // Now, see all annotations in curretn view is correct
+        // Now, see all annotations in current view is correct
         List<View> views = container.getViews();
         if (views.size() != 1) {
             fail(String.format("Expected 1 view. Found: %d", views.size()));
@@ -162,54 +165,120 @@ We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF*
 
 The full example code can be found at `src/test/java/org/lappsgrid/example/TestWhitespaceTokenizer.java`
 
-## Testing the service as a web application
+# Integration Testing
 
-We will use [jetty Maven plugin](http://mvnrepository.com/artifact/org.eclipse.jetty) for web-app testing. 
-As we stated, this tutorial is not focused on details about Maven. 
-For more details about the plugin, please refer to [the documentation from Eclipse](http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html#running-assembled-webapp-as-war)
-
-First, we need to set up the plugin at `pom.xml` so that Maven automatically run jetty server for testing.
-
-```xml
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion/>
-    <groupId/>
-    <artifactId/>
-    <version/>
-    <packaging/>
-    <name/>
-    <description/>
-    <parent> ... </parent>
-    <dependencies> ... </dependencies>
-    <repositories> ... </repositories>
-    
-    <!-- add jetty plugin -->
-    <build>:
-        <finalName> YOUR_ARTIFACT_NAME </finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-</project>
-```
-
-Then run Maven to compile the project then start jetty server for rapid testing.
+The LAPPS Grid war-parent-pom includes the [Jetty Maven plugin](http://mvnrepository.com/artifact/org.eclipse.jetty)
+plugin so services can be launched from the command line. To launch the service invoke
+the `jetty:run` goal.
 
 ```bash
-maven jetty:run
+> mvn jetty:run
 ```
 
-**TODO** now, how to test the service with SOAP-UI
+After a short time you should see the message
+```bash
+    [INFO] Started Jetty Server
+```
+To verify the server is running visit 
+<a target="_blank" href="http://localhost:8080/whitespace_tokenizer/jsServices">http://localhost:8080/whitespace_tokenizer/jsServices</a>.
+You should see the following in your browser: 
+
+![JSON RPC](http://www.anc.org/images/jsServices.png)
+
+This simple user interface is provided automatically by the Apache Axis framework and 
+we can use it to invoke methods on the service.  We will use it to invoke the `getMetatdata`
+method since it does not require any input.
+
+Click on the + sign beside the `getMetadata` line and then click on the [invoke] link to 
+invoke the `getMetadata` method.  If you see the following page then the service is working 
+correctly.  If not check your terminal window for a stack trace
+
+![JSON RPC](http://www.anc.org/images/jsServices2.png)
+
+## SoapUI (Optional)
+
+For the next test we will use SoapUI. SoapUI, as the name suggests, provides a user 
+interface for interacting with SOAP web services. SoapUI is available for Windows, Mac, and Linux and 
+can be downloaded from [Sourceforge](http://sourceforge.net/projects/soapui/files/). See the
+*Getting Started* section at [www.soapui.org](http://www.soapui.org) if you need help using
+SoapUI.
+
+Start SoapUI and create a new SOAP project. Enter the following in the project setup dialog:
+
+* **Project Name:** Whitespace Tokenizer
+* **Initial WSDL:** http://localhost:8080/whitespace_tokenizer/services/WhitespaceTokenizer?wsdl
+
+Click the `OK` button.  SoapUI will load the WSDL file from the service and after a
+moment you should see the Whitespace Tokenizer project in the left hand pane.  Expand the
+`execute` method and double click on `Request 1`. This will open the request editor in the right
+hand pane.
+
+Find the line
+```xml
+         <input xsi:type="xsd:string">?</input>
+```
+
+and replace the question mark with the following JSON:
+```json
+{
+    "discriminator":"http://vocab.lappsgrid.org/ns/media/text",
+    "payload": "Goodbye cruel world I am leaving you today."
+}
+```
+
+The XML in the request editor should now look like:
+
+![soap-ui](http://www.anc.org/images/soapui.png)
+
+To invoke the `execute` method you can:
+* Click the green arrow in the top left of the request editor, or
+* Press Alt-Enter (Windows) or Cmd-Enter (Mac).
+
+You should see the response from the service appear in the right hand pane of the request
+editor.
+
+## Troubleshooting
+
+**Q: My browser says the server could not be found**
+
+**A:** This means the Jetty server did not start.  Check the terminal window for error messages.
+
+**Q: Jetty can't start because the port is in use**
+
+**A:** Another application is using port 8080 on your computer.  You can either quit the other 
+application and try starting Jetty again, or you can tell Jetty to use a different port
+number.
+ 
+```bash
+> mvn jetty:run -Djetty.port=9999
+```
+
+If you do change the port that Jetty uses remember to adjust the URLs used in the rest
+of the tutorial.
+
+**Q: I get a HTTP 404 Not Found error**
+
+**A:** Double check the URL you are using. Did you change the port number? The URL will 
+take the form
+```
+    # For the WSDL file
+    http://localhost:<port>/<artifactId>/services/<className>?wsdl
+    # For the JSON-RPC services
+    http://localhost:<port>/<artifactId>/jsServices
+
+```
+Where
+
+* **port** Is 8080 by default unless explicitly changed when starting Jetty.
+* **artifactId** The <artifactId> value specified in the pom.xml file.
+* **className** The name of the Java class (without the package name) providing the service.
 
 # Up Next
 
-In Step four of the tutorial, we pack up our service into a WAR package using Maven, make it ready to be deployed.
+In Step five of the tutorial we pack up our service into a WAR file ready to be deployed to
+an application server such as Tomcat.
 
-To advance to step two run the command:
+To advance to step five run the command:
 
 ```bash
 > git checkout Step5-Packaging

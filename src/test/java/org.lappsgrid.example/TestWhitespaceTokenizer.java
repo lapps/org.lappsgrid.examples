@@ -108,6 +108,10 @@ public class TestWhitespaceTokenizer
 		List<Annotation> annotations = view.getAnnotations();
 		if (annotations.size() != 2)
 		{
+			for (Annotation a : annotations)
+			{
+				System.out.println(a.getId() + " " + a.getLabel() + " " + a.getFeature(Features.Token.WORD));
+			}
 			fail(String.format("Expected 2 annotations. Found %d", annotations.size()));
 		}
 		Annotation token = annotations.get(0);
