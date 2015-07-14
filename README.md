@@ -123,7 +123,16 @@ We will go through two ways to generate metadata in this tutorial. However devel
 
 ## Generating metadata with `Metadata` module
 
-One way to generate a JSON object is to use [`metadata`](http://lapps.github.io/org.lappsgrid.metadata/) module.
+One way to generate a JSON object is to use [`metadata`](http://lapps.github.io/org.lappsgrid.metadata/) module. To use it, first add it as a dependency in `pom.xml`
+
+```xml
+<dependency>
+    <groupId>org.lappsgrid</groupId>
+    <artifactId>metadata</artifactId>
+    <version>1.0.4</version>
+</dependency>
+```
+
 `metadata` module has these classes for generating JSON string:
 
 * [`ServiceMetadata`](http://lapps.github.io/org.lappsgrid.metadata/index.html?org/lappsgrid/metadata/ServiceMetadata.html): provides JSON schema for a `ProcessingService` as well as getters and setters.
@@ -175,23 +184,29 @@ If we can generate this metadata before the runtime and then simply cache a mere
 That's why lappsgrid team provides java annotation for metadata.
 By using java annotation, the compiler will generate JSON string into a file while compiling, which can be read in at runtime efficiently.
 
-First thing to do is to import `MetadataProcess` as a compiler plugin for maven in `pom.xml`.
+First thing to do is to add `annotation` module as a dependency for the project in `pom.xml`
 
 ```xml
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion/>
-    <groupId/>
-    <artifactId/>
-    <version/>
-    <packaging/>
-    <name/>
-    <description/>
-    <parent> ... </parent>
-    <dependencies> ... </dependencies>
-    <repositories> ... </repositories>
-    
-    <!-- add as a plugin -->
+<project ...>
+...
+    <dependencies>
+        <dependency>
+            <groupId>org.lappsgrid.experimental</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${lapps.annotation.version}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+...
+</project>
+```
+
+
+And then import `MetadataProcess` as a compiler plugin for maven.
+
+```xml
+<project ...>
+...
     <build>
         <finalName> YOUR_ARTIFACT_NAME </finalName>
         <plugins>
@@ -205,10 +220,11 @@ First thing to do is to import `MetadataProcess` as a compiler plugin for maven 
             </plugin>
         </plugins>
     </build>
+...
 </project>
 ```
 
-Then give an annotation to your service class using these keywords:
+Finally, give an annotation to your service class using these keywords:
 
 * `@ServiceMetadata`: provides annotation schema for a `ProcessingService`
 * `@DataSourceMetadata`: provides annotation schema for a `DataSource`
