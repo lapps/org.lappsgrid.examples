@@ -1,7 +1,9 @@
-.idea
-target
+/.classpath
+/.project
 *.iml
 *.ipr
 *.iws
+/.idea
+target
 VERSION
 **/Version.java

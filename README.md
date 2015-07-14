@@ -1,15 +1,15 @@
-Wrapping Web Services : Step 2
+Wrapping Web Services : Step 3
 =====================
 
 # Sections To Be Written
 
 1. Maven project setup
-1. **Implementing LAPPSgrid service**
-  1. **Classes and Methods**
-  1. **Lappsgrid Exchange Datastructures**
-    1. **Lappsgrid Interchange Format (LIF)**
-    1. **Serialization**
-1. Service metadata
+1. Implementing LAPPSgrid service
+1. **Service metadata**
+  1. **What's in Metadata**
+  1. **Generating with ``metadata`` module**
+  1. **Generating with ``annotation`` module**
+  1. **Returning metadata**
 1. Testing a service
 1. Packaging a service
 
@@ -27,209 +27,294 @@ For this tutorial you will require:
 1. Java 1.7 (or later)
 1. Maven 3.0.x
 1. an IDE such as IntelliJ or Eclipse
-1. to have have completed Step one
+1. to have have completed Step two
 1. about 15 minutes
 
-It is assumed that you know how to create a Maven project either using your IDE or via
-the command line.  Maven usage is beyond the scope of this tutorial.
+It is assumed that you know how to create a Maven project either using your IDE or via the command line.  Maven usage is beyond the scope of this tutorial.
 
-# WhitespaceTokenizer Class
 
-All services deployed to the Lappsgrid should extend one of the interfaces in the
-[org.lappsgrid.api](https://lapps.github.io/org.lappsgrid.api) module.  Services that provide
-data to other services (aka DataSources) should implement the [DataSource](http://lapps.github.io/org.lappsgrid.api/index.html?org/lappsgrid/api/DataSource.html) 
-interface and services that process data (aka ProcessingServices) should implement the
-[ProcessingService](http://lapps.github.io/org.lappsgrid.api/index.html?org/lappsgrid/api/ProcessingService.html)
-interface.  Both interfaces are *naming interfaces*, that is, they extend [WebService](http://lapps.github.io/org.lappsgrid.api/index.html?org/lappsgrid/api/WebService.html)
-but do not add any new methods.
+# `getMetadata()` method
 
-## Lappsgrid Interfaces and Classes
+## What's in the Metadata
 
-The `WebService` interface contains two methods:
+The metadata of a LAPPS grid service should be able to provide information about the service itself
+as well as the service's I/O specification.
 
-1. **String getMetadata()**<br/>
-Returns metadata about the service
-1. **String execute(String)**<br/>
-Executes the service.
+### Metadata for a service
 
-So the skeleton for a Lappsgrid web service looks like:
+Default JSON schema for a service consists of these fields:
 
-```java
-package org.lappsgrid.example;
+* **$schema** (String)
+    * The JSON schema that describes the JSON format
+    * Defaults to "http://vocab.lappsgrid.org/schema/service-schema-1.0.0.json".
+* **name** (String)
+    * A human readable name for the service. 
+* **vendor** (String)
+    * Name or URI of the organization providing the service. 
+* **version** (String)
+    * The service version number in [major].[minor].[revision] format with an optional trailing qualifier. 
+    * E.G. 1.1.0-SNAPSHOT 
+* **description** (String)
+    * A plain text description of the service or the URL to an online description. 
+* **allow** (URI)
+    * Permitted uses of this service. URI describes the allowable usages, e.g. commerial, research, etc. 
+    * By default, it gets "allowed for any purpose".
+* **license** (URI)
+    * The license for this service.
+* **url** (URI)
+    * The full URL used to invoke the service.
+* **parameters** (List)
+    * Descriptions of the parameters required by the service.
+* **requires** (JSON)
+    * Input requirements of the service.  
+* **produces** (JSON)
+    * Output format specification.
 
-import org.lappsgrid.api.ProcessingService;
+### Metadata specifying input/output data
 
-public class WhitespaceTokenizer implements ProcessingService
+I/O specifications are nested JSON string which consist of:
+
+* **encoding** (String)
+    * The character encoding of input or output.
+    * Defaults to UTF-8.
+* **language** (List)
+    * A list of [ISO language codes](http://www.loc.gov/standards/iso639-2/php/code_list.php) of acceptable/produced languages as input or output.
+    * E.G. A Chinese-to-English translator service might require "zh" and produce "en"
+* **format** (List)
+    * A list of URI from the Lapps vocabulary specifying the format of I/O.
+* **annotations** (List)
+    * A list of URI from the Lapps vocabulary specifying the annotation types of I/O.
+
+### Metadata JSON example
+
+For example, a tokenizer service might __require__ a plain text with no annotation then __produce__ a sequence of tokens in LIF format.
+Thus, 
+
+```json
+  "requires" : {
+    "language" : [ "en" ],
+    "format" : [ "http://vocab.lappsgrid.org/ns/media/text" ]
+  },
+  "produces" : {
+    "language" : [ "en" ],
+    "format" : [ "http://vocab.lappsgrid.org/ns/media/jsonld#lif" ],
+    "annotations" : [ "http://vocab.lappsgrid.org/Token" ]
+  }
+```
+
+Then, the rest of metadata for this whitespace tokenizer would look like:
+
+```json
 {
-	public WhitespaceTokenizer() { }
-	@Override
-	public String getMetadata() { return null; }
-	@Override
-	public String execute(String input) { return null; }
+  "$schema" : "http://vocab.lappsgrid.org/schema/service-schema-1.0.0.json",
+  "name" : "org.lappsgrid.example.WhitespaceTokenizer",
+  "version" : "1.0.0-SNAPSHOT",
+  "description" : "Whitespace Tokenizer",
+  "vendor" : "http://www.lappsgrid.org",
+  "allow" : "http://vocab.lappsgrid.org/ns/allow#any",
+  "license" : "http://vocab.lappsgrid.org/ns/license#apache-2.0",
+  "requires" : { ... },
+  "produces" : { ... },
 }
 ```
 
-With a tiny bit of XML boilerplate we could deploy the above as a perfectly functioning
-service to the Lappsgrid; albeit not a particularly interesting service...
+Service vendors can generate metadata JSON at compile or in runtime. 
+We will go through two ways to generate metadata in this tutorial. However developers are always allowed to generate this string in their own ways.
 
+## Generating metadata with `Metadata` module
 
-## Lappsgrid Exchange Datastructures
+One way to generate a JSON object is to use [`metadata`](http://lapps.github.io/org.lappsgrid.metadata/) module.
+`metadata` module has these classes for generating JSON string:
 
-All of the Strings passed to and from Lappsgrid services are JSON strings containing
-[org.lappsgrid.serialization.Data](http://lapps.github.io/org.lappsgrid.serialization/index.html?org/lappsgrid/serialization/Data.html)
-objects.  Each `Data` object consists of a `discriminator`, which is a URI from the
-[Lappsgrid URI Inventory](http://vocab.lappsgrid.org/discriminators.html), and a payload.
-The `discriminator` is used to determine how the contents of the `payload` should be
-interpreted.  
+* [`ServiceMetadata`](http://lapps.github.io/org.lappsgrid.metadata/index.html?org/lappsgrid/metadata/ServiceMetadata.html): provides JSON schema for a `ProcessingService` as well as getters and setters.
+* [`DataSourceMetadata`](http://lapps.github.io/org.lappsgrid.metadata/index.html?org/lappsgrid/metadata/DataSourceMetadata.html): provides JSON schema for a `DataSource` serive as well as getters and setters.
+* [`IOSpecification`](http://lapps.github.io/org.lappsgrid.metadata/index.html?org/lappsgrid/metadata/IOSpecificatoin.html): provides JSON schema for a specification for input and output.
 
-```java
-Data<String> data = new Data<String>();
-data.setDiscriminator("http://vocab.lappsgrid.org/ns/media/text");
-data.setPayload("Goodbye cruel world, I am leaving you today.");
-```
-
-The
-[org.lappsgrid.discriminator.Discriminators.Uri](http://lapps.github.io/org.lappsgrid.discriminator/index.html?org/lappsgrid/discriminator/Discriminators.html) 
-class contains static definitions of the URI in the Lappsgrid inventory so users don't 
-have to remember them all:
+For WhitespaceTokenizer, we will use ServiceMetadata and IOSpecification classes. Using these classes should be very straightforward. See the below snippet. 
 
 ```java
-data.setDiscriminator(Uri.TEXT);
+    import static org.lappsgrid.discriminator.Discriminators.Uri;
+    import org.lappsgrid.metadata.ServiceMetadata;
+    import org.lappsgrid.metadata.IOSpecification;
+    import org.lappsgrid.serialization.Data;
+    
+    public class WhitespaceTokenizer implements ProcessingService {
+
+    
+        // Create a metadata object
+        ServiceMetadata this.metadata = new ServiceMetadata();
+        
+        // Populate metadata using setX() methods
+        metadata.setName(this.getClass().getName());
+        metadata.setDescription("Whitespace tokenizer");
+        metadata.setVersion("1.0.0-SNAPSHOT");
+        metadata.setVendor("http://www.lappsgrid.org");
+        metadata.setLicense(Uri.APACHE2);
+
+        // JSON for input information
+        IOSpecification requires = new IOSpecification();
+        requires.addFormat(Uri.TEXT);           // Plain text (form)
+        requires.addLanguage("en");             // Source language
+
+        // JSON for output information
+        IOSpecification produces = new IOSpecification();
+        produces.addFormat(Uri.LAPPS);          // LIF (form)
+        produces.addAnnotation(Uri.TOKEN);      // Tokens (contents)
+        requires.addLanguage("en");             // Target language
+        
+        // Embed I/O metadata JSON objects
+        metadata.setRequires(requires);
+        metadata.setProduces(produces);
+        
+    }
 ```
 
-Use of the `Discriminators.Uri` class also allows IDEs to provide command completion and
-tool-top help.
+## Generating metadata with annotations
 
-### Lappsgrid Interchange Format
+If we can generate this metadata before the runtime and then simply cache a mere string ready to return, the service will run even faster.
+That's why lappsgrid team provides java annotation for metadata.
+By using java annotation, the compiler will generate JSON string into a file while compiling, which can be read in at runtime efficiently.
 
-Typically Lappsgrid services will exchange JSON objects that conform to the [Lappsgrid Interchange
-Format (LIF)](http://vocab.lappsgrid.org/schema/lif-schema.json). The [Lappsgrid Exchange Datastructures (LEDS)](http://github.com/lapps/org.lappsgrid.serialization)
-can be used to reliably generate conformant JSON.  The three main `LEDS` classes are:
+First thing to do is to import `MetadataProcess` as a compiler plugin for maven in `pom.xml`.
 
-1. `Container`<br/>
-The `Container` is the main wrapper for LIF objects.  A `Container` consists of some 
-metadata and a list of Views.
-1. `View`<br/>
-A `View` consists of some metadata and a list of Annotations.
-1. `Annotation`<br/>
-A single annotation.
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion/>
+    <groupId/>
+    <artifactId/>
+    <version/>
+    <packaging/>
+    <name/>
+    <description/>
+    <parent> ... </parent>
+    <dependencies> ... </dependencies>
+    <repositories> ... </repositories>
+    
+    <!-- add as a plugin -->
+    <build>
+        <finalName> YOUR_ARTIFACT_NAME </finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessors>
+                        <annotationProcessor>org.lappsgrid.annotation.processing.MetadataProcessor</annotationProcessor>
+                    </annotationProcessors>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+```
 
+Then give an annotation to your service class using these keywords:
+
+* `@ServiceMetadata`: provides annotation schema for a `ProcessingService`
+* `@DataSourceMetadata`: provides annotation schema for a `DataSource`
+
+Here is the list of all annotation keys supported by `annotation` module
+    
+* Service information
+    * **schema**
+    * **name**
+    * **vendor**
+    * **version**
+    * **description**
+    * **allow**
+    * **license**
+* I/O information
+    * **requires_encoding**: input encoding
+    * **produces_encoding**: output encoding
+    * **encoding**: use if input and output uses the same encoding
+    * **requires_language** (list): source language
+    * **produces_language** (list): target language
+    * **language**: use if input and output are in the same language
+    * **requires_format** (list): acceptable formats
+    * **produces_format** (list): produced foramts
+    * **format**: use if input and output share the same format
+    * **requires** (list): input annotations
+    * **produces** (list): produced annotations
+    
+Note that `name` and `version` are optional. If `name` is not specified, the compiler gets its value automatically from the class name. When `version` is omitted, compiler first try to find a file named `VERSION` with version information, if the file isn't there, then, it gets the version from `pom.xml` Be careful when the service is not a maven project; `version` should be specified in java annotation or in `VERSION` file.
+For keys that require discriminator(s), you can simply give their aliases from [Lappsgrid URI Inventory](http://vocab.lappsgrid.org/discriminators.html).
+    
+Here is an example:
 
 ```java
-Container container = new Container()
-container.setText("Goodbye cruel world, I am leaving you today.");
-container.setLanguage("en");
-View view = container.newView();
-Annotation a = view.newAnnotation("tok1", Uri.TOKEN, 0, 7);
-...
-Data<Container> data = new Data<Container>(Uri.LAPPS, container);
-System.out.println(data.asPrettyJson());
+    import org.lappsgrid.annotations.ServiceMetadata;
+    
+    @ServiceMetadata(
+        vendor = "http://www.lappsgrid.org",
+        version = "1.0.0-SNAPSHOT",
+        description = "Whitespace tokenizer",
+        allow = "any",
+        license = "apache2",
+        language = { "en" },
+        requires_format" = { "text" },
+        produces_format" = { "lapps" },
+        produces = { "token" }
+    )
+    public class WhitespaceTokenizer implements ProcessingService {
+    
+        public WhitespaceTokenizer() { ... }
+    
+        @Override
+        public String getMetadata() { ... }
+        
+        @Override
+        public String execute(String input) { ... }
+    }
 ```
+ 
+If you have multiple services inherit an abstract class or interface, you can give `@CommonMetadata` at the super class/interface for common factors.
 
-Creating `Data<Container>` objects is such a frequent task for Lappsgrid services
-that the [DataContainer](http://lapps.github.io/org.lappsgrid.serialization/index.html?org/lappsgrid/serialization/DataContainer.html)
- class has been defined for just that purpose:
+Now, in `WhitespaceTokenizer` class, we need a method to read the JSON files generated by `MetadataProcess` plugin.
+The files are stored as `/resources/metadata/CLASS_NAME.json`.
 
-```
-	Data data = new DataContainer(container);
-	System.out.println(data.asPrettyJson());
-```
-### Serialization
-
-The [org.lappsgrid.serialization.Serializer](http://lapps.github.io/org.lappsgrid.serialization/index.html?org/lappsgrid/serialization/Serializer.html)
-class is a light-weight wrapper around the [Jackson](https://github.org/FasterXML/Jackson) 
-library that can be used to serialize LIF objects to/from JSON.
+Here's an example:
 
 ```java
-String json = Serializer.toPrettyJson(dataObject);
-DataContainer data = Serializer.parse(json, DataContainer.class);
+    import java.util.*
+    
+    private void loadMetadata(Class<?> serviceClass) throws IOException {
+        // java will care the path to resources
+        String resourceName = "metadata/" + serviceClass.getName() + ".json";
+        InputStream inputStream = this.getClass().getResourceAsStream(resourceName);
+
+        if (inputStream == null) {
+            // throw exception
+        }
+        try {
+            Scanner s = new Scanner(inputStream).useDelimiter("\\A");
+            this.metadata = s.hasNext() ? s.next() : "";
+        } catch (IOException e) {
+            this.metadata = "error";
+            // throw exception
+        }
+    }
 ```
 
-# Putting it all together
+## Returning metadata
 
-## The execute() Method
-
-Recall that all Strings passed to/from Lappgrid interface methods contain the JSON
-representation of a `Data` object.  So the `execute()` method will need to perform the 
-following steps:
-
-1. Parse the incoming String into a `Data` object.
-1. Check the `discriminator` value to determine the `payload` type.  Our WhitespaceTokenzier
-will accept text and LIF containers as input.  The tokenizer should also check that
-the `discriminator` is not `http://vocab.lappsgrid.org/ns/error`.
-1. Extract the text from the `payload`.
-  1. Create a new `Container` if the input was text
-  1. Otherwise reuse the existing container.
-1. Create a new `View`.
-1. Tokenize the text and add annotations to the view.
-1. Add information about the tokens to the view's metadata
-1. Create a new `DataContainer` object to wrap the container.
-1. Serialize the `DataContainer` and return the JSON string.
+Remember that all Strings passed to and from Lappsgrid services are `org.lappsgrid.serialization.Data` objects. 
+So we need to wrap metadata with `Data` class before return it. For metadata, we use "http://vocab.lappsgrid.org/ns/meta"(org.lappsgrid.discriminator.Discriminators.Uri.META) as its discriminator.
 
 ```java
-public String execute(String input) {
-	// Step #1: Parse the input.
-	Data data = Serializer.parse(input, Data.class);
-
-	// Step #2: Check the discriminator
-	final String discriminator = data.getDiscriminator();
-	if (discriminator.equals(Uri.ERROR)) {
-		// Return the input unchanged.
-		return input;
-	}
-
-	// Step #3: Extract the text.
-	Container container = null;
-	if (discriminator.equals(Uri.TEXT)) {
-		container = new Container();
-		container.setText(data.getPayload().toString());
-	}
-	else if (discriminator.equals(Uri.LAPPS)) {
-		container = new Container((Map) data.getPayload());
-	}
-	else {
-		// This is a format we don't accept.
-		String message = String.format("Unsupported discriminator type: %s", discriminator);
-		return new Data<String>(Uri.ERROR, message).asJson();
-	}
-
-	// Step #4: Create a new View
-	View view = container.newView();
-
-	// Step #5: Tokenize the text and add annotations.
-	String text = container.getText();
-	String[] words = text.split("\\s+");
-	int id = -1;
-	int start = 0;
-	for (String word : words) {
-		start = text.indexOf(word, start);
-		if (start < 0) {
-			return new Data<String>(Uri.ERROR, "Unable to match word: " + word).asJson();
-		}
-		int end = start + word.length();
-		Annotation a = view.newAnnotation("tok" + (++id), Uri.TOKEN, start, end);
-		a.addFeature(Features.Token.WORD, word);
-	}
-
-	// Step #6: Update the view's metadata. Each view contains metadata about the
-	// annotations it contains, in particular the name of the tool that produced the
-	// annotations.
-	view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
-	
-	// Step #7: Create a DataContainer with the result.
-	data = new DataContainer(container);
-
-	// Step #8: Serialize the data object and return the JSON.
-	return data.asJson();
-}
+    public String getMetadata() {
+        // Create Data instance and populate it
+        Data<ServiceMetadata> data = new Data<>(Uri.META, this.metadata);
+        return data.asJson();
+    }
 ```
+
+This is only an example. Typically services will generate this metadata at compile time or when the service is first launched. 
+The metadata can then be efficiently cached for `getMetadata()` method. See `WhitespaceTokenizer.java` source file for the caching example. The example code generates metadata while the class is initialized.
 
 # Up Next
 
-In Step three we will generate the JSON metadata returned by the `getMetadata()` method.
-
-To advance to step three run the command:
+In Step four of the tutorial, we will write some test methods to test out services
 
 ```bash
-> git checkout step3
+> git checkout step4
 ```
