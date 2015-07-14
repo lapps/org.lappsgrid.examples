@@ -1,18 +1,18 @@
 Wrapping Web Services : Step 3
 =====================
 
-# Sections To Be Written
+### Contents
 
 1. Maven project setup
 1. Implementing LAPPSgrid service
 1. **Service metadata**
-  1. **What's in Metadata**
-  1. **Generating with ``metadata`` module**
-  1. **Generating with ``annotation`` module**
-  1. **Returning metadata**
+    - [What's in Metadata](#whats-in-the-Metadata)
+    - [Generating with `metadata` module](#generating-metadata-with-metadata-module)
+    - [Generating with `annotations` module](#generating-metadata-with-annotations-module)
+    - [Returning metadata](#returning-metadata)
 1. Testing a service
 1. Packaging a service
-
+ 
 # Introduction
 
 This is a short introduction to creating web services that can be deployed to
@@ -178,7 +178,7 @@ For WhitespaceTokenizer, we will use ServiceMetadata and IOSpecification classes
     }
 ```
 
-## Generating metadata with annotations
+## Generating metadata with `annotations` module
 
 If we can generate this metadata before the runtime and then simply cache a mere string ready to return, the service will run even faster.
 That's why lappsgrid team provides java annotation for metadata.
@@ -330,6 +330,8 @@ The metadata can then be efficiently cached for `getMetadata()` method. See `Whi
 # Up Next
 
 In Step four of the tutorial, we will write some test methods to test out services
+
+To advance to step four run the command:
 
 ```bash
 > git checkout step4
