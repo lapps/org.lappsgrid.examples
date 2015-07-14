@@ -14,7 +14,7 @@ import org.lappsgrid.vocabulary.Features;
 import java.util.Map;
 
 /**
- * Tutorial step #2. Service Implementation 
+ * Tutorial step #4. Packgaing & Deployment
  */
 public class WhitespaceTokenizer implements ProcessingService
 {
@@ -25,9 +25,31 @@ public class WhitespaceTokenizer implements ProcessingService
 
 
     public WhitespaceTokenizer() {
-        
-        // Metadata will be discussed in step 3
-        this.metadata = null;
+        // Create and populate the metadata object
+        ServiceMetadata metadata = new ServiceMetadata();
+        metadata.setName(this.getClass().getName());
+        metadata.setDescription("Whitespace tokenizer");
+        metadata.setVersion("1.0.0-SNAPSHOT");
+        metadata.setVendor("http://www.lappsgrid.org");
+        metadata.setLicense(Uri.APACHE2);
+
+        IOSpecification requires = new IOSpecification();
+        requires.addFormat(Uri.TEXT);
+        requires.addFormat(Uri.LAPPS);
+        requires.addFormat(Uri.LIF);
+        requires.setEncoding("UTF-8");
+        metadata.setRequires(requires);
+
+        IOSpecification produces = new IOSpecification();
+        produces.addFormat(Uri.LAPPS);
+        produces.setEncoding("UTF-8");
+        produces.addAnnotation(Uri.TOKEN);
+        metadata.setProduces(produces);
+
+        // Serialize the metadata to a string and save for the
+        // getMetadata() method.
+        Data<ServiceMetadata> data = new Data<>(Uri.META, metadata);
+        this.metadata = data.asPrettyJson();
     }
 
     @Override
