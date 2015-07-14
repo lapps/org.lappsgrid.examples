@@ -3,6 +3,8 @@ package org.lappsgrid.example;
 import org.lappsgrid.api.ProcessingService;
 
 import static org.lappsgrid.discriminator.Discriminators.Uri;
+import org.lappsgrid.metadata.IOSpecification;
+import org.lappsgrid.metadata.ServiceMetadata;
 import org.lappsgrid.serialization.Data;
 import org.lappsgrid.serialization.DataContainer;
 import org.lappsgrid.serialization.Serializer;
@@ -14,7 +16,7 @@ import org.lappsgrid.vocabulary.Features;
 import java.util.Map;
 
 /**
- * Tutorial step #4. Packgaing & Deployment
+ * For tutorial step #3, writing getMetadata()
  */
 public class WhitespaceTokenizer implements ProcessingService
 {
