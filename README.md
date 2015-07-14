@@ -11,6 +11,8 @@ Wrapping Web Services : Step 2
 1. Service metadata
 1. Testing a service
 1. Packaging a service
+1. Wrapping Java package
+1. Wrapping Python package
 
 # Introduction
 
