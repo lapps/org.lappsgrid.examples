@@ -1,6 +1,7 @@
 package org.lappsgrid.example;
 
 import org.lappsgrid.api.ProcessingService;
+
 import static org.lappsgrid.discriminator.Discriminators.Uri;
 import org.lappsgrid.serialization.Data;
 import org.lappsgrid.serialization.DataContainer;
@@ -14,7 +15,6 @@ import java.util.Map;
 
 /**
  * For tutorial step #3, writing getMetadata()
- *
  */
 public class WhitespaceTokenizer implements ProcessingService
 {
@@ -92,7 +92,7 @@ public class WhitespaceTokenizer implements ProcessingService
 
         // Step #5: Tokenize the text and add annotations.
         String text = container.getText();
-        String[] words = text.split("\\s+");
+        String[] words = text.trim().split("\\s+");
         int id = -1;
         int start = 0;
         for (String word : words) {
@@ -105,14 +105,15 @@ public class WhitespaceTokenizer implements ProcessingService
             a.addFeature(Features.Token.WORD, word);
         }
 
-		 // Step #6: Update the view's metadata. Each view contains metadata about the
-		 // annotations it contains, in particular the name of the tool that produced the
-		 // annotations.
-		 view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
+         // Step #6: Update the view's metadata. Each view contains metadata about the
+         // annotations it contains, in particular the name of the tool that produced the
+         // annotations.
+         view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
 
-		 // Step #7: Create a DataContainer with the result.
-		 data = new DataContainer(container);
+         // Step #7: Create a DataContainer with the result.
+         data = new DataContainer(container);
 
-		 // Step #8: Serialize the data object and return the JSON.
-		 return data.asJson();    }
+         // Step #8: Serialize the data object and return the JSON.
+         return data.asPrettyJson();
+    }
 }
