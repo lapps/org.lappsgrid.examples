@@ -1,10 +1,11 @@
 Wrapping Web Services : Step 1
 =====================
 
-# Sections To Be Written
+### Contents
 
-1. **Maven project setup**
-1. Implementing LAPPSgrid service
+1. [Maven](#maven)
+    - [Project Setup](#project-setup)
+1. Implementing Lappsgrid service
 1. Service metadata
 1. Testing a service
 1. Packaging a service
@@ -76,7 +77,7 @@ Add the following Parent POM:
         </tr>
         <tr>
             <th align="left">version</th>
-            <td>2.0.3</td>
+            <td>2.0.4</td>
         </tr>
     </tbody>
 </table>
@@ -87,7 +88,7 @@ Add a dependency to the `org.lappsgrid.all` module:
 <dependency>
     <groupId>org.lappsgrid</groupId>
     <artifactId>all</artifactId>
-    <version>2.0.2</version>
+    <version>2.0.4</version>
 </dependency>
 ```
 When you are done your pom file should look like:
@@ -106,14 +107,14 @@ When you are done your pom file should look like:
     <parent>
         <artifactId>war-parent-pom</artifactId>
         <groupId>org.lappsgrid.maven</groupId>
-        <version>2.0.3</version>
+        <version>2.0.4</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>all</artifactId>
-            <version>2.0.2</version>
+            <version>2.0.4</version>
         </dependency>
     </dependencies>
     <repositories>
