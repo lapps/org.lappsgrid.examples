@@ -126,5 +126,12 @@ The maven-generated .war file will be located in `target` directory in project r
 
 Simply put the artifact war file in `webapps` directory under a tomcat server set up for the service. Tomcat web-app manager will automatically recognize a new app on next re-start.
 
+# Up Next
 
+In Step six of the tutorial we will add a POS-tagger to our exmaple service using external Java library (Stanford NLP)
 
+To advance to step six, run the command:
+
+```bash
+> git checkout step6
+```
