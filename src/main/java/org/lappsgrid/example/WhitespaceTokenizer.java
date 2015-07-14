@@ -1,6 +1,7 @@
 package org.lappsgrid.example;
 
 import org.lappsgrid.api.ProcessingService;
+
 import static org.lappsgrid.discriminator.Discriminators.Uri;
 import org.lappsgrid.serialization.Data;
 import org.lappsgrid.serialization.DataContainer;
@@ -13,8 +14,7 @@ import org.lappsgrid.vocabulary.Features;
 import java.util.Map;
 
 /**
- * For tutorial step #3, writing getMetadata()
- *
+ * Tutorial step #4. Testing.
  */
 public class WhitespaceTokenizer implements ProcessingService
 {
@@ -92,7 +92,7 @@ public class WhitespaceTokenizer implements ProcessingService
 
         // Step #5: Tokenize the text and add annotations.
         String text = container.getText();
-        String[] words = text.split("\\s+");
+        String[] words = text.trim().split("\\s+");
         int id = -1;
         int start = 0;
         for (String word : words) {
@@ -114,5 +114,6 @@ public class WhitespaceTokenizer implements ProcessingService
 		 data = new DataContainer(container);
 
 		 // Step #8: Serialize the data object and return the JSON.
-		 return data.asJson();    }
+		 return data.asPrettyJson();
+    }
 }
