@@ -3,6 +3,8 @@ package org.lappsgrid.example;
 import org.lappsgrid.api.ProcessingService;
 
 import static org.lappsgrid.discriminator.Discriminators.Uri;
+import org.lappsgrid.metadata.IOSpecification;
+import org.lappsgrid.metadata.ServiceMetadata;
 import org.lappsgrid.serialization.Data;
 import org.lappsgrid.serialization.DataContainer;
 import org.lappsgrid.serialization.Serializer;
