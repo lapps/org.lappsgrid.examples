@@ -1,14 +1,13 @@
 Wrapping Web Services : Step 2
 =====================
 
-# Sections To Be Written
+### Contents
 
 1. Maven project setup
-1. **Implementing LAPPSgrid service**
-  1. **Classes and Methods**
-  1. **Lappsgrid Exchange Datastructures**
-    1. **Lappsgrid Interchange Format (LIF)**
-    1. **Serialization**
+1. [Implementing Lappsgrid service](#implementing-lappsgrid-service)
+    - [Classes and Methods](#lappsgrid-interfaces-and-classes)
+    - [Lappsgrid Exchange Datastructures](#lappsgrid-exchange-datastructures)
+	- [The `execute()` Method](#putting-it-all-together-the-execute-method)
 1. Service metadata
 1. Testing a service
 1. Packaging a service
@@ -33,7 +32,7 @@ For this tutorial you will require:
 It is assumed that you know how to create a Maven project either using your IDE or via
 the command line.  Maven usage is beyond the scope of this tutorial.
 
-# WhitespaceTokenizer Class
+# Implementing Lappsgrid service
 
 All services deployed to the Lappsgrid should extend one of the interfaces in the
 [org.lappsgrid.api](https://lapps.github.io/org.lappsgrid.api) module.  Services that provide
@@ -145,9 +144,7 @@ String json = Serializer.toPrettyJson(dataObject);
 DataContainer data = Serializer.parse(json, DataContainer.class);
 ```
 
-# Putting it all together
-
-## The execute() Method
+## Putting it all together - The `execute()` Method
 
 Recall that all Strings passed to/from Lappgrid interface methods contain the JSON
 representation of a `Data` object.  So the `execute()` method will need to perform the 
