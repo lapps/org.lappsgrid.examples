@@ -1,4 +1,4 @@
-Wrapping Web Services : Step 4 Testing
+Wrapping Web Services : Step 4
 =====================
 
 ### Contents
@@ -10,7 +10,9 @@ Wrapping Web Services : Step 4 Testing
     - [Unit Testing](#unit-testing)
     - [Integration Testing](#integration-testing)
 1. Packaging a service
- 
+1. Wrapping Java package
+1. Wrapping Python package
+
 # Introduction
 
 This is a short introduction to creating web services that can be deployed to
