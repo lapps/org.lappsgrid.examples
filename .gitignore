@@ -1,5 +1,5 @@
-/.classpath
-/.project
+.classpath
+.project
 *.iml
 *.ipr
 *.iws
@@ -7,3 +7,4 @@
 target
 VERSION
 **/Version.java
+*.*~
