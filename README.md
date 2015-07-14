@@ -12,7 +12,9 @@ Wrapping Web Services : Step 3
     - [Returning metadata](#returning-metadata)
 1. Testing a service
 1. Packaging a service
- 
+1. Wrapping Java package
+1. Wrapping Python package
+
 # Introduction
 
 This is a short introduction to creating web services that can be deployed to
