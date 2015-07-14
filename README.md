@@ -3,14 +3,11 @@ Wrapping Web Services : Step 1
 
 # Sections To Be Written
 
-- [ ] Maven setup
-- [ ] Project setup
-- [ ] Lapps interfaces
-- [ ] Serializing Lapps objects
-- [ ] Implementing required methods
-  - [ ] Metadata and annotations
-  - [ ] `execute` method
-  
+1. **Maven project setup**
+1. Implementing LAPPSgrid service
+1. Service metadata
+1. Testing a service
+1. Packaging a service
 
 # Introduction
 
