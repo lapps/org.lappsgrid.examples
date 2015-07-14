@@ -4,8 +4,8 @@ Wrapping Web Services : Step 3
 ### Contents
 
 1. Maven project setup
-1. Implementing LAPPSgrid service
-1. **Service metadata**
+1. Implementing Lappsgrid service
+1. [Service metadata](#getmetadata-method)
     - [What's in Metadata](#whats-in-the-Metadata)
     - [Generating with `metadata` module](#generating-metadata-with-metadata-module)
     - [Generating with `annotations` module](#generating-metadata-with-annotations-module)
