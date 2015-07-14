@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.lappsgrid</groupId>
     <artifactId>whitespace_tokenizer</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-STEP2</version>
     <packaging>war</packaging>
     <name>Java Whitespace Tokenizer Example</name>
     <description>Lapps Web Services wrapping example for Whitespace Tokenizer</description>
