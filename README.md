@@ -11,6 +11,8 @@ Wrapping Web Services : Step 5
     - [Configure WEB-INF](cConfigure-web-inf)
     - [Maven packing](#maven-packing)
     - [Deploying on tomcat server](#deploying-on-tomcat-server)
+1. Wrapping Java package
+1. Wrapping Python package
 
 # Introduction
 
