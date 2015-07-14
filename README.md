@@ -39,8 +39,6 @@ tutorial we will add the `<respoitories>` section directly to the **pom.xml** fi
 
 ***Notes***
 
-1. Please check the [ANC's Nexus repository](http://www.anc.org:8080/nexus) for the 
-latest parent pom version.
 1. In the future the Lappsgrid artifacts will be deployed to Maven Central.  However,
 until that time Lappsgrid artifacts are deployed to the ANC's Nexus instance.
 
@@ -83,6 +81,9 @@ Add the following Parent POM:
         </tr>
     </tbody>
 </table>
+
+To get the right version number, please check the [ANC's Nexus repository](http://www.anc.org:8080/nexus) for the 
+latest parent pom version, search for "war-parent-pom" and select the highest version number for the snapshots in the org.lappsgrid.maven group.
 
 Add a dependency to the `org.lappsgrid.all` module:
 
