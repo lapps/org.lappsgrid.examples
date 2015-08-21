@@ -321,3 +321,4 @@ To advance to step four run the command:
 ```bash
 > git checkout step4
 ```
+Or follow the link: [step4](https://github.com/lapps/org.lappsgrid.examples/tree/step4)
