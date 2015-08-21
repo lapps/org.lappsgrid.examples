@@ -9,8 +9,8 @@ Wrapping Web Services : Step 2
     - [Lappsgrid Exchange Datastructures](#lappsgrid-exchange-datastructures)
     - [The `execute()` Method](#putting-it-all-together-the-execute-method)
 1. Service metadata
-1. Testing a service
 1. Packaging a service
+1. Testing a service
 1. Wrapping Java package
 1. Wrapping Python package
 
