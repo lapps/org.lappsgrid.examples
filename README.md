@@ -10,8 +10,8 @@ Wrapping Web Services : Step 3
     - [Generating with `metadata` module](#option-1-using-metadata-module)
     - [Generating with `annotations` module](#option-2-using-annotations-module)
     - [Returning metadata](#returning-metadata)
-1. Testing a service
 1. Packaging a service
+1. Testing a service
 1. Wrapping Java package
 1. Wrapping Python package
 
