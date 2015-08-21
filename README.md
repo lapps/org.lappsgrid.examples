@@ -1,4 +1,4 @@
-Wrapping Web Services : Step 4
+Wrapping Web Services : Step 5
 =====================
 
 ### Contents
@@ -6,10 +6,10 @@ Wrapping Web Services : Step 4
 1. Maven project setup
 1. Implementing LAPPSgrid service
 1. Service metadata
+1. Packaging a service
 1. [Testing a service](#testing)
     - [Unit Testing](#unit-testing)
     - [Integration Testing](#integration-testing)
-1. Packaging a service
 1. Wrapping Java package
 1. Wrapping Python package
 
@@ -27,7 +27,7 @@ For this tutorial you will require:
 1. Java 1.7 (or later)
 1. Maven 3.0.x
 1. an IDE such as IntelliJ or Eclipse
-1. to have have completed Step three
+1. to have have completed Step four
 1. about 15 minutes
 
 It is assumed that you know how to create a Maven project either using your IDE or via the command line.  Maven usage is beyond the scope of this tutorial.
@@ -66,7 +66,7 @@ We start with following skeleton.
 
 ### Test `getMetadata()` method
 
-In the previous step, we gave the following metadata to our `WhitespaceTokenizer` service.
+In the step 3, we gave the following metadata to our `WhitespaceTokenizer` service.
 
 Key|Value|Notes
 ---|---|---
@@ -171,7 +171,7 @@ We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF*
     }
 ```
 
-The full example code can be found at `src/test/java/org/lappsgrid/example/TestWhitespaceTokenizer.java`
+The full example code can be found at [`src/test/java/org/lappsgrid/example/TestWhitespaceTokenizer.java`](https://github.com/lapps/org.lappsgrid.examples/blob/step5/src/test/java/org.lappsgrid.example/TestWhitespaceTokenizer.java)
 
 # Integration Testing
 
@@ -283,11 +283,12 @@ Where
 
 # Up Next
 
-In Step five of the tutorial we pack up our service into a WAR file ready to be deployed to
-an application server such as Tomcat.
+In Step six of the tutorial we will add a POS-tagger to our exmaple service using external Java library (Stanford NLP).
 
-To advance to step five run the command:
+To advance to step six run the command:
 
 ```bash
-> git checkout step5
+> git checkout step6
 ```
+
+Or follow the link: [step6](https://github.com/lapps/org.lappsgrid.examples/tree/step6)
