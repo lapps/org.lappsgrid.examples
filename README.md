@@ -7,10 +7,10 @@ Wrapping Web Services : Step 2
 1. [Implementing Lappsgrid service](#implementing-lappsgrid-service)
     - [Classes and Methods](#lappsgrid-interfaces-and-classes)
     - [Lappsgrid Exchange Datastructures](#lappsgrid-exchange-datastructures)
-	- [The `execute()` Method](#putting-it-all-together-the-execute-method)
+    - [The `execute()` Method](#putting-it-all-together-the-execute-method)
 1. Service metadata
-1. Testing a service
 1. Packaging a service
+1. Testing a service
 1. Wrapping Java package
 1. Wrapping Python package
 
@@ -43,8 +43,11 @@ interface and services that process data (aka ProcessingServices) should impleme
 [ProcessingService](http://lapps.github.io/org.lappsgrid.api/index.html?org/lappsgrid/api/ProcessingService.html)
 interface.  Both interfaces are *naming interfaces*, that is, they extend [WebService](http://lapps.github.io/org.lappsgrid.api/index.html?org/lappsgrid/api/WebService.html)
 but do not add any new methods.
+In this step, we start to write a simple Java class `WhitespaceTokenizer`, a tokenizer based on white spaces, that will be a Lappsgrid web service through steps of this tutorial.
 
 ## Lappsgrid Interfaces and Classes
+
+Place a new empty class in `src/main/java/org/lappsgrid/example/WhitespaceTokenizer.java` implementing `ProcessingService`, because it will process input text, turn it into tokens.
 
 The `WebService` interface contains two methods:
 
@@ -62,11 +65,11 @@ import org.lappsgrid.api.ProcessingService;
 
 public class WhitespaceTokenizer implements ProcessingService
 {
-	public WhitespaceTokenizer() { }
-	@Override
-	public String getMetadata() { return null; }
-	@Override
-	public String execute(String input) { return null; }
+    public WhitespaceTokenizer() { }
+    @Override
+    public String getMetadata() { return null; }
+    @Override
+    public String execute(String input) { return null; }
 }
 ```
 
@@ -101,9 +104,9 @@ data.setDiscriminator(Uri.TEXT);
 Use of the `Discriminators.Uri` class also allows IDEs to provide command completion and
 tool-top help.
 
-### Lappsgrid Interchange Format
+### Lapps Interchange Format
 
-Typically Lappsgrid services will exchange JSON objects that conform to the [Lappsgrid Interchange
+Typically Lappsgrid services will exchange JSON objects that conform to the [Lapps Interchange
 Format (LIF)](http://vocab.lappsgrid.org/schema/lif-schema.json). The [Lappsgrid Exchange Datastructures (LEDS)](http://github.com/lapps/org.lappsgrid.serialization)
 can be used to reliably generate conformant JSON.  The three main `LEDS` classes are:
 
@@ -132,9 +135,10 @@ that the [DataContainer](http://lapps.github.io/org.lappsgrid.serialization/inde
  class has been defined for just that purpose:
 
 ```
-	Data data = new DataContainer(container);
-	System.out.println(data.asPrettyJson());
+    Data data = new DataContainer(container);
+    System.out.println(data.asPrettyJson());
 ```
+
 ### Serialization
 
 The [org.lappsgrid.serialization.Serializer](http://lapps.github.io/org.lappsgrid.serialization/index.html?org/lappsgrid/serialization/Serializer.html)
@@ -167,61 +171,63 @@ the `discriminator` is not `http://vocab.lappsgrid.org/ns/error`.
 
 ```java
 public String execute(String input) {
-	// Step #1: Parse the input.
-	Data data = Serializer.parse(input, Data.class);
+    // Step #1: Parse the input.
+    Data data = Serializer.parse(input, Data.class);
 
-	// Step #2: Check the discriminator
-	final String discriminator = data.getDiscriminator();
-	if (discriminator.equals(Uri.ERROR)) {
-		// Return the input unchanged.
-		return input;
-	}
+    // Step #2: Check the discriminator
+    final String discriminator = data.getDiscriminator();
+    if (discriminator.equals(Uri.ERROR)) {
+        // Return the input unchanged.
+        return input;
+    }
 
-	// Step #3: Extract the text.
-	Container container = null;
-	if (discriminator.equals(Uri.TEXT)) {
-		container = new Container();
-		container.setText(data.getPayload().toString());
-	}
-	else if (discriminator.equals(Uri.LAPPS)) {
-		container = new Container((Map) data.getPayload());
-	}
-	else {
-		// This is a format we don't accept.
-		String message = String.format("Unsupported discriminator type: %s", discriminator);
-		return new Data<String>(Uri.ERROR, message).asJson();
-	}
+    // Step #3: Extract the text.
+    Container container = null;
+    if (discriminator.equals(Uri.TEXT)) {
+        container = new Container();
+        container.setText(data.getPayload().toString());
+    }
+    else if (discriminator.equals(Uri.LAPPS)) {
+        container = new Container((Map) data.getPayload());
+    }
+    else {
+        // This is a format we don't accept.
+        String message = String.format("Unsupported discriminator type: %s", discriminator);
+        return new Data<String>(Uri.ERROR, message).asJson();
+    }
 
-	// Step #4: Create a new View
-	View view = container.newView();
+    // Step #4: Create a new View
+    View view = container.newView();
 
-	// Step #5: Tokenize the text and add annotations.
-	String text = container.getText();
-	String[] words = text.split("\\s+");
-	int id = -1;
-	int start = 0;
-	for (String word : words) {
-		start = text.indexOf(word, start);
-		if (start < 0) {
-			return new Data<String>(Uri.ERROR, "Unable to match word: " + word).asJson();
-		}
-		int end = start + word.length();
-		Annotation a = view.newAnnotation("tok" + (++id), Uri.TOKEN, start, end);
-		a.addFeature(Features.Token.WORD, word);
-	}
+    // Step #5: Tokenize the text and add annotations.
+    String text = container.getText();
+    String[] words = text.split("\\s+");
+    int id = -1;
+    int start = 0;
+    for (String word : words) {
+        start = text.indexOf(word, start);
+        if (start < 0) {
+            return new Data<String>(Uri.ERROR, "Unable to match word: " + word).asJson();
+        }
+        int end = start + word.length();
+        Annotation a = view.newAnnotation("tok" + (++id), Uri.TOKEN, start, end);
+        a.addFeature(Features.Token.WORD, word);
+    }
 
-	// Step #6: Update the view's metadata. Each view contains metadata about the
-	// annotations it contains, in particular the name of the tool that produced the
-	// annotations.
-	view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
-	
-	// Step #7: Create a DataContainer with the result.
-	data = new DataContainer(container);
+    // Step #6: Update the view's metadata. Each view contains metadata about the
+    // annotations it contains, in particular the name of the tool that produced the
+    // annotations.
+    view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
+    
+    // Step #7: Create a DataContainer with the result.
+    data = new DataContainer(container);
 
-	// Step #8: Serialize the data object and return the JSON.
-	return data.asJson();
+    // Step #8: Serialize the data object and return the JSON.
+    return data.asJson();
 }
 ```
+This method is heavily relying on Lappsgrid APIs mentioned above. 
+To see which classes are imported, complete example code can be found at [here](https://github.com/lapps/org.lappsgrid.examples/blob/step2/src/main/java/org/lappsgrid/example/WhitespaceTokenizer.java).
 
 # Up Next
 
@@ -232,3 +238,5 @@ To advance to step three run the command:
 ```bash
 > git checkout step3
 ```
+
+Or follow the link: [step3](https://github.com/lapps/org.lappsgrid.examples/tree/step3)
