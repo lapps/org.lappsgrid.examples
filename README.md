@@ -1,4 +1,4 @@
-Wrapping Web Services : Step 4
+Wrapping Web Services : Step 5
 =====================
 
 ### Contents
@@ -6,10 +6,10 @@ Wrapping Web Services : Step 4
 1. Maven project setup
 1. Implementing LAPPSgrid service
 1. Service metadata
-1. [Testing a service](#testing)
-    - [Unit Testing](#unit-testing)
-    - [Integration Testing](#integration-testing)
 1. Packaging a service
+1. [Testing a service](#testing-optional)
+    - [Unit Testing](#unit-testing)
+    - [Service Integration Testing](#integration-testing)
 1. Wrapping Java package
 1. Wrapping Python package
 
@@ -27,34 +27,73 @@ For this tutorial you will require:
 1. Java 1.7 (or later)
 1. Maven 3.0.x
 1. an IDE such as IntelliJ or Eclipse
-1. to have have completed Step three
+1. to have have completed Step four
 1. about 15 minutes
 
 It is assumed that you know how to create a Maven project either using your IDE or via the command line.  Maven usage is beyond the scope of this tutorial.
 
 
-# Testing
+# Testing (Optional)
 
-We will use JUnit, which is included by the LAPPS Grid parent pom, for unit testing and
-Jetty/SoapUI for (simple) integration testing.  The unit tests will verify that the 
-WhitespaceTokenizer class does what it claims it does, while the integration tests ensure
-the projects runs as a web service and doesn't return error messages.
+Here, we will test out `WhitespaceTokenizer` service, first as a Java program, then as a web-service. 
+We will use `JUnit` library, which is already included by the LAPPS Grid parent pom, for Java unit testing and Jetty/SoapUI for (simple) integration testing. 
+The unit tests will verify that the `WhitespaceTokenizer` class does what it claims it does, while the integration tests ensure the program runs as a web service and doesn't return error messages.
+
+**Note that** this is an optional step; if a developer has their own test suite, relevant part of this tutorial can be skipped.
 
 ## Unit Testing
 
-Create a new test class in `src/test/java/org/lappsgrid.example/TestWhitespaceTokenizer.java`
+Before start tutorial on unit testing, note that unit tests are specific to the service for which they're designed
+
+Create a new test class  
+
+```
+src/test/Java/org/lappsgrid.example/TestWhitespaceTokenizer.Java
+```
+
 We start with following skeleton.
 
-```java
+```Java
     package org.lappsgrid.example;
 
+    // JUnit modules for unit tests
     import org.junit.After;
     import org.junit.Before;
     import org.junit.Test;
-
     import static org.junit.Assert.*;
 
+    // more APIs for testing code 
+    import org.lappsgrid.api.WebService;
+    import static org.lappsgrid.discriminator.Discriminators.Uri;
+    import org.lappsgrid.metadata.IOSpecification;
+    import org.lappsgrid.metadata.ServiceMetadata;
+    import org.lappsgrid.serialization.Data;
+    import org.lappsgrid.serialization.DataContainer;
+    import org.lappsgrid.serialization.Serializer;
+    import org.lappsgrid.serialization.lif.Annotation;
+    import org.lappsgrid.serialization.lif.Container;
+    import org.lappsgrid.serialization.lif.View;
+    import org.lappsgrid.vocabulary.Features;
+    import Java.io.IOException;
+    import Java.util.List;
+    import Java.util.Map;
+
     public class TestWhitespaceTokenizer {
+
+        // this will be the sandbag
+        protected WebService service;
+
+        // initiate the service before each test
+        @Before
+        public void setUp() throws IOException {
+            service = new WhitespaceTokenizer();
+        }
+
+        // then destroy it after the test
+        @After
+        public void tearDown() {
+            service = null;
+        }
 
         @Test
         public void testMetadata() { ... }
@@ -64,9 +103,11 @@ We start with following skeleton.
     }
 ```
 
-### Test `getMetadata()` method
+Now, we're going to write two example test methods for `getMetadata()` and `execute()` method we wrote in step 2 and 3
 
-In the previous step, we gave the following metadata to our `WhitespaceTokenizer` service.
+### **`testMetadata()`**: Testing `getMetadata()` Method
+
+In the step 3, we gave the following metadata to our `WhitespaceTokenizer` service.
 
 Key|Value|Notes
 ---|---|---
@@ -87,9 +128,9 @@ produces language|[ "en" ]
 produces format" | [ "http://vocab.lappsgrid.org/ns/media/jsonld#lif" ] | "lapps" 
 produces annotation | [ "http://vocab.lappsgrid.org/Token" ]| "token" 
 
-Now, we will see the program generates correct metadata.
+Now, we will see the program generates correct metadata by comparing strings from each field.
 
-```java
+```Java
 
     @Test
     public void testMetadata() {
@@ -116,7 +157,7 @@ Now, we will see the program generates correct metadata.
             ...
         
         List<String> list = requires.getFormat();
-        assertEquals("Too many formats accepted", 1, list.size());
+        assertTrue("LIF format not accepted.", list.contains(Uri.LAPPS));
         assertTrue("Text not accepted", list.contains(Uri.TEXT));
         
         assertEquals("Too many annotation types produced", 1, produces.getAnnotations().size());
@@ -124,29 +165,25 @@ Now, we will see the program generates correct metadata.
     }
 ```
 
-### Test `execute()` method
+### **`testExecute()`**: Testing `execute()` Method
 
-We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF* format, `execute()` will return a JSON serialization. We need to handle this string, just like we did in `testMetadata()`. See the folowing test method.
+We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF* format, `execute()` will return a JSON serialization. We need to handle this string, just like we did in `testMetadata()`. See the following snippet.
 
-```java
-    
-    import static org.lappsgrid.discriminator.Discriminators.Uri;
-    import org.lappsgrid.metadata.*;
-    import org.lappsgrid.serialization.*;
-    import org.lappsgrid.serialization.lif.*;
-    import org.lappsgrid.vocabulary.Features;
-
-    ...
+```Java
 
     @Test
     public void testExecute() {
 
-        // set up test material
-        WebService service = new WhitespaceTokenizer();
         final String text = "   abc def";
 
-        // call `execute()`, store returned a JSON string into a `Container` datastructure, the main wrapper for LIF
-        Container container = execute(text);
+        // wrap plain text into `Data`
+        Data input = new Data<>(Uri.TEXT, text);
+        
+        // call `execute()` with jsonized input,
+        String tokenized = this.service.execute(input.asJson());
+
+        // store the payload from what is returned into a `Container`, the main wrapper for LIF
+        Container container = Serializer.parse(tokenized, DataContainer.class).getPayload();
         assertEquals("Text not set correctly", text, container.getText());
 
         // Now, see all annotations in current view is correct
@@ -171,9 +208,11 @@ We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF*
     }
 ```
 
-The full example code can be found at `src/test/java/org/lappsgrid/example/TestWhitespaceTokenizer.java`
+The full example code can be found at [`src/test/Java/org/lappsgrid/example/TestWhitespaceTokenizer.Java`](https://github.com/lapps/org.lappsgrid.examples/blob/step5/src/test/Java/org.lappsgrid.example/TestWhitespaceTokenizer.Java)
 
 # Integration Testing
+
+Here we will test `WhitespaceTokenizer` as a web-service, then its compatibility with SOAP protocol Lappsgrid adopted. First part is universally applicable to any Maven WAR web-service, while second part contains a test designed specifically for `WhitespaceTokenizer`.
 
 The LAPPS Grid war-parent-pom includes the [Jetty Maven plugin](http://mvnrepository.com/artifact/org.eclipse.jetty)
 plugin so services can be launched from the command line. To launch the service invoke
@@ -283,11 +322,4 @@ Where
 
 # Up Next
 
-In Step five of the tutorial we pack up our service into a WAR file ready to be deployed to
-an application server such as Tomcat.
-
-To advance to step five run the command:
-
-```bash
-> git checkout step5
-```
+We're adding in more tutorials. Stay tuned for coming tutorials on wrapping existing Java program, and wrapping non-Java program, such as Python.
