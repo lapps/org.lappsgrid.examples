@@ -1,4 +1,4 @@
-Wrapping Web Services : Step 5
+Wrapping Web Services : Step 4
 =====================
 
 ### Contents
@@ -6,11 +6,11 @@ Wrapping Web Services : Step 5
 1. Maven project setup
 1. Implementing Lappsgrid service
 1. Service metadata
-1. Testing a service
 1. [Packaging a service](#pack-things-up)
     - [Configure WEB-INF](cConfigure-web-inf)
     - [Maven packing](#maven-packing)
     - [Deploying on tomcat server](#deploying-on-tomcat-server)
+1. Testing a service
 1. Wrapping Java package
 1. Wrapping Python package
 
@@ -28,7 +28,7 @@ For this tutorial you will require:
 1. Java 1.7 (or later)
 1. Maven 3.0.x
 1. an IDE such as IntelliJ or Eclipse
-1. to have have completed Step four
+1. to have have completed Step three
 1. about 10 minutes
 
 It is assumed that you know how to create a Maven project either using your IDE or via the command line.  Maven usage is beyond the scope of this tutorial.
@@ -37,7 +37,7 @@ It is assumed that you know how to create a Maven project either using your IDE 
 
 A service needs to be pakced into a .war file before deployed to Lappsgrid. 
 To pack things up, a developer first needs to config manifest files for maven compilation as a web application.
-We provide here [webapp.zip](https://github.com/lapps/org.lappsgrid.example.java.whitespacetokenizer/blob/Step5-Packaing/webapp.zip)
+We provide here [webapp.zip](https://github.com/lapps/org.lappsgrid.example.java.whitespacetokenizer/blob/step4/webapp.zip)
  file contains templates of necessary manifest files.
 
 ## Configure WEB-INF
@@ -117,7 +117,7 @@ Finally, it's time to compile. Use maven to compile the package into a war file.
 mvn clean package
 ```
 
-If you want to run all tests before compilation, use `test` flag
+If you want to run all test methods before compilation, use `test` flag. (Next step of the tutorial will cover writing test methods.)
 
 ```bash
 mvn clean test package
@@ -130,10 +130,11 @@ Simply put the artifact war file in `webapps` directory under a tomcat server se
 
 # Up Next
 
-In Step six of the tutorial we will add a POS-tagger to our exmaple service using external Java library (Stanford NLP)
+In Step five of the tutorial, we will write some test methods to test out services
 
-To advance to step six, run the command:
+To advance to step five, run the command:
 
 ```bash
-> git checkout step6
+> git checkout step5
 ```
+Or follow the link: [step5](https://github.com/lapps/org.lappsgrid.examples/tree/step5)
