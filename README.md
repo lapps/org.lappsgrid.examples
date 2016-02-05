@@ -117,11 +117,8 @@ Finally, it's time to compile. Use maven to compile the package into a war file.
 mvn clean package
 ```
 
-If you want to run all test methods before compilation, use `test` flag. (Next step of the tutorial will cover writing test methods.)
+This will run all your Junit test code, if any, before compilation. Writing test for a Lapps service is covered in the next step.
 
-```bash
-mvn clean test package
-```
 The maven-generated .war file will be located in `target` directory in project root.
 
 ## Deploying on tomcat server
