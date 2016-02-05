@@ -7,7 +7,7 @@ Wrapping Web Services : Step 5
 1. Implementing LAPPSgrid service
 1. Service metadata
 1. Packaging a service
-1. [Testing a service](#testing-optional)
+1. [Testing a service](#optional-testing)
     - [Unit Testing](#unit-testing)
     - [Service Integration Testing](#integration-testing)
 1. Wrapping Java package
@@ -33,13 +33,13 @@ For this tutorial you will require:
 It is assumed that you know how to create a Maven project either using your IDE or via the command line.  Maven usage is beyond the scope of this tutorial.
 
 
-# Testing (Optional)
-
-Here, we will test out `WhitespaceTokenizer` service, first as a Java program, then as a web-service. 
-We will use `JUnit` library, which is already included by the LAPPS Grid parent pom, for Java unit testing and Jetty/SoapUI for (simple) integration testing. 
-The unit tests will verify that the `WhitespaceTokenizer` class does what it claims it does, while the integration tests ensure the program runs as a web service and doesn't return error messages.
+# (Optional) Testing
 
 **Note that** this is an optional step; if a developer has their own test suite, relevant part of this tutorial can be skipped.
+
+Here, we will test out `WhitespaceTokenizer` service, first as a Java program, then as a web-service.
+We will use `JUnit` library, which is already included by the LAPPS Grid parent pom, for Java unit testing and Jetty/SoapUI for (simple) integration testing. 
+The unit tests will verify that the `WhitespaceTokenizer` class does what it claims it does, while the integration tests ensure the program runs as a web service and doesn't return error messages.
 
 ## Unit Testing
 

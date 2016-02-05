@@ -3,8 +3,6 @@ package org.lappsgrid.example;
 import org.lappsgrid.api.ProcessingService;
 
 import static org.lappsgrid.discriminator.Discriminators.Uri;
-import org.lappsgrid.metadata.IOSpecification;
-import org.lappsgrid.metadata.ServiceMetadata;
 import org.lappsgrid.serialization.Data;
 import org.lappsgrid.serialization.DataContainer;
 import org.lappsgrid.serialization.Serializer;
@@ -12,6 +10,10 @@ import org.lappsgrid.serialization.lif.Annotation;
 import org.lappsgrid.serialization.lif.Container;
 import org.lappsgrid.serialization.lif.View;
 import org.lappsgrid.vocabulary.Features;
+
+// additional API for metadata
+import org.lappsgrid.metadata.IOSpecification;
+import org.lappsgrid.metadata.ServiceMetadata;
 
 import java.util.Map;
 
@@ -27,31 +29,40 @@ public class WhitespaceTokenizer implements ProcessingService
 
 
     public WhitespaceTokenizer() {
+
+        metadata = generateMetadata();
+
+    }
+
+    private String generateMetadata() {
         // Create and populate the metadata object
         ServiceMetadata metadata = new ServiceMetadata();
+
+        // Populate metadata using setX() methods
         metadata.setName(this.getClass().getName());
         metadata.setDescription("Whitespace tokenizer");
         metadata.setVersion("1.0.0-SNAPSHOT");
         metadata.setVendor("http://www.lappsgrid.org");
         metadata.setLicense(Uri.APACHE2);
 
+        // JSON for input information
         IOSpecification requires = new IOSpecification();
-        requires.addFormat(Uri.TEXT);
-        requires.addFormat(Uri.LAPPS);
-        requires.addFormat(Uri.LIF);
-        requires.setEncoding("UTF-8");
-        metadata.setRequires(requires);
+        requires.addFormat(Uri.TEXT);           // Plain text (form)
+        requires.addLanguage("en");             // Source language
 
+        // JSON for output information
         IOSpecification produces = new IOSpecification();
-        produces.addFormat(Uri.LAPPS);
-        produces.setEncoding("UTF-8");
-        produces.addAnnotation(Uri.TOKEN);
+        produces.addFormat(Uri.LAPPS);          // LIF (form)
+        produces.addAnnotation(Uri.TOKEN);      // Tokens (contents)
+        requires.addLanguage("en");             // Target language
+
+        // Embed I/O metadata JSON objects
+        metadata.setRequires(requires);
         metadata.setProduces(produces);
 
-        // Serialize the metadata to a string and save for the
-        // getMetadata() method.
+        // Serialize the metadata to a string and return
         Data<ServiceMetadata> data = new Data<>(Uri.META, metadata);
-        this.metadata = data.asPrettyJson();
+        return data.asPrettyJson();
     }
 
     @Override
@@ -107,15 +118,15 @@ public class WhitespaceTokenizer implements ProcessingService
             a.addFeature(Features.Token.WORD, word);
         }
 
-         // Step #6: Update the view's metadata. Each view contains metadata about the
-         // annotations it contains, in particular the name of the tool that produced the
-         // annotations.
-         view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
+        // Step #6: Update the view's metadata. Each view contains metadata about the
+        // annotations it contains, in particular the name of the tool that produced the
+        // annotations.
+        view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
 
-         // Step #7: Create a DataContainer with the result.
-         data = new DataContainer(container);
+        // Step #7: Create a DataContainer with the result.
+        data = new DataContainer(container);
 
-         // Step #8: Serialize the data object and return the JSON.
-         return data.asPrettyJson();
+        // Step #8: Serialize the data object and return the JSON.
+        return data.asPrettyJson();
     }
 }
