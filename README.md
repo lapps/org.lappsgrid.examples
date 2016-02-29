@@ -64,7 +64,7 @@ Field | Value
 ---|---
 **groudID**|org.lappsgrid.maven
 **artifactId**|war-parent-pom
-**version**|2.0.4
+**version**|2.0.5
 
 At this point `pom.xml` for our example service should look like this:
 
@@ -83,7 +83,7 @@ At this point `pom.xml` for our example service should look like this:
     <parent>
         <artifactId>war-parent-pom</artifactId>
         <groupId>org.lappsgrid.maven</groupId>
-        <version>2.0.4</version>
+        <version>2.0.5</version>
     </parent>
 
 </project>
@@ -92,7 +92,7 @@ At this point `pom.xml` for our example service should look like this:
 ***Note*** 
 
 1. To get the right version number, please check the [ANC's Nexus repository](http://www.anc.org:8080/nexus/index.html#nexus-search;gav~org.lappsgrid.maven~war-parent-pom~~~).
-(As of October 2015, the latest is 2.0.4 .)
+(As of February 2016, the latest is 2.0.5 .)
 
 ## API Dependency
 
@@ -148,7 +148,7 @@ All of core APIs for Lappsgrid services are included `org.lappsgrid.all` package
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>all</artifactId>
-            <version>2.1.1</version>
+            <version>2.3.0</version>
         </dependency>
     </dependencies>
 </project>
@@ -158,7 +158,7 @@ All of core APIs for Lappsgrid services are included `org.lappsgrid.all` package
 ***Notes***
 
 1. To get the right version number, please check the [ANC's Nexus repository](http://www.anc.org:8080/nexus/index.html#nexus-search;gav~org.lappsgrid~all~~~). 
-(As of October 2015, the latest is 2.1.1 .)
+(As of February 2016, the latest is 2.3.0 .)
 
 After all, your `pom.xml` file should look like:
 
@@ -177,14 +177,14 @@ After all, your `pom.xml` file should look like:
     <parent>
         <artifactId>war-parent-pom</artifactId>
         <groupId>org.lappsgrid.maven</groupId>
-        <version>2.0.4</version>
+        <version>2.0.5</version>
     </parent>
     <!-- API dependency -->
     <dependencies>
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>all</artifactId>
-            <version>2.1.1</version>
+            <version>2.3.0</version>
         </dependency>
     </dependencies>
     <repositories>
