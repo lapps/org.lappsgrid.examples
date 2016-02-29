@@ -37,7 +37,7 @@ It is assumed that you know how to create a Maven project either using your IDE 
 
 A service needs to be pakced into a .war file before deployed to Lappsgrid. 
 To pack things up, a developer first needs to config manifest files for maven compilation as a web application.
-We provide here [webapp.zip](https://github.com/lapps/org.lappsgrid.example.java.whitespacetokenizer/blob/step4/webapp.zip)
+We provide here [webapp.zip](https://github.com/lapps/org.lappsgrid.examples/blob/step4/webapp.zip)
  file contains templates of necessary manifest files.
 
 ## Configure WEB-INF
