@@ -208,7 +208,7 @@ We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF*
     }
 ```
 
-The full example code can be found at [`src/test/Java/org/lappsgrid/example/TestWhitespaceTokenizer.Java`](https://github.com/lapps/org.lappsgrid.examples/blob/step5/src/test/Java/org.lappsgrid.example/TestWhitespaceTokenizer.Java)
+The full example code can be found at [here](https://github.com/lapps/org.lappsgrid.examples/blob/step5/src/test/java/org.lappsgrid.example/TestWhitespaceTokenizer.java).
 
 # Integration Testing
 
@@ -230,7 +230,7 @@ To verify the server is running visit
 <a target="_blank" href="http://localhost:8080/whitespace_tokenizer/jsServices">http://localhost:8080/whitespace_tokenizer/jsServices</a>.
 You should see the following in your browser: 
 
-![JSON RPC](http://www.anc.org/images/jsServices.png)
+![JSON RPC](images/jsServices.png)
 
 This simple user interface is provided automatically by the Apache Axis framework and 
 we can use it to invoke methods on the service.  We will use it to invoke the `getMetatdata`
@@ -240,7 +240,7 @@ Click on the + sign beside the `getMetadata` line and then click on the [invoke]
 invoke the `getMetadata` method.  If you see the following page then the service is working 
 correctly.  If not check your terminal window for a stack trace
 
-![JSON RPC](http://www.anc.org/images/jsServices2.png)
+![JSON RPC](images/jsServices2.png)
 
 ## SoapUI (Optional)
 
@@ -275,7 +275,7 @@ and replace the question mark with the following JSON:
 
 The XML in the request editor should now look like:
 
-![soap-ui](http://www.anc.org/images/soapui.png)
+![soap-ui](images/soapui.png)
 
 To invoke the `execute` method you can:
 * Click the green arrow in the top left of the request editor, or
