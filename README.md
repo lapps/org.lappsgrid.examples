@@ -46,7 +46,7 @@ Default JSON schema for a service consists of these fields:
 
 * **$schema** (String)
     * The JSON schema that describes the JSON format
-    * Defaults to "http://vocab.lappsgrid.org/schema/service-schema-1.0.0.json".
+    * Defaults to "http://vocab.lappsgrid.org/schema/service-schema.json".
 * **name** (String)
     * A human readable name for the service. 
 * **vendor** (String)
@@ -122,7 +122,7 @@ Service vendors can generate metadata JSON at compile or in runtime. We will go 
 
 ## Option #1. using `Metadata` module
 
-One way to generate a JSON object is to use [`metadata`](http://lapps.github.io/org.lappsgrid.metadata/) module. It contains wrapping classes for generating JSON string:
+One way to generate a JSON object is to use [`metadata`](http://lapps.github.io/org.lappsgrid.metadata/groovydoc) module. It contains wrapping classes for generating JSON string:
 
 * [`ServiceMetadata`](http://lapps.github.io/org.lappsgrid.metadata/index.html?org/lappsgrid/metadata/ServiceMetadata.html): provides JSON schema for a `ProcessingService` as well as getters and setters.
 * [`DataSourceMetadata`](http://lapps.github.io/org.lappsgrid.metadata/index.html?org/lappsgrid/metadata/DataSourceMetadata.html): provides JSON schema for a `DataSource` serive as well as getters and setters.
