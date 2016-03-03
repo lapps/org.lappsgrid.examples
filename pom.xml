@@ -18,19 +18,25 @@
     <dependencies>
         <dependency>
             <groupId>org.lappsgrid</groupId>
-            <artifactId>api</artifactId>
-            <version>2.0.1</version>
+            <artifactId>all</artifactId>
+            <version>2.3.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.lappsgrid</groupId>
-            <artifactId>vocabulary</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.lappsgrid</groupId>
-            <artifactId>metadata</artifactId>
-            <version>1.0.5</version>
-        </dependency>
-
     </dependencies>
+
+    <!-- compiler plugin for metadata annotation -->
+    <!-- which will not be used in current implementation -->
+    <build>
+        <finalName> YOUR_ARTIFACT_NAME </finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessors>
+                        <annotationProcessor>org.lappsgrid.annotation.processing.MetadataProcessor</annotationProcessor>
+                    </annotationProcessors>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
