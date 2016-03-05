@@ -113,7 +113,7 @@ All of core APIs for Lappsgrid services are included `org.lappsgrid.all` package
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>all</artifactId>
-            <version>2.3.0</version>
+            <version>2.3.1</version>
         </dependency>
     </dependencies>
 </project>
@@ -123,7 +123,7 @@ All of core APIs for Lappsgrid services are included `org.lappsgrid.all` package
 ***Notes***
 
 1. To get the right version number, please check the [Maven Central repository](http://mvnrepository.com/artifact/org.lappsgrid/all). 
-(As of February 2016, the latest is 2.3.0 .)
+(As of March 2016, the latest is 2.3.1 .)
 
 After all, your `pom.xml` file should look like:
 
@@ -149,7 +149,7 @@ After all, your `pom.xml` file should look like:
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>all</artifactId>
-            <version>2.3.0</version>
+            <version>2.3.1</version>
         </dependency>
     </dependencies>
 </project>
