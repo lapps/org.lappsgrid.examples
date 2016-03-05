@@ -124,14 +124,13 @@ Service vendors can generate metadata JSON at compile or in runtime. We will go 
 
 One way to generate a JSON object is to use [`metadata`](http://lapps.github.io/org.lappsgrid.metadata/groovydoc) module. It contains wrapping classes for generating JSON string:
 
-* [`ServiceMetadata`](http://lapps.github.io/org.lappsgrid.metadata/index.html?org/lappsgrid/metadata/ServiceMetadata.html): provides JSON schema for a `ProcessingService` as well as getters and setters.
-* [`DataSourceMetadata`](http://lapps.github.io/org.lappsgrid.metadata/index.html?org/lappsgrid/metadata/DataSourceMetadata.html): provides JSON schema for a `DataSource` serive as well as getters and setters.
-* [`IOSpecification`](http://lapps.github.io/org.lappsgrid.metadata/index.html?org/lappsgrid/metadata/IOSpecificatoin.html): provides JSON schema for a specification for input and output.
+* [`ServiceMetadata`](http://lapps.github.io/org.lappsgrid.metadata/groovydoc/org/lappsgrid/metadata/ServiceMetadata.html): provides JSON schema for a `ProcessingService` as well as getters and setters.
+* [`DataSourceMetadata`](http://lapps.github.io/org.lappsgrid.metadata/groovydoc/org/lappsgrid/metadata/DataSourceMetadata.html): provides JSON schema for a `DataSource` serive as well as getters and setters.
+* [`IOSpecification`](http://lapps.github.io/org.lappsgrid.metadata/groovydoc/org/lappsgrid/metadata/IOSpecification.html): provides JSON schema for a specification for input and output.
 
 For WhitespaceTokenizer, we will use ServiceMetadata and IOSpecification classes. Using these classes should be very straightforward. See the below snippet. 
 
 ```java
-...
 // import necessary classes from metadata module
 import org.lappsgrid.metadata.ServiceMetadata;
 import org.lappsgrid.metadata.IOSpecification;
