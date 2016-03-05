@@ -12,37 +12,31 @@
     <parent>
         <artifactId>war-parent-pom</artifactId>
         <groupId>org.lappsgrid.maven</groupId>
-        <version>2.0.4</version>
+        <version>2.0.5</version>
     </parent>
     <!-- API dependency -->
     <dependencies>
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>all</artifactId>
-            <version>2.1.1</version>
+            <version>2.3.1</version>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>anc-releases</id>
-            <url>http://www.anc.org:8080/nexus/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>anc-snapshots</id>
-            <url>http://www.anc.org:8080/nexus/content/repositories/snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
+
+    <!-- compiler plugin for metadata annotation -->
+    <!-- which will not be used in current implementation -->
+    <build>
+        <finalName> YOUR_ARTIFACT_NAME </finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessors>
+                        <annotationProcessor>org.lappsgrid.annotation.processing.MetadataProcessor</annotationProcessor>
+                    </annotationProcessors>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
