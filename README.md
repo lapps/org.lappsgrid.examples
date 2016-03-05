@@ -48,7 +48,7 @@ A basic template for a maven project should look like this:
 </project>
 ```
 
-As a maven project, our service will have these.
+As a maven project, our service will have these properties.
 
 Field | Value
 ---|---
@@ -58,7 +58,7 @@ Field | Value
 **packaging**|war (`.war` is for web apps)
 **name**|Lappsgrid Service Example
 
-Which inherits from the following Parent POM:
+And it inherits from the following Parent POM:
 
 Field | Value
 ---|---
@@ -91,7 +91,7 @@ At this point `pom.xml` for our example service should look like this:
 
 ***Note*** 
 
-1. To get the right version number, please check the [ANC's Nexus repository](http://www.anc.org:8080/nexus/index.html#nexus-search;gav~org.lappsgrid.maven~war-parent-pom~~~).
+1. To get the right version number, please check the [Maven Central repository](http://mvnrepository.com/artifact/org.lappsgrid.maven/war-parent-pom).
 (As of February 2016, the latest is 2.0.5 .)
 
 ## API Dependency
@@ -100,42 +100,7 @@ To make it easier for anyone to create a Lappsgrid web service, Lappsgrid dev te
 
 ### Repository set-up
 
-Typically users will follow [these instructions](http://lapps.github.io/Maven.html) to add the ANC's Nexus repositories to their settings.xml file as a global Maven configuration.  However, in this tutorial we will add the `<respoitories>` section directly to the `pom.xml` file **locally**.
-
-Here's how to add additional maven repositories.
-We can add additional repositories using `<repositories>` tag inside the `<project>`.
-
-```xml
-<project ...>
-    <repositories>
-        <repository>
-            <id>anc-releases</id>
-            <url>http://www.anc.org:8080/nexus/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>anc-snapshots</id>
-            <url>http://www.anc.org:8080/nexus/content/repositories/snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-</project>
-```
-***Notes***
-
-1. In the future the Lappsgrid artifacts will be deployed to Maven Central.  However, until that time Lappsgrid artifacts are deployed to the ANC's Nexus instance.
-
+All public APIs to help writing Lappsgrid web service is released on [Maven Central](http://mvnrepository.com/artifact/org.lappsgrid). Thus developers don't have to set up additional repositories. 
 
 ### Adding dependencies
 
@@ -148,7 +113,7 @@ All of core APIs for Lappsgrid services are included `org.lappsgrid.all` package
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>all</artifactId>
-            <version>2.3.0</version>
+            <version>2.3.1</version>
         </dependency>
     </dependencies>
 </project>
@@ -157,8 +122,8 @@ All of core APIs for Lappsgrid services are included `org.lappsgrid.all` package
 
 ***Notes***
 
-1. To get the right version number, please check the [ANC's Nexus repository](http://www.anc.org:8080/nexus/index.html#nexus-search;gav~org.lappsgrid~all~~~). 
-(As of February 2016, the latest is 2.3.0 .)
+1. To get the right version number, please check the [Maven Central repository](http://mvnrepository.com/artifact/org.lappsgrid/all). 
+(As of March 2016, the latest is 2.3.1 .)
 
 After all, your `pom.xml` file should look like:
 
@@ -184,39 +149,15 @@ After all, your `pom.xml` file should look like:
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>all</artifactId>
-            <version>2.3.0</version>
+            <version>2.3.1</version>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>anc-releases</id>
-            <url>http://www.anc.org:8080/nexus/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>anc-snapshots</id>
-            <url>http://www.anc.org:8080/nexus/content/repositories/snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>
 ```
 
-Again, it is important to use the `org.lappsgrid.maven:war-parent-pom` as it defines the Service Grid and Lappsgrid dependencies required to implement a service on the Language Application Grid. 
-Check the [ANC's Nexus Repository](http://www.anc.org:8080/nexus/index.html#nexus-search;gav~org.lappsgrid.maven~war-parent-pom~~~) to find the latest version of the Lappsgrid Maven artifacts.
+**Note again** that it is important to use the `org.lappsgrid.maven:war-parent-pom` as it defines the Service Grid and Lappsgrid dependencies required to implement a service on the Language Application Grid. 
 
-Also be sure to set the `packaging` to war (Web App Archive) to make it a web-app.
+Also be sure to set the `packaging` to `war` (Web App Archive) to make it a web-app.
 
 # Up Next
 
