@@ -48,13 +48,16 @@ public class WhitespaceTokenizer implements ProcessingService
         // JSON for input information
         IOSpecification requires = new IOSpecification();
         requires.addFormat(Uri.TEXT);           // Plain text (form)
+        requires.addFormat(Uri.LIF);            // LIF (form)
         requires.addLanguage("en");             // Source language
+        requires.setEncoding("UTF-8");
 
         // JSON for output information
         IOSpecification produces = new IOSpecification();
-        produces.addFormat(Uri.LAPPS);          // LIF (form)
+        produces.addFormat(Uri.LAPPS);          // LIF (form) synonymous to LIF
         produces.addAnnotation(Uri.TOKEN);      // Tokens (contents)
         requires.addLanguage("en");             // Target language
+        produces.setEncoding("UTF-8");
 
         // Embed I/O metadata JSON objects
         metadata.setRequires(requires);

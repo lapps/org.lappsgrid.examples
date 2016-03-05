@@ -198,7 +198,7 @@ We will test `execute()` as well. Since our `WhitespaceTokenizer` produces *LIF*
             fail(String.format("Expected 2 tokens. Found %d", annotations.size()));
         }
         Annotation tok1 = annotations.get(0);
-        assertEquals("Token 1: wrong label", Uri.TOKEN, tok1.getLabel());
+        assertEquals("Token 1: wrong @type", Uri.TOKEN, tok1.getAtType());
         assertEquals("Token 1: wrong start", 3L, tok1.getStart().longValue());
         assertEquals("Token 1: wrong word", "abc", tok1.getFeature(Features.Token.WORD));
 

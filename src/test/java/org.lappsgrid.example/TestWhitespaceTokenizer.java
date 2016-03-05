@@ -110,18 +110,18 @@ public class TestWhitespaceTokenizer
 		{
 			for (Annotation a : annotations)
 			{
-				System.out.println(a.getId() + " " + a.getLabel() + " " + a.getFeature(Features.Token.WORD));
+				System.out.println(a.getId() + " " + a.getAtType() + " " + a.getFeature(Features.Token.WORD));
 			}
 			fail(String.format("Expected 2 annotations. Found %d", annotations.size()));
 		}
 		Annotation token = annotations.get(0);
-		assertEquals("Token 1: wrong label", Uri.TOKEN, token.getLabel());
+		assertEquals("Token 1: wrong @type", Uri.TOKEN, token.getAtType());
 		assertEquals("Token 1: wrong start", 3L, token.getStart().longValue());
 		assertEquals("Token 1: wrong end", 6L, token.getEnd().longValue());
 		assertEquals("Token 1: wrong word", "abc", token.getFeature(Features.Token.WORD));
 
 		token = annotations.get(1);
-		assertEquals("Token 2: wrong label", Uri.TOKEN, token.getLabel());
+		assertEquals("Token 2: wrong @type", Uri.TOKEN, token.getAtType());
 		assertEquals("Token 2: wrong start", 7L, token.getStart().longValue());
 		assertEquals("Token 2: wrong end", 10L, token.getEnd().longValue());
 		assertEquals("Token 2: wrong word", "def", token.getFeature(Features.Token.WORD));
@@ -149,13 +149,13 @@ public class TestWhitespaceTokenizer
 			fail(String.format("Expected 2 annotations. Found %d", annotations.size()));
 		}
 		Annotation token = annotations.get(0);
-		assertEquals("Token 1: wrong label", Uri.TOKEN, token.getLabel());
+		assertEquals("Token 1: wrong @type", Uri.TOKEN, token.getAtType());
 		assertEquals("Token 1: wrong start", 3L, token.getStart().longValue());
 		assertEquals("Token 1: wrong end", 6L, token.getEnd().longValue());
 		assertEquals("Token 1: wrong word", "abc", token.getFeature(Features.Token.WORD));
 
 		token = annotations.get(1);
-		assertEquals("Token 2: wrong label", Uri.TOKEN, token.getLabel());
+		assertEquals("Token 2: wrong @type", Uri.TOKEN, token.getAtType());
 		assertEquals("Token 2: wrong start", 7L, token.getStart().longValue());
 		assertEquals("Token 2: wrong end", 10L, token.getEnd().longValue());
 		assertEquals("Token 2: wrong word", "def", token.getFeature(Features.Token.WORD));
@@ -181,13 +181,13 @@ public class TestWhitespaceTokenizer
 			fail(String.format("Expected 2 annotations. Found %d", annotations.size()));
 		}
 		Annotation token = annotations.get(0);
-		assertEquals("Token 1: wrong label", Uri.TOKEN, token.getLabel());
+		assertEquals("Token 1: wrong @type", Uri.TOKEN, token.getAtType());
 		assertEquals("Token 1: wrong start", 0L, token.getStart().longValue());
 		assertEquals("Token 1: wrong end", 3L, token.getEnd().longValue());
 		assertEquals("Token 1: wrong word", "abc", token.getFeature(Features.Token.WORD));
 
 		token = annotations.get(1);
-		assertEquals("Token 2: wrong label", Uri.TOKEN, token.getLabel());
+		assertEquals("Token 2: wrong @type", Uri.TOKEN, token.getAtType());
 		assertEquals("Token 2: wrong start", 7L, token.getStart().longValue());
 		assertEquals("Token 2: wrong end", 10L, token.getEnd().longValue());
 		assertEquals("Token 2: wrong word", "def", token.getFeature(Features.Token.WORD));
