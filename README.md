@@ -34,12 +34,12 @@ For this tutorial you will require:
 # Implementing Lappsgrid service
 
 All services deployed to the Lappsgrid should extend one of the interfaces in the
-[org.lappsgrid.api](https://lapps.github.io/org.lappsgrid.api) module.  Services that provide
-data to other services (aka data sources) should implement the [DataSource](http://lapps.github.io/org.lappsgrid.api/index.html?org/lappsgrid/api/DataSource.html) 
-interface and services that process data (aka ProcessingServices) should implement the
-[ProcessingService](http://lapps.github.io/org.lappsgrid.api/index.html?org/lappsgrid/api/ProcessingService.html)
-interface.  Both interfaces are *naming interfaces*, that is, they extend [WebService](http://lapps.github.io/org.lappsgrid.api/index.html?org/lappsgrid/api/WebService.html)
-but do not add any new methods.
+[org.lappsgrid.api](http://lapps.github.io/org.lappsgrid.api/apidocs/) module.
+Services that provide data to other services (aka data sources) 
+should implement the [DataSource](http://lapps.github.io/org.lappsgrid.api/apidocs/org/lappsgrid/api/DataSource.html) interface 
+and services that process data (aka ProcessingServices) 
+should implement the [ProcessingService](http://lapps.github.io/org.lappsgrid.api/apidocs/org/lappsgrid/api/ProcessingService.html) interface.
+Both interfaces are only *naming interfaces*, that is, they extend [WebService](http://lapps.github.io/org.lappsgrid.api/apidocs/org/lappsgrid/api/WebService.html) but do not add any new methods.
 In this step, we start to write a simple Java class `WhitespaceTokenizer`, a tokenizer based on white spaces, that will be a Lappsgrid web service through steps of this tutorial.
 
 ## Lappsgrid Interfaces and Classes
@@ -48,9 +48,9 @@ Place a new empty class in `src/main/java/org/lappsgrid/example/WhitespaceTokeni
 
 The `WebService` (superclass of `ProcessingService`) interface contains two methods:
 
-1. **String getMetadata()**<br/>
+1. **`String getMetadata()`**<br/>
 Returns metadata about the service
-1. **String execute(String)**<br/>
+1. **`String execute(String)`**<br/>
 Executes the service.
 
 So the skeleton for a Lappsgrid web service looks like:
@@ -76,7 +76,8 @@ service to the Lappsgrid; albeit not a particularly interesting service.
 ## Lappsgrid Exchange Datastructures (LEDS)
 
 All of the Strings passed to and from Lappsgrid services are JSON strings containing
-LEDS. See [org.lappsgrid.serialization.Data](http://lapps.github.io/org.lappsgrid.serialization/index.html?org/lappsgrid/serialization/Data.html), this `Data` class is a wrapper for LEDS compatible JSON format. 
+LEDS. See [org.lappsgrid.serialization.Data](http://lapps.github.io/org.lappsgrid.serialization/groovydoc/org/lappsgrid/serialization/Data.html), 
+this `Data` class is a wrapper for LEDS compatible JSON format. 
 Each `Data` object, that is LEDS, consists of a `discriminator`, which is a URI from the
 [Lappsgrid URI Inventory](http://vocab.lappsgrid.org/discriminators.html), and a payload.
 The `discriminator` is used to determine how the contents of the `payload` should be
@@ -96,7 +97,7 @@ String json = data.asJson()
 String prettyJson = data.asPrettyJson()
 ```
 
-The [org.lappsgrid.discriminator.Discriminators.Uri](http://lapps.github.io/org.lappsgrid.discriminator/index.html?org/lappsgrid/discriminator/Discriminators.html) 
+The [org.lappsgrid.discriminator.Discriminators.Uri](http://lapps.github.io/org.lappsgrid.discriminator/apidocs/org/lappsgrid/discriminator/Discriminators.Uri.html) 
 class contains static definitions of the URI in the Lappsgrid inventory so users don't 
 have to remember them all:
 
@@ -109,32 +110,31 @@ tool-top help.
 
 ### Lapps Interchange Format (LIF)
 
-In previous section, we saw a LED that contains plain text as its payload. However, typically Lappsgrid services will exchange JSON as payload of their LEDS that conform to the [Lapps Interchange
-Format (LIF)](http://vocab.lappsgrid.org/schema/lif-schema.json). The [Lappsgrid Exchange Datastructures (LEDS)](http://github.com/lapps/org.lappsgrid.serialization)
-also can be used to reliably generate conformant JSON. These three `LEDS` classes are provided for LIF generation:
+In previous section, we saw a LEDS that contains plain text as its payload. However, typically Lappsgrid services will exchange JSON as payload of their LEDS that conform to the [Lapps Interchange
+Format (LIF)](http://vocab.lappsgrid.org/schema/lif-schema.json). The same [wrapper module for LEDS](http://github.com/lapps/org.lappsgrid.serialization)
+also can be used to reliably generate conformant LIF JSON. These three `LEDS` classes are provided for LIF generation:
 
 1. `Container`<br/>
-The `Container` is the main wrapper for LIF objects.  A `Container` consists of some 
-metadata and a list of Views.
+The `Container` is the main wrapper for LIF objects.  A `Container` consists of some metadata and a list of Views.
 1. `View`<br/>
-Each service should contribute a `view`. A `View` consists of some metadata and a list of Annotations.
+Each service should contribute a **view**. A `View` consists of some metadata and a list of Annotations.
 1. `Annotation`<br/>
-A single annotation.
+A single annotation from the service.
 
 ```java
-Container container = new Container()       # creates a new LIF
-container.setText("Goodbye cruel world, I am leaving you today.");      # original input text
-container.setLanguage("en");            # original input langage
-View view = container.newView();        # new view that this service will contribute
-Annotation a = view.newAnnotation("tok1", Uri.TOKEN, 0, 7);     # add annotations
+Container container = new Container()       // creates a new LIF
+container.setText("Goodbye cruel world, I am leaving you today.");      // original input text
+container.setLanguage("en");            // original input langage
+View view = container.newView();        // new view that this service will contribute
+Annotation a = view.newAnnotation("tok1", Uri.TOKEN, 0, 7);     // add annotations
 Annotation a = view.newAnnotation("tok2", Uri.TOKEN, 8, 13); 
 ...
-Data<Container> data = new Data<Container>(Uri.LAPPS, container);       # wrap LIF inside LEDS
+Data<Container> data = new Data<Container>(Uri.LAPPS, container);       // wrap LIF inside LEDS
 System.out.println(data.asPrettyJson());
 ```
 
 Creating `Data<Container>` objects is such a frequent task for Lappsgrid services
-that the [DataContainer](http://lapps.github.io/org.lappsgrid.serialization/index.html?org/lappsgrid/serialization/DataContainer.html)
+that the [DataContainer](http://lapps.github.io/org.lappsgrid.serialization/groovydoc/org/lappsgrid/serialization/DataContainer.html)
  class has been defined for just that purpose:
 
 ```
@@ -144,7 +144,7 @@ that the [DataContainer](http://lapps.github.io/org.lappsgrid.serialization/inde
 
 ### Serialization and de-serialization
 
-The [org.lappsgrid.serialization.Serializer](http://lapps.github.io/org.lappsgrid.serialization/index.html?org/lappsgrid/serialization/Serializer.html)
+The [org.lappsgrid.serialization.Serializer](http://lapps.github.io/org.lappsgrid.serialization/groovydoc/org/lappsgrid/serialization/Serializer.html)
 class is a light-weight wrapper around the [Jackson](https://github.org/FasterXML/Jackson) 
 library that can be used to serialize LIF objects to/from JSON.
 
