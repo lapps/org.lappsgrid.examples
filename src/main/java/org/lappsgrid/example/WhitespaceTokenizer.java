@@ -48,13 +48,16 @@ public class WhitespaceTokenizer implements ProcessingService
         // JSON for input information
         IOSpecification requires = new IOSpecification();
         requires.addFormat(Uri.TEXT);           // Plain text (form)
+        requires.addFormat(Uri.LIF);            // LIF (form)
         requires.addLanguage("en");             // Source language
+        requires.setEncoding("UTF-8");
 
         // JSON for output information
         IOSpecification produces = new IOSpecification();
-        produces.addFormat(Uri.LAPPS);          // LIF (form)
+        produces.addFormat(Uri.LAPPS);          // LIF (form) synonymous to LIF
         produces.addAnnotation(Uri.TOKEN);      // Tokens (contents)
         requires.addLanguage("en");             // Target language
+        produces.setEncoding("UTF-8");
 
         // Embed I/O metadata JSON objects
         metadata.setRequires(requires);
@@ -118,15 +121,15 @@ public class WhitespaceTokenizer implements ProcessingService
             a.addFeature(Features.Token.WORD, word);
         }
 
-         // Step #6: Update the view's metadata. Each view contains metadata about the
-         // annotations it contains, in particular the name of the tool that produced the
-         // annotations.
-         view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
+        // Step #6: Update the view's metadata. Each view contains metadata about the
+        // annotations it contains, in particular the name of the tool that produced the
+        // annotations.
+        view.addContains(Uri.TOKEN, this.getClass().getName(), "whitespace");
 
-         // Step #7: Create a DataContainer with the result.
-         data = new DataContainer(container);
+        // Step #7: Create a DataContainer with the result.
+        data = new DataContainer(container);
 
-         // Step #8: Serialize the data object and return the JSON.
-         return data.asPrettyJson();
+        // Step #8: Serialize the data object and return the JSON.
+        return data.asPrettyJson();
     }
 }
