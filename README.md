@@ -35,10 +35,9 @@ It is assumed that you know how to create a Maven project either using your IDE 
 
 # Pack things up
 
-A service needs to be pakced into a .war file before deployed to Lappsgrid. 
-To pack things up, a developer first needs to config manifest files for maven compilation as a web application.
-We provide here [webapp.zip](https://github.com/lapps/org.lappsgrid.examples/blob/step4/webapp.zip)
- file contains templates of necessary manifest files.
+A service needs to be pakced into a .war file before being deployed to the Lappsgrid. 
+To pack things up, a developer first needs to configure manifest files for maven compilation as a web application.
+We provide an [archive](https://github.com/lapps/org.lappsgrid.examples/blob/step4/webapp.zip) that contains templates of necessary manifest files.
 
 ## Configure WEB-INF
 
@@ -81,16 +80,14 @@ With the whitespace tokenizer example, `web.xml` will look like:
 
 ### Adding services configuration to serviceimpl
 
-In `webapp/WEB-INF/serviceimpl` directory, There is `YOUR_CLASS_NAME.xml`. 
-Here you need to create corresponding xml files for each service class that has `execute()` and `getMetadata()` methods.
-Since, in this exmaple, we only have one such class, `WhitespaceTokonizer`, all we need is `WhitespaceTokenizer.xml`. Rename it.
-Then we also need to edit the xml file, change `class` attribute of inner `bean` tag
+In `webapp/WEB-INF/serviceimpl` directory you need to create corresponding xml files for each service class that has `execute()` and `getMetadata()` methods. In this exmaple, we only have one such class, `WhitespaceTokenizer`, so all we need is a file `WhitespaceTokenizer.xml`. Make a copy of the template file `YOUR_CLASS_NAME.xml` and name it `WhitespaceTokenizer.xml`.
+Then we need to edit the new xml file: change the `class` attribute of the inner `bean` tag, which now is
 
 ```xml
 <bean class="===YOUR CLASS NAME HERE===">
 ```
 
-Finally, `WhitespaceTokenizer.xml` would look like this:
+After editing, `WhitespaceTokenizer.xml` should look like this:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -107,9 +104,7 @@ Finally, `WhitespaceTokenizer.xml` would look like this:
 
 ## Maven packing
 
-We complete to set up all necessary configuration to pack things up. 
-Now, we are one step away; put those configurations in the right place. 
-Move `webapp` directory in source directory `src/main/`.
+We have now almost set up all necessary configurations for packing things up. The last step is to put those configurations in the right place by making sure that the `WEB-inf` directory from the archive in in the directory `src/main/webapp`.
 
 Finally, it's time to compile. Use maven to compile the package into a war file.
 
@@ -117,13 +112,14 @@ Finally, it's time to compile. Use maven to compile the package into a war file.
 mvn clean package
 ```
 
-This will run all your Junit test code, if any, before compilation. Writing test for a Lapps service is covered in the next step.
+This will run all your Junit test code, if any, before compilation. Writing tests for a Lapps service is covered in the next step.
 
-The maven-generated .war file will be located in `target` directory in project root.
+The maven-generated .war file will be located in the `target` directory in the project root.
+
 
 ## Deploying on tomcat server
 
-Simply put the artifact war file in `webapps` directory under a tomcat server set up for the service. Tomcat web-app manager will automatically recognize a new app on next re-start.
+Simply put the artifact war file in the `webapps` directory under a tomcat server set up for the service. The Tomcat web-app manager will automatically recognize a new app on next re-start.
 
 # Up Next
 
