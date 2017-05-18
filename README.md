@@ -32,11 +32,9 @@ For this tutorial you will require:
 # Maven
 
 It is assumed that you know how to create a Maven project either using your IDE or via
-the command line.  Maven usage is beyond the scope of this tutorial.
+the command line. Maven usage is beyond the scope of this tutorial.
 
 ## Project Setup
-
-Let's start with creating a new maven project using the following maven coordinates:
 
 A basic template for a maven project should look like this:
 
@@ -48,23 +46,27 @@ A basic template for a maven project should look like this:
 </project>
 ```
 
-As a maven project, our service will have these properties.
+Let's start with creating a new maven project using the following properties:
 
 Field | Value
 ---|---
 **groudID**|org.lappsgrid.tutorial
 **artifactId**|lappsgrid_example
 **version**|1.0.0-SNAPSHOT
-**packaging**|war (`.war` is for web apps)
+**packaging**|war
 **name**|Lappsgrid Service Example
 
-And it inherits from the following Parent POM:
+Setting the `packaging` to `war` (Web Application Archive) ensures that Maven creates a web application from the specifications in the pom file.
+
+The project inherits from the following Parent POM:
 
 Field | Value
 ---|---
 **groudID**|org.lappsgrid.maven
 **artifactId**|war-parent-pom
 **version**|2.0.5
+
+It is important to use the `org.lappsgrid.maven:war-parent-pom` parent as it defines the Service Grid and Lappsgrid dependencies required to implement a service on the Language Application Grid. To get the right version number, please check the [Maven Central repository](http://mvnrepository.com/artifact/org.lappsgrid.maven/war-parent-pom). As of may 2017, the latest version is 2.0.5.
 
 At this point `pom.xml` for our example service should look like this:
 
@@ -89,22 +91,19 @@ At this point `pom.xml` for our example service should look like this:
 </project>
 ```
 
-***Note*** 
-
-1. To get the right version number, please check the [Maven Central repository](http://mvnrepository.com/artifact/org.lappsgrid.maven/war-parent-pom).
-(As of February 2016, the latest is 2.0.5 .)
-
 ## API Dependency
 
-To make it easier for anyone to create a Lappsgrid web service, Lappsgrid dev team provides various API's. Currently packages of those APIs are hosted on ANC's Nexus repository.
+To make it easier for anyone to create a Lappsgrid web service, the Lappsgrid development team provides various API's. Currently packages of those APIs are hosted on ANC's Nexus repository.
 
 ### Repository set-up
 
-All public APIs to help writing Lappsgrid web service is released on [Maven Central](http://mvnrepository.com/artifact/org.lappsgrid). Thus developers don't have to set up additional repositories. 
+All public APIs to help writing Lappsgrid web services are released on [Maven Central](http://mvnrepository.com/artifact/org.lappsgrid). Thus developers don't have to set up additional repositories. 
 
 ### Adding dependencies
 
-All of core APIs for Lappsgrid services are included `org.lappsgrid.all` package. Add a dependency to it to the current project:
+All core APIs for Lappsgrid services are included in the `org.lappsgrid.all` package. 
+
+Add a dependency to it to the current project:
 
 ```xml
 ...
@@ -120,12 +119,7 @@ All of core APIs for Lappsgrid services are included `org.lappsgrid.all` package
 ...
 ```
 
-***Notes***
-
-1. To get the right version number, please check the [Maven Central repository](http://mvnrepository.com/artifact/org.lappsgrid/all). 
-(As of March 2016, the latest is 2.3.1 .)
-
-After all, your `pom.xml` file should look like:
+After this, your `pom.xml` file should look like:
 
 ```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -155,9 +149,6 @@ After all, your `pom.xml` file should look like:
 </project>
 ```
 
-**Note again** that it is important to use the `org.lappsgrid.maven:war-parent-pom` as it defines the Service Grid and Lappsgrid dependencies required to implement a service on the Language Application Grid. 
-
-Also be sure to set the `packaging` to `war` (Web App Archive) to make it a web-app.
 
 # Up Next
 
