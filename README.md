@@ -24,7 +24,7 @@ have been abstracted away by the Service Grid and Language Grid layers.
 
 For this tutorial you will require:
 
-1. Java 1.7
+1. Java 1.7 or later
 1. Maven 3.0.x
 1. An IDE such as IntelliJ or Eclipse
 1. About 15 minues
@@ -93,7 +93,7 @@ At this point `pom.xml` for our example service should look like this:
 
 ## API Dependency
 
-To make it easier for anyone to create a Lappsgrid web service, the Lappsgrid development team provides various API's. Currently packages of those APIs are hosted on ANC's Nexus repository.
+To make it easier for anyone to create a Lappsgrid web service, the Lappsgrid development team provides various API's.
 
 ### Repository set-up
 
