@@ -30,15 +30,15 @@ For this tutorial you will require:
 1. to have have completed Step four
 1. about 15 minutes
 
-It is assumed that you know how to create a Maven project either using your IDE or via the command line.  Maven usage is beyond the scope of this tutorial.
+It is assumed that you know how to create a Maven project either using your IDE or via the command line. Maven usage is beyond the scope of this tutorial.
 
 
 # (Optional) Testing
 
-**Note that** this is an optional step; if a developer has their own test suite, relevant part of this tutorial can be skipped.
+**Note that** this is an optional step; if a developer has his or her own test suite, then parts of this tutorial can be skipped.
 
 Here, we will test out `WhitespaceTokenizer` service, first as a Java program, then as a web-service.
-We will use `JUnit` library, which is already included by the LAPPS Grid parent pom, for Java unit testing and Jetty/SoapUI for (simple) integration testing. 
+We will use the `JUnit` library, which is already included by the LAPPS Grid parent pom, for Java unit testing and Jetty/SoapUI for (simple) integration testing. 
 The unit tests will verify that the `WhitespaceTokenizer` class does what it claims it does, while the integration tests ensure the program runs as a web service and doesn't return error messages.
 
 ## Unit Testing
@@ -51,7 +51,7 @@ Create a new test class
 src/test/Java/org/lappsgrid.example/TestWhitespaceTokenizer.Java
 ```
 
-We start with following skeleton.
+We start with the following skeleton.
 
 ```Java
     package org.lappsgrid.example;
@@ -107,7 +107,7 @@ Now, we're going to write two example test methods for `getMetadata()` and `exec
 
 ### **`testMetadata()`**: Testing `getMetadata()` Method
 
-In the step 3, we gave the following metadata to our `WhitespaceTokenizer` service.
+In step 3, we gave the following metadata to our `WhitespaceTokenizer` service.
 
 Key|Value|Notes
 ---|---|---
@@ -128,7 +128,7 @@ produces language|[ "en" ]
 produces format" | [ "http://vocab.lappsgrid.org/ns/media/jsonld#lif" ] | "lapps" 
 produces annotation | [ "http://vocab.lappsgrid.org/Token" ]| "token" 
 
-Now, we will see the program generates correct metadata by comparing strings from each field.
+Now, we will see whether the program generates correct metadata by comparing strings from each field.
 
 ```Java
 
@@ -227,8 +227,7 @@ After a short time you should see the message
     [INFO] Started Jetty Server
 ```
 To verify the server is running visit 
-<a target="_blank" href="http://localhost:8080/whitespace_tokenizer/jsServices">http://localhost:8080/whitespace_tokenizer/jsServices</a>.
-You should see the following in your browser: 
+<a target="_blank" href="http://localhost:8080/whitespace_tokenizer/jsServices">http://localhost:8080/whitespace_tokenizer/jsServices</a>. Note that `whitespace_tokenizer` is the value of the `artifactID` property in your pom file. You should see the following in your browser: 
 
 ![JSON RPC](images/jsServices.png)
 
@@ -322,4 +321,4 @@ Where
 
 # Up Next
 
-We're adding in more tutorials. Stay tuned for coming tutorials on wrapping existing Java program, and wrapping non-Java program, such as Python.
+We're adding in more tutorials. Stay tuned for coming tutorials on wrapping existing Java program, and wrapping non-Java code, such as Python.
