@@ -227,7 +227,7 @@ After a short time you should see the message
     [INFO] Started Jetty Server
 ```
 To verify the server is running visit 
-<a target="_blank" href="http://localhost:8080/whitespace_tokenizer/jsServices">http://localhost:8080/whitespace_tokenizer/jsServices</a>. Note that `whitespace_tokenizer` is the value of the `artifactID` property in your pom file. You should see the following in your browser: 
+<a target="_blank" href="http://localhost:8080/lappsgrid_example/jsServices">http://localhost:8080/lappsgrid_example/jsServices</a>. Note that `lappsgrid_example` is the value of the `artifactID` property in your pom file. You should see the following in your browser: 
 
 ![JSON RPC](images/jsServices.png)
 
@@ -252,7 +252,7 @@ SoapUI.
 Start SoapUI and create a new SOAP project. Enter the following in the project setup dialog:
 
 * **Project Name:** Whitespace Tokenizer
-* **Initial WSDL:** http://localhost:8080/whitespace_tokenizer/services/WhitespaceTokenizer?wsdl
+* **Initial WSDL:** http://localhost:8080/lappsgrid_example/services/WhitespaceTokenizer?wsdl
 
 Click the `OK` button.  SoapUI will load the WSDL file from the service and after a
 moment you should see the Whitespace Tokenizer project in the left hand pane.  Expand the
