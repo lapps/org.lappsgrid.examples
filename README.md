@@ -28,7 +28,7 @@ For this tutorial you will require:
 1. Java 1.7 (or later)
 1. Maven 3.0.x
 1. an IDE such as IntelliJ or Eclipse
-1. to have have completed Step one
+1. to have completed Step one
 1. about 15 minutes
 
 # Implementing Lappsgrid service
@@ -44,7 +44,7 @@ In this step, we start to write a simple Java class `WhitespaceTokenizer`, a tok
 
 ## Lappsgrid Interfaces and Classes
 
-Place a new empty class in `src/main/java/org/lappsgrid/example/WhitespaceTokenizer.java` implementing `ProcessingService`, because it will process input text, turn it into tokens.
+Place a new empty class in `src/main/java/org/lappsgrid/example/WhitespaceTokenizer.java` implementing `ProcessingService`, because it will process input text and turn it into tokens.
 
 The `WebService` (superclass of `ProcessingService`) interface contains two methods:
 
@@ -82,7 +82,7 @@ Each `Data` object, that is LEDS, consists of a `discriminator`, which is a URI 
 [Lappsgrid URI Inventory](http://vocab.lappsgrid.org/discriminators.html), and a payload.
 The `discriminator` is used to determine how the contents of the `payload` should be
 interpreted.  
-For example, the following `data` contains plain text.
+For example, the following `data` object contains plain text.
 
 ```java
 Data data = new Data<>();
@@ -90,7 +90,7 @@ data.setDiscriminator("http://vocab.lappsgrid.org/ns/media/text");
 data.setPayload("Goodbye cruel world, I am leaving you today.");
 ```
 
-To convert `data` into json string, one can use one of these methods.
+To convert `data` into a json string, one can use one of these methods.
 
 ```java
 String json = data.asJson()
@@ -105,8 +105,7 @@ have to remember them all:
 data.setDiscriminator(Uri.TEXT);
 ```
 
-Use of the `Discriminators.Uri` class also allows IDEs to provide command completion and
-tool-top help.
+Use of the `Discriminators.Uri` class also allows IDEs to provide command completion and tool-tip help.
 
 ### Lapps Interchange Format (LIF)
 
@@ -122,14 +121,14 @@ Each service should contribute a **view**. A `View` consists of some metadata an
 A single annotation from the service.
 
 ```java
-Container container = new Container()       // creates a new LIF
-container.setText("Goodbye cruel world, I am leaving you today.");      // original input text
-container.setLanguage("en");            // original input langage
-View view = container.newView();        // new view that this service will contribute
-Annotation a = view.newAnnotation("tok1", Uri.TOKEN, 0, 7);     // add annotations
+Container container = new Container()                               // creates a new LIF
+container.setText("Goodbye cruel world, I am leaving you today.");  // original input text
+container.setLanguage("en");                                        // original input language
+View view = container.newView();                                    // new view that this service will contribute
+Annotation a = view.newAnnotation("tok1", Uri.TOKEN, 0, 7);         // add annotations
 Annotation a = view.newAnnotation("tok2", Uri.TOKEN, 8, 13); 
 ...
-Data<Container> data = new Data<Container>(Uri.LAPPS, container);       // wrap LIF inside LEDS
+Data<Container> data = new Data<Container>(Uri.LAPPS, container);   // wrap LIF inside LEDS
 System.out.println(data.asPrettyJson());
 ```
 
@@ -138,8 +137,8 @@ that the [DataContainer](http://lapps.github.io/org.lappsgrid.serialization/groo
  class has been defined for just that purpose:
 
 ```
-    Data data = new DataContainer(container);
-    System.out.println(data.asPrettyJson());
+Data data = new DataContainer(container);
+System.out.println(data.asPrettyJson());
 ```
 
 ### Serialization and de-serialization
@@ -244,7 +243,7 @@ public class WhitespaceTokenizer implements ProcessingService {
 }
 ```
 This method is heavily relying on Lappsgrid APIs mentioned above. 
-Complete example code can be found at [here](https://github.com/lapps/org.lappsgrid.examples/blob/step2/src/main/java/org/lappsgrid/example/WhitespaceTokenizer.java).
+Complete example code can be found [here](https://github.com/lapps/org.lappsgrid.examples/blob/step2/src/main/java/org/lappsgrid/example/WhitespaceTokenizer.java).
 
 # Up Next
 
