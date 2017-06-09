@@ -81,6 +81,7 @@ public class WhitespaceTokenizer implements ProcessingService
             int end = start + word.length();
             Annotation a = view.newAnnotation("tok" + (++id), Uri.TOKEN, start, end);
             a.addFeature(Features.Token.WORD, word);
+            start = end;
         }
 
         // Step #6: Update the view's metadata. Each view contains metadata about the
