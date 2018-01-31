@@ -119,6 +119,35 @@ Add a dependency to it to the current project:
 ...
 ```
 
+Note that the Lappsgrid core APIs require java 7 features. Hence, to use those APIs, one needs to configure the compiler to use the proper java version by adding `maven-compiler-plugin` plugin as follows: 
+
+```xml
+...
+<project ...>
+    <dependencies>
+    ...
+    </dependencies>
+
+    <build>
+    ...
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>>
+        ...
+    </build>
+    ...
+</project>
+
+```
+
 After this, your `pom.xml` file should look like:
 
 ```xml
@@ -146,6 +175,20 @@ After this, your `pom.xml` file should look like:
             <version>2.3.1</version>
         </dependency>
     </dependencies>
+    <!-- plugin used at the compile time -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>>
+    </build>
 </project>
 ```
 
