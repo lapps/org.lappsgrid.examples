@@ -186,17 +186,18 @@ This way, our service can generate the metadata and answer whenever it's called 
 
 If we can generate this metadata before the runtime and then simply cache a mere string ready to return, the service will run even faster. That's why we provide java annotation for metadata. By using java annotation, the compiler will generate JSON string into a file while compiling, which can be read in at runtime more efficiently.
 
-First, we need a compiler plugin. Add this `MetadataProcess` plugin dependency in `pom.xml`.
+First, we need a compiler plugin. Add this `MetadataProcess` plugin dependency in `pom.xml`. Note that we are already using this plugin to configure java version to use at the compile time. 
 
 ```xml
 <project ...>
 ...
     <build>
-        <finalName> YOUR_ARTIFACT_NAME </finalName>
+    ...
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
+                    ...
                     <annotationProcessors>
                         <annotationProcessor>org.lappsgrid.annotation.processing.MetadataProcessor</annotationProcessor>
                     </annotationProcessors>
