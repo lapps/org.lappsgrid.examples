@@ -112,7 +112,7 @@ Add a dependency to it to the current project:
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>all</artifactId>
-            <version>2.3.1</version>
+            <version>2.3.3</version>
         </dependency>
     </dependencies>
 </project>
